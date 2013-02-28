@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="myApp">
   <head>
     <meta charset="utf-8">
     <title>Work protocol</title>
@@ -52,7 +52,7 @@
             <span class="icon-bar"></span>
           </button>
           <a class="brand" href="#">Work protocol</a>
-          <div class="nav-collapse collapse">
+          <!-- div class="nav-collapse collapse">
             <p class="navbar-text pull-right">
               Logged in as <a href="#" class="navbar-link">Username</a>
             </p>
@@ -70,21 +70,15 @@
       <div class="row-fluid">
         <div class="span3">
           <div class="well sidebar-nav">
-            <ul class="nav nav-list"> 
+            <ul class="nav nav-list" ng-controller="navCtrl">
               <li class="nav-header">Browse by</li>
-              <li class="active"><a href="/index.html">Categories</a></li>
-              <li><a href="/services.html">Services</a></li>
+              <li ng-class="navClass('categories')"><a href="#/categories">Categories</a></li>
+              <li ng-class="navClass('services')"><a href="#/services">Services</a></li>
             </ul>
           </div><!--/.well -->
         </div><!--/span-->
         <div class="span9">
-        	<div id="view">
-				<div class="page-header">
-				  <h4>Pick a category</h4>
-				</div>
-				<span class="loading"> loading categories ... </span>
-				<div class="categories"></div>
-        	</div>
+        	<div ng-view></div>
         </div><!--/span-->
       </div><!--/row-->
 
@@ -99,22 +93,16 @@
     <!-- javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-	<script src="https://raw.github.com/janl/mustache.js/master/mustache.js"></script>
-	<script src="https://raw.github.com/cowboy/jquery-bbq/master/jquery.ba-bbq.js"></script>
-	<script src="js/bootstrap.js"></script>
-	<script src="js/index.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular.min.js"></script>
+	<script src="app/js/app.js"></script>
+	<script src="app/js/services.js"></script>
+	<script src="app/js/controllers.js"></script>
+	<script src="app/js/filters.js"></script>
+	<script src="app/js/directives.js"></script>
+	<script src="https://raw.github.com/desandro/masonry/master/jquery.masonry.js"></script>
 
-	<script id="TL_categories" type="text/template">
-		<ul class="unstyled text-center">
-			{{#category}}
-		  		<li class="well well-small"><a href="/services.html?name={{name}}&id={{id}}">{{name}}</a></li>
-			{{/category}}
+	<!-- script src="app/lib/angular/angular.js"></script -->
 
-			{{^category}}
-		  		<li>No categories</li>
-			{{/category}}
-		</ul>
-	</script>
   </body>
 </html>

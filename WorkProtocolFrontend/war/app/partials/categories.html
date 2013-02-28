@@ -1,0 +1,8 @@
+<div class="page-header">
+  <h4>Pick a category</h4>
+</div>
+<span ng-show="isViewLoading"> loading categories ... </span>
+<ul class="unstyled text-center">
+  <li class="well well-small" ng-repeat="category in categories"><a href="#/services/{{category.id}}">{{category.name}}</a></li>
+  <li ng-show="!isViewLoading && !categories.length">No categories</li>
+</ul>

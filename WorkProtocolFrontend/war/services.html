@@ -72,18 +72,20 @@
           <div class="well sidebar-nav">
             <ul class="nav nav-list"> 
               <li class="nav-header">Browse by</li>
-              <li class="active"><a href="/index.html">Categories</a></li>
-              <li><a href="/services.html">Services</a></li>
+              <li><a href="/index.html">Categories</a></li>
+              <li class="active"><a href="/services.html">Services</a></li>
             </ul>
           </div><!--/.well -->
         </div><!--/span-->
         <div class="span9">
         	<div id="view">
 				<div class="page-header">
-				  <h4>Pick a category</h4>
+				  <h4>Pick a service</h4>
 				</div>
-				<span class="loading"> loading categories ... </span>
-				<div class="categories"></div>
+				<span class="loading"> loading services ... </span>
+				<div class="services"></div>
+				<div id="srForm" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="Service request form" aria-hidden="true"></div>
+
         	</div>
         </div><!--/span-->
       </div><!--/row-->
@@ -99,22 +101,36 @@
     <!-- javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-	<script src="https://raw.github.com/janl/mustache.js/master/mustache.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+	<script src="http://github.com/janl/mustache.js/raw/master/mustache.js"></script>
 	<script src="https://raw.github.com/cowboy/jquery-bbq/master/jquery.ba-bbq.js"></script>
 	<script src="js/bootstrap.js"></script>
-	<script src="js/index.js"></script>
+	<script src="js/services.js"></script>
+	<script id="TL_services" type="text/template">
+		<div class="unstyled text-center service-wrap">
+			{{#service}}
+		  		<div class="service well well-small" data-srvcid="{{id}}"><a href="#">{{name}}</a></div>
+			{{/service}}
+			{{^service}}
+		  		<div>No services</div>
+			{{/service}}
+		</div>
+	</script>
 
-	<script id="TL_categories" type="text/template">
-		<ul class="unstyled text-center">
-			{{#category}}
-		  		<li class="well well-small"><a href="/services.html?name={{name}}&id={{id}}">{{name}}</a></li>
-			{{/category}}
-
-			{{^category}}
-		  		<li>No categories</li>
-			{{/category}}
-		</ul>
+	<script id="TL_requestSrvc" type="text/template">
+		  <div class="modal-header">
+		    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		    <h3 id="myModalLabel">Submit service request for {{name}}</h3>
+		  </div>
+		  <div class="modal-body">
+		    loading ...
+		  </div>
+		  <div class="modal-footer">
+			<span class="hide">submitting  ...</span>
+		    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+		    <button class="btn btn-primary">Submit</button>
+		  </div>
+		</div>
 	</script>
   </body>
 </html>
