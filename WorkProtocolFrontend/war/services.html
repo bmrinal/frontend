@@ -83,9 +83,10 @@
 				  <h4>Pick a service</h4>
 				</div>
 				<span class="loading"> loading services ... </span>
+				<div id="page-status" class="alert alert-success hide"></div>
 				<div class="services"></div>
-				<div id="srForm" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="Service request form" aria-hidden="true"></div>
-
+				<div id="srForm" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="Service request form" aria-hidden="true">
+				</div>
         	</div>
         </div><!--/span-->
       </div><!--/row-->
@@ -123,7 +124,8 @@
 		    <h3 id="myModalLabel">Submit service request for {{name}}</h3>
 		  </div>
 		  <div class="modal-body">
-		    loading ...
+		    <span class="frm-ldg">loading ...</span>
+			<form action="http://work0protocol.appspot.com/resources/servicerequests"></form>
 		  </div>
 		  <div class="modal-footer">
 			<span class="hide">submitting  ...</span>

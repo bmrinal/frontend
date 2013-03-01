@@ -20,7 +20,7 @@ $(function (){
 		  template = $('#TL_services').html();
 		  data = {};
 		  data.service = response.services || response.service || [];
-		  $('#view .services').html(Mustache.to_html(template, data)); 
+		  $('#view .services').html(Mustache.to_html(template, data));
 	  },
 	  error: function (){
 		  $('#view .services').html('<div class="alert alert-error">'
@@ -51,7 +51,7 @@ $(function (){
 			  cache: false,
 			  dataType: "jsonp",
 			  complete: function (){
-				  $('#srForm .loading').hide();
+				  $('#srForm .frm-ldg').hide();
 			  },
 			  success: function (response){
 				  var template, data;
@@ -59,16 +59,16 @@ $(function (){
 				  data = $.parseJSON(response.htmlMetaData);
 
 				  if (data && template) {
-					  $('#srForm .modal-body').html(Mustache.to_html(template, data));
+					  $('#srForm form').html(Mustache.to_html(template, data));
 				  } else {
-					  $('#srForm .modal-body').html('<div class="alert  alert-error">'
+					  $('#srForm form').html('<div class="alert  alert-error">'
 							  + 'Sorry, service form unavailable'
 							  + '</div>'
 					  );
 				  }
 			  },
 			  error: function (){
-				  $('#srForm .modal-body').html('<div class="alert alert-error">'
+				  $('#srForm form').html('<div class="alert alert-error">'
 						  + '<button type="button" class="close" data-dismiss="alert">&times;</button>'
 						  + 'Sorry, unable to load service request form'
 						  + '</div>'
@@ -83,14 +83,9 @@ $(function (){
 		
 		form = $('#srForm .modal-body form');
 		
-		$.post(form.attr('action'), form.serialize(), function(){
-			$('#srForm .modal-footer span').html(response);
-		});
-
-		/* params = form.serialize();
+		params = form.serialize();
 		$.ajax({
 		  url: form.attr('action'),
-		  type: 'POST',
 		  data: params,
 		  dataType: "jsonp",
 		  beforeSend: function (){
@@ -99,7 +94,8 @@ $(function (){
 		  complete: function (){
 		  },
 		  success: function (response){
-			  $('#srForm .modal-footer span').html(response);
+			  $('#srForm').modal('hide');
+			  $('#page-status').html('Service request ('+ response.id +') submitted').removeClass('hide');
 		  },
 		  error: function (){
 			  $('#srForm .modal-body').prepend('<div class="alert alert-error">'
@@ -108,6 +104,6 @@ $(function (){
 					  + '</div>'
 			  );
 		  }
-		}); */
+		});
 	});
 });
