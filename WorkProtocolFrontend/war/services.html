@@ -7,6 +7,7 @@
 
     <!-- styles -->
     <link href="/app/css/bootstrap.css" rel="stylesheet">
+    <!-- link href="http://bootswatch.com/united/bootstrap.css" rel="stylesheet" -->
     <style type="text/css">
       body {
         padding-top: 60px;
@@ -26,7 +27,7 @@
       }
     </style>
     <link href="/app/css/bootstrap-responsive.css" rel="stylesheet">
-	<link href="/app/css/app.css" rel="stylesheet">
+	<link href="/css/services.css" rel="stylesheet">
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="/app/js/html5shiv.js"></script>
@@ -104,35 +105,50 @@
     <!-- Placed at the end of the document so the pages load faster -->
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 	<script src="http://github.com/janl/mustache.js/raw/master/mustache.js"></script>
+	<script src="https://raw.github.com/wycats/handlebars.js/1.0.0-rc.3/dist/handlebars.js"></script>
 	<script src="https://raw.github.com/cowboy/jquery-bbq/master/jquery.ba-bbq.js"></script>
 	<script src="js/bootstrap.js"></script>
 	<script src="js/services.js"></script>
-	<script id="TL_services" type="text/template">
-		<div class="unstyled text-center service-wrap">
-			{{#service}}
-		  		<div class="service well well-small" data-srvcid="{{id}}"><a href="#">{{name}}</a></div>
-			{{/service}}
+	<script id="TL_services" type="text/x-handlebars-template">
+			{{#each service}}
+		  		<div class="well well-small service" data-srvcid="{{id}}"><a href="#">{{name}}</a></div>
+			{{/each}}
 			{{^service}}
 		  		<div>No services</div>
 			{{/service}}
-		</div>
 	</script>
 
-	<script id="TL_requestSrvc" type="text/template">
+	<script id="TL_requestSrvc" type="text/x-handlebars-template">
 		  <div class="modal-header">
 		    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 		    <h3 id="myModalLabel">Submit service request for {{name}}</h3>
 		  </div>
 		  <div class="modal-body">
 		    <span class="frm-ldg">loading ...</span>
-			<form action="http://work0protocol.appspot.com/resources/servicerequests"></form>
+			<form action="http://work0protocol.appspot.com/resources/servicerequests">
+			<div class="vendors-wrap">
+				<h4>Choose vendor(s)</h4>
+				<div class="vendors">
+				{{#each vendor}}
+					<input type="checkbox" name="vendorIds" value="{{id}}">{{name}}</input>
+				{{/each}}
+				</div>
+			</div>
+			<div id="srTemplate"></div>
+			</form>
 		  </div>
 		  <div class="modal-footer">
 			<span class="hide">submitting  ...</span>
 		    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-		    <button class="btn btn-primary">Submit</button>
+		    <button class="btn btn-primary" data-action="next">Next</button>
 		  </div>
 		</div>
+	</script>
+	
+	<script id="TL_vendors" type="text/x-handlebars-template">
+		{{#each vendor}}
+			<input type="checkbox" name="vendors" value="{{id}}">{{name}}</input>
+		{{/each}}
 	</script>
   </body>
 </html>

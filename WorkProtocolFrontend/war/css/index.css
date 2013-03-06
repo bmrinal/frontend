@@ -1,0 +1,31 @@
+/* .categories{
+	position: relative;
+	float: left;
+}
+
+.categories ul, .categories li{
+	list-style: none;
+	padding: 5px;
+}
+
+.categories > ul{
+	display: block;
+	border-radius: 6px;
+}
+
+.wp-dd{
+	background-color: #fff;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+	padding: 5px 0;
+}
+
+.dropdown > .dropdown-menu{
+	display: block;
+} */
+
+.dropdown > .dropdown-menu{
+	display: block;
+	position: static;
+	margin-bottom: 5px;
+}
