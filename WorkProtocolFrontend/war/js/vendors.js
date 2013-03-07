@@ -1,6 +1,6 @@
 $(function (){
 	$.ajax({
-	  url: "http://work0protocol.appspot.com/resources/categories/list",
+	  url: "http://work0protocol.appspot.com/resources/vendors/list",
 	  cache: false,
 	  dataType: "jsonp",
 	  complete: function (){
@@ -8,14 +8,14 @@ $(function (){
 	  },
 	  success: function (response){
 		  var source, template;
-		  source = $('#TL_categories').html();
+		  source = $('#TL_vendors').html();
 		  template = Handlebars.compile(source);
-		  $('#view .categories').html(template(response)); 
+		  $('#view .vendors').html(template(response)); 
 	  },
 	  error: function (){
-		  $('#view .categories').html('<div class="alert alert-error">'
+		  $('#view .vendors').html('<div class="alert alert-error">'
 				  + '<button type="button" class="close" data-dismiss="alert">&times;</button>'
-				  + 'Sorry, unable to load categories'
+				  + 'Sorry, unable to load vendors'
 				  + '</div>'
 		  );
 	  }
