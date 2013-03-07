@@ -129,11 +129,10 @@
 			<form action="http://work0protocol.appspot.com/resources/servicerequests">
 			<div class="vendors-wrap">
 				<h4>Choose vendor(s)</h4>
-				<div class="vendors">
-				{{#each vendor}}
-					<input type="checkbox" name="vendorIds" value="{{id}}">{{name}}</input>
-				{{/each}}
+				<div class="service">
+					<input type="hidden" name="serviceId" value="" />
 				</div>
+				<div class="vendors"></div>
 			</div>
 			<div id="srTemplate"></div>
 			</form>
