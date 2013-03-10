@@ -1,31 +1,70 @@
-/* .categories{
-	position: relative;
+#menu {
+	/* background-color: #000; */
+	height: 25px;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5)
+}
+
+#menu a:hover{
+	color: #fff;	
+}
+
+#menu ul {
+	list-style-type: none;
+}
+
+#menu ul li {
 	float: left;
+	position: relative;
+	margin: 20px 0 0 20px;
+	width: 220px;
+	padding: 0;
 }
 
-.categories ul, .categories li{
-	list-style: none;
-	padding: 5px;
+#menu ul li:hover {
+	background-color: #999;
 }
 
-.categories > ul{
+#menu ul li a {
+	color: #666;
+	padding: 10px 30px;
+	line-height: 25px;
 	display: block;
-	border-radius: 6px;
+	text-decoration: none;
 }
 
-.wp-dd{
-	background-color: #fff;
-	border: 1px solid rgba(0, 0, 0, 0.2);
-	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-	padding: 5px 0;
+#menu ul li a:hover {
+	background-color: #999;
 }
 
-.dropdown > .dropdown-menu{
-	display: block;
-} */
+#menu ul li ul li {
+	float: none;
+	position: relative;
+	margin: auto;
+}
 
-.dropdown > .dropdown-menu{
+#menu ul li ul {
+	position: absolute;
+	z-index: 1;
+	display: none;
+	left: 0;
+	/* background-color: #000;
+	top: 25px;
+	width: 150px; */
+}
+
+#menu ul li:hover>ul {
 	display: block;
-	position: static;
-	margin-bottom: 5px;
+}
+
+#menu ul li ul li a {
+	white-space: nowrap;
+	line-height: 25px;
+}
+
+#menu ul li ul li ul {
+	position: absolute;
+	display: none;
+	/* background-color: #000;
+	width: 150px;
+	top: 0; */
 }

@@ -7,10 +7,100 @@ $(function (){
 		  $('#view .loading').hide();
 	  },
 	  success: function (response){
-		  var source, template;
-		  source = $('#TL_categories').html();
-		  template = Handlebars.compile(source);
-		  $('#view .categories').html(template(response)); 
+		  var template, categorySource;
+
+		  /* response = {
+				    'category': [{
+				        "id": "35003",
+				        "name": "EventManagement",
+				        "leaf": {
+				            'category': [{
+				                "id": "31010",
+				                "name": "AllHands"
+				            }, {
+				                "id": "35004",
+				                "name": "Birthdays"
+				            }, {
+				                "id": "40003",
+				                "name": "PressMeet"
+				            }]
+				        }
+				    }, {
+				        "id": "37007",
+				        "name": "Catering",
+				        "leaf": {
+				            'category': [{
+				                "id": "34002",
+				                "name": "Italian"
+				            }, {
+				                "id": "38007",
+				                "name": "Mexican"
+				            }]
+				        }
+				    }, {
+				        "id": "35003",
+				        "name": "EventManagement",
+				        "leaf": {
+				            'category': [{
+				                "id": "31010",
+				                "name": "AllHands"
+				            }, {
+				                "id": "35004",
+				                "name": "Birthdays"
+				            }, {
+				                "id": "40003",
+				                "name": "PressMeet"
+				            }]
+				        }
+				    }, {
+				        "id": "35003",
+				        "name": "EventManagement",
+				        "leaf": {
+				            'category': [{
+				                "id": "31010",
+				                "name": "AllHands",
+				                "leaf": {
+						            'category': [{
+						                "id": "31010",
+						                "name": "AllHands"
+						            }, {
+						                "id": "35004",
+						                "name": "Birthdays"
+						            }, {
+						                "id": "40003",
+						                "name": "PressMeet"
+						            }]
+						        }
+				            }, {
+				                "id": "35004",
+				                "name": "Birthdays"
+				            }, {
+				                "id": "40003",
+				                "name": "PressMeet"
+				            }]
+				        }
+				    }, {
+				        "id": "35003",
+				        "name": "EventManagement",
+				        "leaf": {
+				            'category': [{
+				                "id": "31010",
+				                "name": "AllHands"
+				            }, {
+				                "id": "35004",
+				                "name": "Birthdays"
+				            }, {
+				                "id": "40003",
+				                "name": "PressMeet"
+				            }]
+				        }
+				    }]
+				}; */
+		  categorySource = $("#TL_categories").html();
+		  Handlebars.registerPartial('leaf', categorySource);
+		  template = Handlebars.compile(categorySource);
+	
+		  $('#view .categories').html(template(response));
 	  },
 	  error: function (){
 		  $('#view .categories').html('<div class="alert alert-error">'
