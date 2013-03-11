@@ -108,18 +108,14 @@
 
 	<script id="TL_categories" type="text/x-handlebars-template">
 		<ul class="unstyled text-center">
-			{{#each category}}
+			{{#each .}}
 		  		<li class="well well-small">
 					<a href="/services.html?name={{name}}&id={{id}}">{{name}}</a>
-					{{#if leaf}}
-						{{#with leaf}} {{> leaf}} {{/with}}
+					{{#if children}}
+						{{#with children}} {{> leaf}} {{/with}}
 					{{/if}}
 				</li>
 			{{/each}}
-
-			{{#unless category}}
-		  		No categories
-			{{/unless}}
 		</ul>
 	</script>
   </body>
