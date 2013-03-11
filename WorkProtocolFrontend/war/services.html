@@ -108,11 +108,22 @@
 	<script src="http://github.com/janl/mustache.js/raw/master/mustache.js"></script>
 	<script src="https://raw.github.com/wycats/handlebars.js/1.0.0-rc.3/dist/handlebars.js"></script>
 	<script src="https://raw.github.com/cowboy/jquery-bbq/master/jquery.ba-bbq.js"></script>
+	<script src="https://raw.github.com/desandro/masonry/master/jquery.masonry.js"></script>
 	<script src="js/bootstrap.js"></script>
 	<script src="js/services.js"></script>
 	<script id="TL_services" type="text/x-handlebars-template">
 			{{#each service}}
-		  		<div class="well well-small service" data-srvcid="{{id}}"><a href="#">{{name}}</a></div>
+		  		<div class="service" data-srvcid="{{id}}">
+					<a href="#">
+						<div class="srvc-name">{{name}}</div>
+						{{#if images}}
+							<img src="http://work0protocol.appspot.com/resources/images/{{images}}"/>
+						{{/if}}
+						{{#if description}}
+							<div class="srvc-desc">{{description}}</div>
+						{{/if}}
+					</a>
+				</div>
 			{{/each}}
 			{{^service}}
 		  		<div>No services</div>

@@ -12,18 +12,28 @@ $(function (){
 	  url: ajaxUrl,
 	  cache: false,
 	  dataType: "jsonp",
-	  complete: function (){
-		  $('#view .loading').hide();
-	  },
 	  success: function (response){
-		  var source, template, data;
+		  var source, template, data, servicesHTML, container;
+		  container = $('#view .services');
 		  source = $('#TL_services').html();
 		  template = Handlebars.compile(source);
 		  data = {};
 		  data.service = response.services || response.service || [];
-		  $('#view .services').html(template(data));
+		  servicesHTML = $(template(data));
+ 
+		  servicesHTML.imagesLoaded(function (){
+			  container.append(servicesHTML);
+			  container.masonry({
+			    // options
+			    itemSelector : '.service',
+			    columnWidth : 242
+			  }).each(function (){
+				  $('#view .loading').hide();
+			  });
+		  });
 	  },
 	  error: function (){
+		  $('#view .loading').hide();
 		  $('#view .services').html('<div class="alert alert-error">'
 				  + '<button type="button" class="close" data-dismiss="alert">&times;</button>'
 				  + 'Sorry, unable to load services'
@@ -39,7 +49,7 @@ $(function (){
 		source = $('#TL_requestSrvc').html();
 		template = Handlebars.compile(source);
 		data = {};
-		data.name = $('a', this).text();
+		data.name = $('.srvc-name', this).text();
 		$('#srForm').html(template(data));
 		currServiceId = $(this).data('srvcid'); //store service in closure for easy modal access
 		$('#srForm').modal();
