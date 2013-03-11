@@ -1,8 +1,0 @@
-<div class="page-header">
-  <h4>Pick a service</h4>
-</div>
-<span ng-show="isViewLoading"> loading services ... </span>
-<div class="unstyled text-center service-wrap">
-  <div class="service well well-small" ng-repeat="service in services"><a href="#/services/{{service.name}}">{{service.name}}</a></div>
-  <div ng-show="!isViewLoading && !services.length">No service available</div>
-</div>
