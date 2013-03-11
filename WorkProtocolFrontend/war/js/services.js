@@ -57,7 +57,7 @@ $(function (){
 	
 	$('#srForm').on('shown', function (){
 		if (currServiceId) {
-			$("#srForm .service input[name='serviceId']").val(currServiceId);
+			$("#srForm .serviceData input[name='serviceId']").val(currServiceId);
 			$.ajax({
 			  url: 'http://work0protocol.appspot.com/resources/services/'+currServiceId,
 			  cache: false,
