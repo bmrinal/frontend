@@ -26,6 +26,8 @@
       }
     </style>
     <link href="/bootstrap/bootstrap-responsive.css" rel="stylesheet">
+    <link href="/css/services.css" rel="stylesheet">
+    <link href="/css/vendor.css" rel="stylesheet">
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="/bootstrap/html5shiv.js"></script>
@@ -103,6 +105,7 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+	<script src="https://raw.github.com/phstc/jquery-dateFormat/master/jquery.dateFormat-1.0.js"></script>
 	<script src="http://github.com/janl/mustache.js/raw/master/mustache.js"></script>
 	<script src="https://raw.github.com/wycats/handlebars.js/1.0.0-rc.3/dist/handlebars.js"></script>
 	<script src="https://raw.github.com/cowboy/jquery-bbq/master/jquery.ba-bbq.js"></script>
@@ -110,28 +113,53 @@
 	<script src="js/vendor.js"></script>
 
 	<script id="TL_srs" type="text/x-handlebars-template">
-		<ul class="unstyled text-center">
-			{{#each serviceRequests}}
-		  		<li class="well well-small wp-sr" data-srvcreqid="{{id}}"><a href="#">{{id}}</a></li>
-			{{/each}}
-
-			{{#unless serviceRequests}}
-		  		<li>No service request</li>
-			{{/unless}}
-		</ul>
+	<table class="table table-bordered table-hover">
+	  <thead>
+	    <tr class="well">
+	      <th>Service Id</th>
+	      <th>Created Time</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+		{{#each serviceRequests}}
+			<tr data-srvcreqid="{{id}}">
+		      <td>
+				<a href="#">{{id}}</a>
+			  </td>
+		      <td>{{createdDate}}</td>
+		    </tr>
+		{{/each}}
+		
+		{{#unless serviceRequests}}
+	 		<tr>
+	 			<td>No service request</td>
+	 		</tr>
+		{{/unless}}
+	  </tbody>
+	</table>
 	</script>
 
 	<script id="TL_srsModal" type="text/x-handlebars-template">	
 	  <div class="modal-header">
-	    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+	    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 	    <h3 id="myModalLabel">Submit service response for {{name}}</h3>
 	  </div>
 	  <div class="modal-body">
 	    <span class="frm-ldg">loading ...</span>
 	    <div class="serviceForm"></div>
-		<form class="responseForm hide" action="http://work0protocol.appspot.com/resources/serviceresponses">
-			<div> Amount <input type="text" name="amount" value=""> </div>
-			<div> Comments <textarea name="comments"></textarea></div>
+		<form class="responseForm hide form-horizontal" action="http://work0protocol.appspot.com/resources/serviceresponses">
+			<div class="control-group">
+				 <label class="control-label" for="inputAmount">Amount</label>
+				 <div class="controls">
+      				<input type="text" id="inputAmount" name="amount" placeholder="Amount" />
+    			 </div>
+			</div>
+			<div class="control-group">
+				 <label class="control-label" for="inputComments">Comments</label>
+				 <div class="controls">
+      				<textarea id="inputComments" name="comments" placeholder="Comments" />
+    			 </div>
+			</div>
 			<input type="hidden" name="serviceRequestId" value="{{id}}" />
 			<input type="hidden" name="vendorId" value="{{vendorId}}" />
 		</form>

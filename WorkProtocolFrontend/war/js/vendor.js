@@ -18,10 +18,16 @@ $(function (){
 		  $('#view .loading').hide();
 	  },
 	  success: function (response){
-		  var source, template;
+		  var source, template, i, createdDate;
 		  source = $('#TL_srs').html();
 		  template = Handlebars.compile(source);
-		  $('#view .srs').html(template(response)); 
+		  response.serviceRequests = response.serviceRequests || [];
+		  for (i=0; i<response.serviceRequests.length; i++){
+			  createdDate = parseInt(response.serviceRequests[i].createdDate, 10);
+			  response.serviceRequests[i].createdDate = $.format.date(new Date(createdDate).toString(), "dd-MMM-yyyy hh:mm:ss");
+		  }
+		  
+		  $('#view .srs').html(template(response));
 	  },
 	  error: function (){
 		  $('#view .srs').html('<div class="alert alert-error">'
@@ -31,8 +37,8 @@ $(function (){
 		  );
 	  }
 	});
-	
-	$('#view').on('click', '.wp-sr', function(e){
+
+	$('#view').on('click', 'tbody tr', function(e){
 		var source, template, data, html;
 
 		e.preventDefault();

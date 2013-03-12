@@ -27,6 +27,7 @@
       }
     </style>
     <link href="/bootstrap/bootstrap-responsive.css" rel="stylesheet">
+    <link href="/css/app.css" rel="stylesheet">
 	<link href="/css/services.css" rel="stylesheet">
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -132,14 +133,14 @@
 
 	<script id="TL_requestSrvc" type="text/x-handlebars-template">
 		  <div class="modal-header">
-		    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+		    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 		    <h3 id="myModalLabel">Submit service request for {{name}}</h3>
 		  </div>
 		  <div class="modal-body">
 		    <span class="frm-ldg">loading ...</span>
-			<form action="http://work0protocol.appspot.com/resources/servicerequests">
+			<form class="form-horizontal" action="http://work0protocol.appspot.com/resources/servicerequests">
 			<div class="vendors-wrap">
-				<h4>Choose vendor(s)</h4>
+				<h5>Choose vendor(s)</h5>
 				<div class="serviceData">
 					<input type="hidden" name="serviceId" value="" />
 				</div>
@@ -158,7 +159,14 @@
 	
 	<script id="TL_vendors" type="text/x-handlebars-template">
 		{{#each vendor}}
-			<input type="checkbox" name="vendorIds" value="{{id}}">{{name}}</input>
+			<div class="control-group">
+				<div class="controls">
+      				<label class="checkbox">
+        				<input type="checkbox" name="vendorIds" value="{{id}}"> {{name}}
+						<img class="vendor-img" src="http://work0protocol.appspot.com/resources/images/{{images}}"/>
+      				</label>
+					<div class="vendor-desc">{{description}}</div>
+				</div>
 		{{/each}}
 	</script>
   </body>

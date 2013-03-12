@@ -8,6 +8,15 @@
 	color: #fff;	
 }
 
+#menu a span{
+	color: #777;
+	font-size: 0.84em;
+}
+
+#menu a:hover span{
+	color: #fff;
+}
+
 #menu ul {
 	list-style-type: none;
 }

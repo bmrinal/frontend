@@ -26,6 +26,8 @@
       }
     </style>
     <link href="/bootstrap/bootstrap-responsive.css" rel="stylesheet">
+    <link href="/css/services.css" rel="stylesheet">
+	<link href="/css/vendors.css" rel="stylesheet">    
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="/bootstrap/js/html5shiv.js"></script>
@@ -102,19 +104,28 @@
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 	<script src="https://raw.github.com/wycats/handlebars.js/1.0.0-rc.3/dist/handlebars.js"></script>
 	<script src="https://raw.github.com/cowboy/jquery-bbq/master/jquery.ba-bbq.js"></script>
+	<script src="https://raw.github.com/desandro/masonry/master/jquery.masonry.js"></script>
 	<script src="bootstrap/bootstrap.js"></script>
 	<script src="js/vendors.js"></script>
 
-	<script id="TL_vendors" type="text/x-handlebars-template">
-		<ul class="unstyled text-center">
-			{{#each vendors}}
-		  		<li class="well well-small"><a href="/vendor.html?name={{name}}&id={{id}}">{{name}}</a></li>
-			{{/each}}
 
-			{{#unless vendors}}
-		  		<li>No vendors</li>
-			{{/unless}}
-		</ul>
+	<script id="TL_vendors" type="text/x-handlebars-template">
+	{{#each vendor}}
+  		<div class="vendor" data-srvcid="{{id}}">
+			<a href="/vendor.html?name={{name}}&id={{id}}">
+				<div class="vendor-name">{{name}}</div>
+				{{#if images}}
+					<img src="http://work0protocol.appspot.com/resources/images/{{images}}"/>
+				{{/if}}
+				{{#if description}}
+					<div class="vendor-desc">{{description}}</div>
+				{{/if}}
+			</a>
+		</div>
+	{{/each}}
+	{{^vendor}}
+  		<div>No vendors</div>
+	{{/vendor}}
 	</script>
   </body>
-</html>
+ </html>
