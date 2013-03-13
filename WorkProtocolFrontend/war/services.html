@@ -117,9 +117,9 @@
 		  		<div class="service" data-srvcid="{{id}}">
 					<a href="#">
 						<div class="srvc-name">{{name}}</div>
-						{{#if images}}
-							<img src="http://work0protocol.appspot.com/resources/images/{{images}}"/>
-						{{/if}}
+						{{#each images}}
+							<img src="http://work0protocol.appspot.com/resources/images/{{.}}"/>
+						{{/each}}
 						{{#if description}}
 							<div class="srvc-desc">{{description}}</div>
 						{{/if}}
@@ -163,7 +163,9 @@
 				<div class="controls">
       				<label class="checkbox">
         				<input type="checkbox" name="vendorIds" value="{{id}}"> {{name}}
-						<img class="vendor-img" src="http://work0protocol.appspot.com/resources/images/{{images}}"/>
+						{{#each images}}
+							<img class="vendor-img" src="http://work0protocol.appspot.com/resources/images/{{.}}"/>
+						{{/each}}
       				</label>
 					<div class="vendor-desc">{{description}}</div>
 				</div>

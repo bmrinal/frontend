@@ -100,7 +100,7 @@ $(function (){
 		  Handlebars.registerPartial('leaf', categorySource);
 		  template = Handlebars.compile(categorySource);
 	
-		  $('#view .categories').html(template(response.category));
+		  $('#view .categories').html(template(response));
 	  },
 	  error: function (){
 		  $('#view .categories').html('<div class="alert alert-error">'

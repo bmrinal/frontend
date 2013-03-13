@@ -23,7 +23,7 @@ $(function (){
 		  template = Handlebars.compile(source);
 		  response.serviceRequests = response.serviceRequests || [];
 		  for (i=0; i<response.serviceRequests.length; i++){
-			  createdDate = parseInt(response.serviceRequests[i].createdDate, 10);
+			  createdDate = response.serviceRequests[i].createdDate;
 			  response.serviceRequests[i].createdDate = $.format.date(new Date(createdDate).toString(), "dd-MMM-yyyy hh:mm:ss");
 		  }
 		  

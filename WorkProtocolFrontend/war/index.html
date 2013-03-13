@@ -112,7 +112,7 @@
 			{{#each .}}
 		  		<li class="well well-small">
 					<a href="/services.html?name={{name}}&id={{id}}">{{name}}
-						{{#if countOfServices}} <span>({{countOfServices}})</span> {{/if}}
+						<span>({{countOfServices}})</span>
 					</a>
 					{{#if children}}
 						{{#with children}} {{> leaf}} {{/with}}

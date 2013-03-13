@@ -12,7 +12,7 @@ $(function (){
 		  source = $('#TL_vendors').html();
 		  template = Handlebars.compile(source);
 		  data = {};
-		  data.vendor = response.vendors || [];
+		  data.vendor = response;
 		  vendorsHTML = $(template(data));
 		  
 		  vendorsHTML.imagesLoaded(function (){

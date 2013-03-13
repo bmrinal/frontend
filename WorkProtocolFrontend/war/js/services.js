@@ -18,7 +18,7 @@ $(function (){
 		  source = $('#TL_services').html();
 		  template = Handlebars.compile(source);
 		  data = {};
-		  data.service = response.services || response.service || [];
+		  data.service = response.services || response;
 		  servicesHTML = $(template(data));
  
 		  servicesHTML.imagesLoaded(function (){

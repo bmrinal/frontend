@@ -114,9 +114,9 @@
   		<div class="vendor" data-srvcid="{{id}}">
 			<a href="/vendor.html?name={{name}}&id={{id}}">
 				<div class="vendor-name">{{name}}</div>
-				{{#if images}}
-					<img src="http://work0protocol.appspot.com/resources/images/{{images}}"/>
-				{{/if}}
+				{{#each images}}
+					<img src="http://work0protocol.appspot.com/resources/images/{{.}}"/>
+				{{/each}}
 				{{#if description}}
 					<div class="vendor-desc">{{description}}</div>
 				{{/if}}
