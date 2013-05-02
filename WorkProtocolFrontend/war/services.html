@@ -73,10 +73,17 @@
         <div class="span3">
           <div class="well sidebar-nav">
             <ul class="nav nav-list"> 
-              <li class="nav-header">Browse by</li>
-              <li><a href="/index.html">Categories</a></li>
+              <li class="nav-header">Vendor</li>
+              <li><a href="/advertisemyservice.html">Advertise my service</a></li>
+			  <li><a href="/vendors.html">View requests</a></li>
+            </ul>
+          </div><!--/.well -->
+
+          <div class="well sidebar-nav">
+            <ul class="nav nav-list"> 
+              <li class="nav-header">Consumer</li>
+              <li><a href="/browsecategory.html">Categories</a></li>
               <li class="active"><a href="/services.html">Services</a></li>
-               <li><a href="/vendors.html">Vendors</a></li>
             </ul>
           </div><!--/.well -->
         </div><!--/span-->
@@ -116,7 +123,7 @@
 			{{#each service}}
 		  		<div class="service" data-srvcid="{{id}}">
 					<a href="#">
-						<div class="srvc-name">{{name}}</div>
+						<div class="srvc-name">{{id}}{{name}}</div>
 						{{#each images}}
 							<img src="http://work0protocol.appspot.com/resources/images/{{.}}"/>
 						{{/each}}

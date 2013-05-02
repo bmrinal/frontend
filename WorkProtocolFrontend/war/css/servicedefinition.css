@@ -1,0 +1,55 @@
+.services{
+	position: relative;
+}
+
+.service{
+	width: 220px;
+	border: 1px solid #e2e2e2;
+	margin: 10px;
+	float: left;
+	border-radius: 3px;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+	position: absolute;
+}
+
+.service:hover{
+	border: 1px solid #aaa;
+}
+
+.service a{
+	display: block;
+	color: #666;
+	text-decoration: none;
+	position: relative;
+}
+
+.service img{
+	max-width: 100%;
+	padding: 5px 0;
+}
+
+.srvc-name{
+	padding: 10px;
+	text-align: center;
+}
+
+.srvc-desc{
+	padding: 10px;
+	color: #777;
+}
+
+.vendors-wrap{
+	display: none;
+}
+
+.vendor-img{
+	max-width: 100px;
+	max-height: 100px;
+	vertical-align: top;
+}
+
+.vendor-desc{
+	color: #999;
+	font-size: 0.84em;
+}

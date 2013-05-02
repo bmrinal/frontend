@@ -7,6 +7,7 @@
 
     <!-- styles -->
     <link href="/bootstrap/bootstrap.css" rel="stylesheet">
+    <!-- link href="http://bootswatch.com/united/bootstrap.css" rel="stylesheet" -->
     <style type="text/css">
       body {
         padding-top: 60px;
@@ -26,11 +27,11 @@
       }
     </style>
     <link href="/bootstrap/bootstrap-responsive.css" rel="stylesheet">
-    <link href="/css/services.css" rel="stylesheet">
-    <link href="/css/vendor.css" rel="stylesheet">
+    <link href="/css/app.css" rel="stylesheet">
+	<link href="/css/servicedefinition.css" rel="stylesheet">
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
-      <script src="/bootstrap/html5shiv.js"></script>
+      <script src="/app/js/html5shiv.js"></script>
     <![endif]-->
 
     <!-- Fav and touch icons 
@@ -73,8 +74,8 @@
           <div class="well sidebar-nav">
             <ul class="nav nav-list"> 
               <li class="nav-header">Vendor</li>
-              <li><a href="/advertisemyservice.html">Advertise my service</a></li>
-			  <li class="active"><a href="/vendors.html">View requests</a></li>
+              <li class="active"><a href="/advertisemyservice.html">Advertise my service</a></li>
+			  <li><a href="/vendors.html">View requests</a></li>
             </ul>
           </div><!--/.well -->
 
@@ -89,12 +90,12 @@
         <div class="span9">
         	<div id="view">
 				<div class="page-header">
-				  <h4>Pick a service request</h4>
+				  <h4>Pick a service definition</h4>
 				</div>
-				<span class="loading"> loading service requests ... </span>
-				<div id="page-status" class="alert alert-success hide"></div>				
-				<div class="srs"></div>
-				<div id="svcRespDialog" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="Service response form" aria-hidden="true">
+				<span class="loading"> loading service definitions ... </span>
+				<div id="page-status" class="alert alert-success hide"></div>
+				<div class="services"></div>
+				<div id="srForm" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="Service request form" aria-hidden="true">
 				</div>
         	</div>
         </div><!--/span-->
@@ -111,71 +112,50 @@
     <!-- javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-	<script src="https://raw.github.com/phstc/jquery-dateFormat/master/jquery.dateFormat-1.0.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 	<script src="http://github.com/janl/mustache.js/raw/master/mustache.js"></script>
 	<script src="https://raw.github.com/wycats/handlebars.js/1.0.0-rc.3/dist/handlebars.js"></script>
 	<script src="https://raw.github.com/cowboy/jquery-bbq/master/jquery.ba-bbq.js"></script>
+	<script src="https://raw.github.com/desandro/masonry/master/jquery.masonry.js"></script>
 	<script src="bootstrap/bootstrap.js"></script>
-	<script src="js/vendor.js"></script>
-
-	<script id="TL_srs" type="text/x-handlebars-template">
-	<table class="table table-bordered table-hover">
-	  <thead>
-	    <tr class="well">
-	      <th>Service Id</th>
-	      <th>Created Time</th>
-	    </tr>
-	  </thead>
-	  <tbody>
-		{{#each serviceRequests}}
-			<tr data-srvcreqid="{{id}}">
-		      <td>
-				<a href="#">{{id}}</a>
-			  </td>
-		      <td>{{createdDate}}</td>
-		    </tr>
-		{{/each}}
-		
-		{{#unless serviceRequests}}
-	 		<tr>
-	 			<td>No service request</td>
-	 		</tr>
-		{{/unless}}
-	  </tbody>
-	</table>
+	<script src="js/servicedefinition.js"></script>
+	<script id="TL_services" type="text/x-handlebars-template">
+			{{#each serviceDefinition}}
+		  		<div class="service" data-srvcid="{{id}}">
+					<a href="#">
+						<div class="srvc-name">{{name}}</div>
+						{{#each images}}
+							<img src="http://work0protocol.appspot.com/resources/images/{{.}}"/>
+						{{/each}}
+						{{#if description}}
+							<div class="srvc-desc">{{description}}</div>
+						{{/if}}
+					</a>
+				</div>
+			{{/each}}
+			{{^serviceDefinition}}
+		  		<div>No services</div>
+			{{/serviceDefinition}}
 	</script>
 
-	<script id="TL_srsModal" type="text/x-handlebars-template">	
-	  <div class="modal-header">
-	    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	    <h3 id="myModalLabel">Submit service response for {{name}}</h3>
-	  </div>
-	  <div class="modal-body">
-	    <span class="frm-ldg">loading ...</span>
-	    <form class="serviceForm form-horizontal"></form>
-		<form class="responseForm hide form-horizontal" action="http://work0protocol.appspot.com/resources/serviceresponses">
-			<div class="control-group">
-				 <label class="control-label" for="inputAmount">Amount</label>
-				 <div class="controls">
-      				<input type="text" id="inputAmount" name="amount" placeholder="Amount" />
-    			 </div>
-			</div>
-			<div class="control-group">
-				 <label class="control-label" for="inputComments">Comments</label>
-				 <div class="controls">
-      				<textarea id="inputComments" name="comments" placeholder="Comments" />
-    			 </div>
-			</div>
-			<input type="hidden" name="serviceRequestId" value="{{id}}" />
-			<input type="hidden" name="vendorId" value="{{vendorId}}" />
-		</form>
-	  </div>
-	  <div class="modal-footer">
-		<span class="hide">submitting  ...</span>
-	    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-	    <button class="btn btn-primary" data-action="next">Next</button>
-	  </div>
+	<script id="TL_requestSrvc" type="text/x-handlebars-template">
+		  <div class="modal-header">
+		    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		    <h3 id="myModalLabel">Submit service request for {{name}}</h3>
+		  </div>
+		  <div class="modal-body">
+		    <span class="frm-ldg">loading ...</span>
+			<form class="form-horizontal" action="http://work0protocol.appspot.com/resources/services">
+				<input type="hidden" name="serviceDefinitionId" value="" />
+				<div id="srTemplate"></div>
+			</form>
+		  </div>
+		  <div class="modal-footer">
+			<span class="hide">submitting  ...</span>
+		    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+		    <button class="btn btn-primary" data-action="submit">Submit</button>
+		  </div>
+		</div>
 	</script>
   </body>
 </html>

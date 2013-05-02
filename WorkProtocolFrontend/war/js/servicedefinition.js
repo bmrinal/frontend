@@ -1,12 +1,12 @@
 $(function (){
-	var params, ajaxUrl, currServiceId, vendorTempl, filterByCategory;
+	var params, ajaxUrl, currServiceDefId, vendorTempl, filterByCategory;
 	
 	params = $.deparam.querystring();
 	filterByCategory = params.hasOwnProperty('id');
 	if (filterByCategory === true) {
 		ajaxUrl = "http://work0protocol.appspot.com/resources/categories/" + params.id;
 	} else {
-		ajaxUrl = "http://work0protocol.appspot.com/resources/services/list";
+		ajaxUrl = "http://work0protocol.appspot.com/resources/servicedefinitions/list";
 	}
 	$.ajax({
 	  url: ajaxUrl,
@@ -20,9 +20,9 @@ $(function (){
 		  data = {};
 
 		  if (filterByCategory === true){
-			  data.service = response.services;
+			  data.serviceDefinition = response.serviceDefinitions;
 		  } else {
-			  data.service = response;
+			  data.serviceDefinition = response;
 		  }
 		  servicesHTML = $(template(data));
  
@@ -41,7 +41,7 @@ $(function (){
 		  $('#view .loading').hide();
 		  $('#view .services').html('<div class="alert alert-error">'
 				  + '<button type="button" class="close" data-dismiss="alert">&times;</button>'
-				  + 'Sorry, unable to load services'
+				  + 'Sorry, unable to load service definitions'
 				  + '</div>'
 		  );
 	  }
@@ -56,15 +56,15 @@ $(function (){
 		data = {};
 		data.name = $('.srvc-name', this).text();
 		$('#srForm').html(template(data));
-		currServiceId = $(this).data('srvcid'); //store service in closure for easy modal access
+		currServiceDefId = $(this).data('srvcid'); //store service in closure for easy modal access
 		$('#srForm').modal();
 	});
 	
 	$('#srForm').on('shown', function (){
-		if (currServiceId) {
-			$("#srForm .serviceData input[name='serviceId']").val(currServiceId);
+		if (currServiceDefId) {
+			$("#srForm input[name='serviceDefinitionId']").val(currServiceDefId);
 			$.ajax({
-			  url: 'http://work0protocol.appspot.com/resources/services/'+currServiceId,
+			  url: 'http://work0protocol.appspot.com/resources/servicedefinitions/'+currServiceDefId,
 			  cache: false,
 			  dataType: "jsonp",
 			  complete: function (){
@@ -73,14 +73,13 @@ $(function (){
 			  success: function (response){
 				  var template, data;
 				  template = response.htmlTemplate;
-				  data = $.parseJSON(response.metaDataInstance);
+				  data = $.parseJSON(response.htmlMetaData);
 
 				  if (data && template) {
 					  $('#srTemplate').html(Mustache.to_html(template, data));
-					  vendorTempl(response.vendors || {});
 				  } else {
 					  $('#srTemplate').html('<div class="alert  alert-error">'
-							  + 'Sorry, service form unavailable'
+							  + 'Sorry, service definition form unavailable'
 							  + '</div>'
 					  );
 				  }
@@ -88,7 +87,7 @@ $(function (){
 			  error: function (){
 				  $('#srTemplate').html('<div class="alert alert-error">'
 						  + '<button type="button" class="close" data-dismiss="alert">&times;</button>'
-						  + 'Sorry, unable to load service request form'
+						  + 'Sorry, unable to load service definition form'
 						  + '</div>'
 				  );
 			  }
@@ -96,46 +95,32 @@ $(function (){
 		}
 	});
 	
-	function vendorTempl(param){
-		var source, template, data;
-		
-		source = $('#TL_vendors').html();
-		template = Handlebars.compile(source);
-		data = {'vendor': param};
-		$('#srForm .vendors').html(template(data));
-	}
-	
 	$('#view').on('click', '.modal-footer .btn-primary', function (){
 		var form, params, action;
 		action = $(this).data('action');
-		if (action === "next"){
-			$('#srTemplate').hide();
-			$('#srForm .vendors-wrap').show();
-			$(this).data('action', 'submit').html('Submit');
-		} else if (action === "submit"){
-			form = $('#srForm .modal-body form');
-			params = form.serialize();
-			$.ajax({
-			  url: form.attr('action'),
-			  data: params,
-			  dataType: "jsonp",
-			  beforeSend: function (){
-				  $('#srForm .modal-footer span').show();
-			  },
-			  complete: function (){
-			  },
-			  success: function (response){
-				  $('#srForm').modal('hide');
-				  $('#page-status').html('Service request ('+ response.id +') submitted').removeClass('hide');
-			  },
-			  error: function (){
-				  $('#srForm .modal-body').prepend('<div class="alert alert-error">'
-						  + '<button type="button" class="close" data-dismiss="alert">&times;</button>'
-						  + 'Sorry, unable to create a service request'
-						  + '</div>'
-				  );
-			  }
-			});
-		}
+	
+		form = $('#srForm .modal-body form');
+		params = form.serialize();
+		$.ajax({
+		  url: form.attr('action'),
+		  data: params,
+		  dataType: "jsonp",
+		  beforeSend: function (){
+			  $('#srForm .modal-footer span').show();
+		  },
+		  complete: function (){
+		  },
+		  success: function (response){
+			  $('#srForm').modal('hide');
+			  $('#page-status').html('Service ('+ response.id +') submitted').removeClass('hide');
+		  },
+		  error: function (){
+			  $('#srForm .modal-body').prepend('<div class="alert alert-error">'
+					  + '<button type="button" class="close" data-dismiss="alert">&times;</button>'
+					  + 'Sorry, unable to create a service request'
+					  + '</div>'
+			  );
+		  }
+		});
 	});
 });
