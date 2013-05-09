@@ -1,23 +1,30 @@
 $(function (){
-	
-	$('#formTarget').submit(function (e){
+	$('#profileForm').submit(function (e){
 		e.preventDefault();
-		$('#view .loading').show();
 		$.ajax({
 			  url: "http://work0protocol.appspot.com/resources/vendors/",
 			  cache: false,
 			  params: $(this).serialize(),
-			  dataType: "jsonp",
+			  dataType: 'json',
+			  beforeSend: function (){
+				  $('#profileForm .btn-primary').attr('disabled', true);
+				  $('#page-status').removeClass('alert-success')
+	 							.removeClass('alert-error')
+	 							.hide();
+			  },
 			  complete: function (){
-				  $('#view .loading').hide();
+				  $('#profileForm .btn-primary').removeAttr('disabled');
 			  },
 			  success: function (response){
-				 $('#view .status').html('Profile created successfully');
+				 $('#page-status').html('Profile('+response.id +') created successfully')
+				 				.addClass('alert-success')
+				 				.show();
 			  },
 			  error: function (){
-				  $('#view .status').html('Sorry, unable to create profile');
+				 $('#page-status').html('Sorry, unable to create profile')
+	 							.addClass('alert-error')
+	 							.show();
 			  }
 		});
 	});
-
 });
