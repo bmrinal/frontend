@@ -1,1 +1,4 @@
 /* for common styles across pages */
+#user-info{
+	display: none;
+}

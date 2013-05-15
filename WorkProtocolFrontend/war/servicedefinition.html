@@ -53,11 +53,11 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="brand" href="#">Work protocol</a>
+          <a class="brand" href="/index.html">Work protocol</a>
           <div class="nav-collapse collapse">
-            <p class="navbar-text pull-right">
-              Logged in as <a href="#" class="navbar-link">Username</a>
-            </p>
+            <p class="navbar-text pull-right" id="user-info">
+	             Hi <span></span> (<a href="#" class="navbar-link">Sign out</a>)
+	        </p>
             <ul class="nav">
               <li class="active"><a href="#">Home</a></li>
               <li><a href="#about">About</a></li>
@@ -74,6 +74,7 @@
           <div class="well sidebar-nav">
             <ul class="nav nav-list"> 
               <li class="nav-header">Vendor</li>
+              <li><a href="/vendorprofile.html">My profile</a></li>
               <li class="active"><a href="/advertisemyservice.html">Advertise my service</a></li>
 			  <li><a href="/vendors.html">View requests</a></li>
             </ul>
@@ -118,6 +119,7 @@
 	<script src="https://raw.github.com/cowboy/jquery-bbq/master/jquery.ba-bbq.js"></script>
 	<script src="https://raw.github.com/desandro/masonry/master/jquery.masonry.js"></script>
 	<script src="bootstrap/bootstrap.js"></script>
+	<script src="js/app.js"></script>
 	<script src="js/servicedefinition.js"></script>
 	<script id="TL_services" type="text/x-handlebars-template">
 			{{#each serviceDefinition}}

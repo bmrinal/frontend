@@ -3,16 +3,16 @@ $(function (){
 	$.ajax({
 		  url: "http://work0protocol.appspot.com/resources/user",
 		  dataType: 'json',
+		  cache: false,
 		  xhrFields: {
 			  withCredentials: true
 		  },
-		  cache: false,
 		  complete: function (){
 			  $('.page-loading').hide();
 		  },
 		  success: function (response){
 			  if(response && response.userId){
-				  console.log(response.nickname);
+				  $('#view').show();
 			  } else {
 				  window.location.href = response.signInUrl + '?ru=' + window.location.href;
 			  }

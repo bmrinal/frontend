@@ -26,6 +26,7 @@
 	     }
 	   </style>
 	   <link href="/bootstrap/bootstrap-responsive.css" rel="stylesheet">
+	   <link href="/css/app.css" rel="stylesheet">
 	   <link href="/css/vendorprofile.css" rel="stylesheet">
 	   <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
 	   <!--[if lt IE 9]>
@@ -49,10 +50,10 @@
 	           <span class="icon-bar"></span>
 	           <span class="icon-bar"></span>
 	         </button>
-	         <a class="brand" href="#">Work protocol</a>
+	         <a class="brand" href="/index.html">Work protocol</a>
 	         <div class="nav-collapse collapse">
-	           <p class="navbar-text pull-right">
-	             Logged in as <a href="#" class="navbar-link">Username</a>
+	           <p class="navbar-text pull-right" id="user-info">
+	             Hi <span></span> (<a href="#" class="navbar-link">Sign out</a>)
 	           </p>
 	           <ul class="nav">
 	             <li class="active"><a href="#">Home</a></li>
@@ -251,6 +252,7 @@
 		<script src="https://raw.github.com/wycats/handlebars.js/1.0.0-rc.3/dist/handlebars.js"></script>
 		<script src="https://raw.github.com/cowboy/jquery-bbq/master/jquery.ba-bbq.js"></script>
 		<script src="bootstrap/bootstrap.js"></script>
+		<script src="js/app.js"></script>
 		<script src="js/vendorprofile.js"></script>
 	  </body>
 	</html>
