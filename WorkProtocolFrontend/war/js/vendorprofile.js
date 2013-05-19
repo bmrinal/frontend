@@ -26,6 +26,9 @@ $(function (){
 						  var urlTypes, urlObj, descTypes, descObj;
 
 						  $('#view').show();
+						  if (response.id) {
+							  $('#profileForm').append('<input name="vendorId" type="hidden" value="' +response.id+ '">');
+						  }
 						  $('#profileForm input[name="vendorName"]').val(response.name || '');
 						  $('#profileForm input[name="vendorPhone"]').val(response.phone || '');
 						  $('#profileForm input[name="vendorMobilePhone"]').val(response.mobilePhone || '');
