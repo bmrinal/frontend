@@ -66,7 +66,10 @@ $(function (){
 			$.ajax({
 			  url: 'http://work0protocol.appspot.com/resources/servicedefinitions/'+currServiceDefId,
 			  cache: false,
-			  dataType: "jsonp",
+			  xhrFields: {
+				  withCredentials: true
+			  },
+			  dataType: "json",
 			  complete: function (){
 				  $('#srForm .frm-ldg').hide();
 			  },

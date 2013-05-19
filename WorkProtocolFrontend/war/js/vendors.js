@@ -2,7 +2,7 @@ $(function (){
 	$.ajax({
 	  url: "http://work0protocol.appspot.com/resources/vendors/list",
 	  cache: false,
-	  dataType: "jsonp",
+	  dataType: "json",
 	  complete: function (){
 		  $('#view .loading').hide();
 	  },

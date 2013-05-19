@@ -13,7 +13,7 @@ $(function (){
 	$.ajax({
 	  url: ajaxUrl,
 	  cache: false,
-	  dataType: "jsonp",
+	  dataType: "json",
 	  complete: function (){
 		  $('#view .loading').hide();
 	  },
