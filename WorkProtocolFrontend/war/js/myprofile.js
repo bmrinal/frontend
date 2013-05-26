@@ -115,12 +115,20 @@ $(function (){
 				  $('#profileForm .btn-primary').removeAttr('disabled');
 			  },
 			  success: function (response){
-				 $('#page-status').html('Profile('+response.id +') created successfully')
-				 				.addClass('alert-success')
-				 				.show();
+				 var statusMsg;
+
+				 if ($('#profileForm input[name="vendorId"]').length > 0){
+					 statusMsg = 'Profile updated successfully';					 
+				 } else {
+					 statusMsg = 'Profile created successfully';
+					 $('#profileForm').append('<input name="vendorId" type="hidden" value="' +response.id+ '">');
+				 }
+				 $('#page-status').html(statusMsg)
+					 .addClass('alert-success')
+					 .show();
 			  },
 			  error: function (){
-				 $('#page-status').html('Sorry, unable to create profile')
+				 $('#page-status').html('Sorry, unable to process your request at this time')
 	 							.addClass('alert-error')
 	 							.show();
 			  }

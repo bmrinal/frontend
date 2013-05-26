@@ -27,11 +27,10 @@
     </style>
     <link href="/bootstrap/bootstrap-responsive.css" rel="stylesheet">
     <link href="/css/app.css" rel="stylesheet">
-    <link href="/css/services.css" rel="stylesheet">
-	<link href="/css/vendors.css" rel="stylesheet">    
+    <link href='css/fullcalendar.css' rel='stylesheet' />
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
-      <script src="/bootstrap/js/html5shiv.js"></script>
+      <script src="/bootstrap/html5shiv.js"></script>
     <![endif]-->
 
     <!-- Fav and touch icons 
@@ -75,12 +74,14 @@
             <ul class="nav nav-list"> 
               <li class="nav-header">Vendor</li>
               <li><a href="/myprofile.html">My profile</a></li>
+			  <li><a href="/vendors.html">View requests</a></li>
             </ul>
           </div><!--/.well -->
 
           <div class="well sidebar-nav">
             <ul class="nav nav-list"> 
               <li class="nav-header">Consumer</li>
+              <li class="active"><a href="/bookappointment.html">Book an appointment</a></li>
               <li><a href="/browsecategory.html">Categories</a></li>
               <li><a href="/services.html">Services</a></li>
             </ul>
@@ -88,11 +89,7 @@
         </div><!--/span-->
         <div class="span9">
         	<div id="view">
-				<div class="page-header">
-				  <h4>Pick a vendor</h4>
-				</div>
-				<span class="loading"> loading vendors ... </span>
-				<div class="vendors"></div>
+				<div id='calendar'></div>
         	</div>
         </div><!--/span-->
       </div><!--/row-->
@@ -105,35 +102,15 @@
 
     </div><!--/.fluid-container-->
 
-    <!-- javascript
+	<!-- javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 	<script src="https://raw.github.com/wycats/handlebars.js/1.0.0-rc.3/dist/handlebars.js"></script>
 	<script src="https://raw.github.com/cowboy/jquery-bbq/master/jquery.ba-bbq.js"></script>
-	<script src="https://raw.github.com/desandro/masonry/master/jquery.masonry.js"></script>
 	<script src="bootstrap/bootstrap.js"></script>
 	<script src="js/app.js"></script>
-	<script src="js/vendors.js"></script>
-
-
-	<script id="TL_vendors" type="text/x-handlebars-template">
-	{{#each vendor}}
-  		<div class="vendor" data-srvcid="{{id}}">
-			<a href="/vendor.html?name={{name}}&id={{id}}">
-				<div class="vendor-name">{{name}}</div>
-				{{#each images}}
-					<img src="http://work0protocol.appspot.com/resources/images/{{.}}"/>
-				{{/each}}
-				{{#if description}}
-					<div class="vendor-desc">{{description}}</div>
-				{{/if}}
-			</a>
-		</div>
-	{{/each}}
-	{{^vendor}}
-  		<div>No vendors</div>
-	{{/vendor}}
-	</script>
+	<script src='js/fullcalendar.js'></script>
+	<script src='js/bookappointment.js'></script>
   </body>
- </html>
+</html>

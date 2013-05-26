@@ -27,7 +27,7 @@
 	   </style>
 	   <link href="/bootstrap/bootstrap-responsive.css" rel="stylesheet">
 	   <link href="/css/app.css" rel="stylesheet">
-	   <link href="/css/vendorprofile.css" rel="stylesheet">
+	   <link href="/css/myprofile.css" rel="stylesheet">
 	   <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
 	   <!--[if lt IE 9]>
 	     <script src="/bootstrap/html5shiv.js"></script>
@@ -71,9 +71,7 @@
 	         <div class="well sidebar-nav">
 	           <ul class="nav nav-list"> 
 	             <li class="nav-header">Vendor</li>
-	             <li class="active"><a href="/vendorprofile.html">My profile</a></li>
-	             <li><a href="/advertisemyservice.html">Advertise my service</a></li>
-			  <li><a href="/vendors.html">View requests</a></li>
+	             <li class="active"><a href="/myprofile.html">My profile</a></li>
 	           </ul>
 	         </div><!--/.well -->
 	
@@ -89,13 +87,11 @@
 	       	<div class="page-loading">Loading...</div>
 	       	<div id="view">
 				<ul class="nav nav-tabs">
-				  <li><a href="#">My Business</a></li>
-				  <li><a href="#">Services</a></li>
-				  <li><a href="/schedule.html">Schedule</a></li>
+				  <li><a href="/mybusiness.html">My Business</a></li>
+				  <li><a href="/myservices.html">Services</a></li>
+				  <li><a href="/myschedule.html">Schedule</a></li>
 				  <li><a href="#">Clients</a></li>
-				  <li class="active">
-				    <a href="#">Settings</a>
-				  </li>
+				  <li class="active"><a href="#">Settings</a></li>
 				</ul>
 				<form id="profileForm" class="form-horizontal" method="POST" action="http://work0protocol.appspot.com/resources/vendors/">
 		              <h5>Business Information</h5>
@@ -261,6 +257,6 @@
 		<script src="https://raw.github.com/cowboy/jquery-bbq/master/jquery.ba-bbq.js"></script>
 		<script src="bootstrap/bootstrap.js"></script>
 		<!-- script src="js/app.js"></script -->
-		<script src="js/vendorprofile.js"></script>
+		<script src="js/myprofile.js"></script>
 	  </body>
 	</html>

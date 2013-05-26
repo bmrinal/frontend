@@ -9,41 +9,65 @@ $(function (){
 		ajaxUrl = "http://work0protocol.appspot.com/resources/servicedefinitions/list";
 	}
 	$.ajax({
-	  url: ajaxUrl,
+	  url: "http://work0protocol.appspot.com/resources/user",
+	  dataType: 'json',
 	  cache: false,
-	  dataType: "jsonp",
-	  success: function (response){
-		  var source, template, data, servicesHTML, container;
-		  container = $('#view .services');
-		  source = $('#TL_services').html();
-		  template = Handlebars.compile(source);
-		  data = {};
-
-		  if (filterByCategory === true){
-			  data.serviceDefinition = response.serviceDefinitions;
-		  } else {
-			  data.serviceDefinition = response;
-		  }
-		  servicesHTML = $(template(data));
- 
-		  servicesHTML.imagesLoaded(function (){
-			  container.append(servicesHTML);
-			  container.masonry({
-			    // options
-			    itemSelector : '.service',
-			    columnWidth : 242
-			  }).each(function (){
-				  $('#view .loading').hide();
-			  });
-		  });
+	  xhrFields: {
+		  withCredentials: true
 	  },
-	  error: function (){
-		  $('#view .loading').hide();
-		  $('#view .services').html('<div class="alert alert-error">'
-				  + '<button type="button" class="close" data-dismiss="alert">&times;</button>'
-				  + 'Sorry, unable to load service definitions'
-				  + '</div>'
-		  );
+	  success: function (response){
+		  if(response && response.userId){
+			$('#user-info span').html(response.nickname);
+			$('#user-info a').prop('href', response.signOutUrl + '?ru=' + window.location.protocol + '//' + window.location.host);
+			$('#user-info').show();
+
+			$.ajax({
+				  url: ajaxUrl,
+				  cache: false,
+				  dataType: "jsonp",
+				  success: function (response){
+					  var source, template, data, servicesHTML, container;
+					  container = $('#view .services');
+					  source = $('#TL_services').html();
+					  template = Handlebars.compile(source);
+					  data = {};
+
+					  if (filterByCategory === true){
+						  data.serviceDefinition = response.serviceDefinitions;
+					  } else {
+						  data.serviceDefinition = response;
+					  }
+					  servicesHTML = $(template(data));
+			 
+					  servicesHTML.imagesLoaded(function (){
+						  container.append(servicesHTML);
+						  container.masonry({
+						    // options
+						    itemSelector : '.service',
+						    columnWidth : 242
+						  }).each(function (){
+							  $('#view .loading').hide();
+						  });
+					  });
+				  },
+				  error: function (){
+					  $('#view .loading').hide();
+					  $('#view .services').html('<div class="alert alert-error">'
+							  + '<button type="button" class="close" data-dismiss="alert">&times;</button>'
+							  + 'Sorry, unable to load service definitions'
+							  + '</div>'
+					  );
+				  }
+				});				
+		  } else {
+			  window.location.href = response.signInUrl + '?ru=' + window.location.href;
+		  }
+	  },
+	  error: function (e){
+		 $('#page-status').html('Sorry, unable to authenticate')
+						.addClass('alert-error')
+						.show();
+		 $('.page-loading').hide();
 	  }
 	});
 
