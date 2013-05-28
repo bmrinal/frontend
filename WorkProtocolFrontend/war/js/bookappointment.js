@@ -49,7 +49,7 @@ $(function (){
 			maxTime: '6:00pm',
 			year: y,
 			month: m,
-			date: d+1,
+			date: d,
 			defaultView: 'agendaDay',
 			selectable: true,
 			selectHelper: true,
