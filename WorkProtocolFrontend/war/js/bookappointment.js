@@ -42,15 +42,17 @@ $(function (){
 		}
 		calendar = $('#calendar').fullCalendar({
 			header: {
-				right: 'next'
+				left: 'prev,next today',
+				center: 'title', 
+				right: ''
 			},
 			allDaySlot: false,
 			minTime: '9:00am',
 			maxTime: '6:00pm',
 			year: y,
 			month: m,
-			date: d,
-			defaultView: 'agendaDay',
+			date: d+1,
+			defaultView: 'agendaWeek',
 			selectable: true,
 			selectHelper: true,
 			select: function(start, end, allday) {

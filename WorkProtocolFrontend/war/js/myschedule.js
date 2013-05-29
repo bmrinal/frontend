@@ -10,8 +10,11 @@ $(function (){
 			  $('.page-loading').hide();  
 		  },
 		  success: function (response){
+			  var userName, email;
 			  if(response && response.userId){
-				  $('#user-info span').html(response.nickname);
+				  email = response.email;
+				  userName = email.split('@');
+				  $('#user-info span').html(userName[0]);
 				  $('#user-info a').prop('href', response.signOutUrl + '?ru=' + window.location.protocol + '//' + window.location.host);
 				  $('#user-info').show();
 				  $('#view').show();
