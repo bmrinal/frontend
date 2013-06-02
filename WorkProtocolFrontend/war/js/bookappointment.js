@@ -55,49 +55,11 @@ $(function (){
 			defaultView: 'agendaWeek',
 			selectable: true,
 			selectHelper: true,
-			select: function(start, end, allday) {
-				var title = prompt('Event Title:'), qsParams, stStr, etStr;
-				if (title) {
-					stStr = (start.getMonth() + 1) + '-' + start.getDate() + '-' + start.getFullYear()
-							+ ' ' + start.getHours() + ':' + start.getMinutes() + ':' + start.getSeconds();
-					etStr = (end.getMonth() + 1) + '-' + end.getDate() + '-' + end.getFullYear()
-							+ ' ' + end.getHours() + ':' + end.getMinutes() + ':' + end.getSeconds();
-
-					qsParams = {
-						vendorId: params.vendorId,
-						eventSummary: title,
-						eventStartTime: stStr,
-						eventEndTime: etStr
-					};
-					$.ajax({
-						  url: 'http://work0protocol.appspot.com/resources/calendar/event',
-						  cache: false,
-						  data: qsParams,
-						  dataType: "jsonp",
-						  beforeSend: function (){
-							  $('#view .loading').html('Booking appointment...').show();
-						  },
-						  complete: function (){
-							  $('#view .loading').hide();
-						  },
-						  success: function (response){
-							  $('#page-status').addClass('alert-success').html('Appointment booked successfully.').show();
-							  calendar.fullCalendar('renderEvent',{
-								  id: title,
-								  title: title,
-								  start: start,
-								  end: end,
-								  allDay: allday,
-								  className: 'wp-event-editable'
-							  }, true); // true makes the event "stick"
-						  },
-						  error: function (){
-							  $('#page-status').addClass('alert-error').html('Sorry, unable to book appointment at this time. Please try again later.').show();
-						  }
-					});
-				} else {
-					calendar.fullCalendar('unselect');
-				}
+			select: function(s, e, allday) {
+				start = s;
+				end = e;
+				$('#addEvent').modal();
+				
 			},
 			eventClick: function(event, jsEvent, view){
 				if (event.id !== BUSYEVENT_ID && confirm('Do you want to delete this event')) {
@@ -105,6 +67,56 @@ $(function (){
 				}
 			},
 			events: eventsArr
+		});
+		
+		//book new appointment
+		$('#addEvent .appt-book').on('click', function (){
+			var title, qsParams, stStr, etStr;
+			
+			title = $('#addEvent input[name="title"]').val();
+
+			stStr = (start.getMonth() + 1) + '-' + start.getDate() + '-' + start.getFullYear()
+			+ ' ' + start.getHours() + ':' + start.getMinutes() + ':' + start.getSeconds();
+			etStr = (end.getMonth() + 1) + '-' + end.getDate() + '-' + end.getFullYear()
+			+ ' ' + end.getHours() + ':' + end.getMinutes() + ':' + end.getSeconds();
+			
+			qsParams = {
+					vendorId: params.vendorId,
+					eventStartTime: stStr,
+					eventEndTime: etStr
+			};
+			$.ajax({
+				url: 'http://work0protocol.appspot.com/resources/calendar/event',
+				cache: false,
+				data: qsParams,
+				dataType: "jsonp",
+				beforeSend: function (){
+					$('#view .loading').html('Booking appointment...').show();
+				},
+				complete: function (){
+					$('#view .loading').hide();
+				},
+				success: function (response){
+					$('#addEvent').modal('hide');
+					$('#page-status').addClass('alert-success').html('Appointment booked successfully.').show();
+					calendar.fullCalendar('renderEvent',{
+						id: title,
+						title: title,
+						start: start,
+						end: end,
+						allDay: false,
+						className: 'wp-event-editable'
+					}, true); // true makes the event "stick"
+				},
+				error: function (){
+					$('#page-status').addClass('alert-error').html('Sorry, unable to book appointment at this time. Please try again later.').show();
+				}
+			});
+		});
+
+		$('#addEvent .appt-cancel').on('click', function (){
+			$('#addEvent').modal('hide');
+			calendar.fullCalendar('unselect');
 		});
 	  },
 	  error: function (){
