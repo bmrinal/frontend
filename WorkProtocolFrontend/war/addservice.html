@@ -27,7 +27,8 @@
     </style>
     <link href="/bootstrap/bootstrap-responsive.css" rel="stylesheet">
     <link href="/css/app.css" rel="stylesheet">
-	<link href="/css/myservices.css" rel="stylesheet">
+    <link href="/css/services.css" rel="stylesheet">
+	<link href="/css/addservice.css" rel="stylesheet">
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="/bootstrap/html5shiv.js"></script>
@@ -94,12 +95,12 @@
 				  <li><a href="#">Clients</a></li>
 				  <li><a href="/myprofile.html">Settings</a></li>
 				</ul>
-				<span class="loading"> loading services ... </span>
-				<div class="services"></div>
-				<div class="srvc-add">
-					<a href="/addservice.html">Add a new service</a>
+        	
+				<div>
+				  <h4>Pick a category to advertise your service</h4>
 				</div>
-				<div id="srvc-details" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="Service request form" aria-hidden="true"></div>
+				<span class="loading"> loading categories ... </span>
+				<div class="categories" id="menu"></div>
         	</div>
         </div><!--/span-->
       </div><!--/row-->
@@ -116,47 +117,25 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-	<script src="http://github.com/janl/mustache.js/raw/master/mustache.js"></script>
 	<script src="https://raw.github.com/wycats/handlebars.js/1.0.0-rc.3/dist/handlebars.js"></script>
 	<script src="https://raw.github.com/cowboy/jquery-bbq/master/jquery.ba-bbq.js"></script>
 	<script src="bootstrap/bootstrap.js"></script>
 	<!-- script src="js/app.js"></script-->
-	<script src="js/myservices.js"></script>
+	<script src="js/addservice.js"></script>
 
-	<script id="TL_services" type="text/x-handlebars-template">
-			{{#each service}}
-		  		<div class="service" data-srvcid="{{id}}">
-					<a href="#">
-						<div class="srvc-name">{{id}}{{name}}</div>
-						{{#each images}}
-							<img src="http://work0protocol.appspot.com/resources/images/{{.}}"/>
-						{{/each}}
-						{{#if description}}
-							<div class="srvc-desc">{{description}}</div>
-						{{/if}}
+	<script id="TL_categories" type="text/x-handlebars-template">
+		<ul class="unstyled text-center">
+			{{#each .}}
+		  		<li class="well well-small">
+					<a href="/servicedefinition.html?name={{name}}&id={{id}}">{{name}}
+						<span>({{countOfServiceDefinitions}})</span>
 					</a>
-				</div>
+					{{#if children}}
+						{{#with children}} {{> leaf}} {{/with}}
+					{{/if}}
+				</li>
 			{{/each}}
-			{{^service}}
-		  		<div>No services</div>
-			{{/service}}
-	</script>
-
-	<script id="TL_requestSrvc" type="text/x-handlebars-template">
-		  <div class="modal-header">
-		    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		    <h3 id="myModalLabel">Service details : {{name}}</h3>
-		  </div>
-		  <div class="modal-body">
-		    <span class="frm-ldg">loading ...</span>
-			<div class="form-horizontal">
-				<div id="srTemplate"></div>
-			</div>
-		  </div>
-		  <div class="modal-footer">
-		    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-		  </div>
-		</div>
+		</ul>
 	</script>
   </body>
 </html>

@@ -28,7 +28,7 @@ $(function (){
 					  success: function (response){
 						  var urlTypes, urlObj, descTypes, descObj;
 
-						  $('#view').show();
+						  $('#profileForm').show();
 						  if (response.id) {
 							  $('#profileForm').append('<input name="vendorId" type="hidden" value="' +response.id+ '">');
 						  }
