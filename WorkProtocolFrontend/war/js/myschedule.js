@@ -19,7 +19,7 @@ $(function (){
 				  $('#user-info').show();
 				  $('#view').show();
 				  
-				  $('#myCal').prop('src', 'http://www.google.com/calendar/embed?showTitle=0&src=' + response.email + '&ctz=America/Los_Angeles');
+				  $('#myCal').prop('src', 'http://www.google.com/calendar/embed?mode=WEEK&showTitle=0&src=' + response.email + '&ctz=America/Los_Angeles');
 			  } else {
 				  window.location.href = response.signInUrl + '?ru=' + window.location.href;
 			  }
