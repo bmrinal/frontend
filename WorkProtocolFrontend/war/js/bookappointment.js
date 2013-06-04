@@ -71,20 +71,19 @@ $(function (){
 		
 		//book new appointment
 		$('#addEvent .appt-book').on('click', function (){
-			var title, qsParams, stStr, etStr;
+			var qsParams, stStr, etStr;
 			
-			title = $('#addEvent input[name="title"]').val();
-
 			stStr = (start.getMonth() + 1) + '-' + start.getDate() + '-' + start.getFullYear()
-			+ ' ' + start.getHours() + ':' + start.getMinutes() + ':' + start.getSeconds();
+					+ ' ' + start.getHours() + ':' + start.getMinutes() + ':' + start.getSeconds();
 			etStr = (end.getMonth() + 1) + '-' + end.getDate() + '-' + end.getFullYear()
-			+ ' ' + end.getHours() + ':' + end.getMinutes() + ':' + end.getSeconds();
-			
+					+ ' ' + end.getHours() + ':' + end.getMinutes() + ':' + end.getSeconds();
+
 			qsParams = {
 					vendorId: params.vendorId,
 					eventStartTime: stStr,
 					eventEndTime: etStr
 			};
+
 			$.ajax({
 				url: 'http://work0protocol.appspot.com/resources/calendar/event',
 				cache: false,
@@ -97,6 +96,9 @@ $(function (){
 					$('#view .loading').hide();
 				},
 				success: function (response){
+					var title;
+
+					title = response.eventSummary;
 					$('#addEvent').modal('hide');
 					$('#page-status').addClass('alert-success').html('Appointment booked successfully.').show();
 					calendar.fullCalendar('renderEvent',{
