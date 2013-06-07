@@ -16,14 +16,33 @@ $(function (){
 		  withCredentials: true
 	  },
 	  success: function (response){
-		  var userName, email;
 		  if(response && response.userId){
-			email = response.email;
-			userName = email.split('@');
-			$('#user-info span').html(userName[0]);
-			$('#user-info a').prop('href', response.signOutUrl + '?ru=' + window.location.protocol + '//' + window.location.host);
-			$('#user-info').show();
-
+			  if (!response.isVendor){
+				  $('#page-status').html('Sorry, please register as a vendor to view this page.').addClass('alert-error').show();
+				  $('#view .loading').hide();
+				  return;
+			  }
+			  wp.mynav.load({
+				  targetSelector: '#top-nav',
+				  data :{tab: [{
+						  'text': 'My Business',
+						  'href': '/mybusiness.html'
+					  }, {
+						  'text': 'Services',
+						  'href': '#',
+						  'active': true
+					  }, {
+						  'text': 'Schedule',
+						  'href': '/myschedule.html'
+					  }, {
+						  'text': 'Clients',
+						  'href': '/myclients.html'
+					  }, {
+						  'text': 'Settings',
+						  'href': '/myprofile.html'
+					  }]
+				  },
+			 });
 			$.ajax({
 				  url: ajaxUrl,
 				  cache: false,
@@ -70,7 +89,7 @@ $(function (){
 		 $('#page-status').html('Sorry, unable to authenticate')
 						.addClass('alert-error')
 						.show();
-		 $('.page-loading').hide();
+		 $('#view .loading').hide();
 	  }
 	});
 

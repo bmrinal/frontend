@@ -9,14 +9,12 @@ $(function (){
 			  withCredentials: true
 		  },
 		  success: function (response){
-			  var userName, email;
 			  if(response && response.userId){
-				  email = response.email;
-				  userName = email.split('@');
-				  $('#user-info span').html(userName[0]);
-				  $('#user-info a').prop('href', response.signOutUrl + '?ru=' + window.location.protocol + '//' + window.location.host);
-				  $('#user-info').show();
-				  
+				    if (!response.isVendor){
+				    	$('#page-status').html('Sorry, please register as a vendor to view this page.').addClass('alert-error').show();
+				    	$('#view .loading').hide();
+				    	return;
+				    }
 					$.ajax({
 					  url: 'http://work0protocol.appspot.com/resources/vendors/myvendor/',
 					  cache: false,
@@ -26,6 +24,27 @@ $(function (){
 					  dataType: "json",
 					  success: function (response){
 						  if(response && response.id && response.id > 0){
+							  wp.mynav.load({
+								  targetSelector: '#top-nav',
+								  data :{tab: [{
+										  'text': 'My Business',
+										  'href': '#',
+										  'active': true  
+									  }, {
+										  'text': 'Services',
+										  'href': '/myservices.html'
+									  }, {
+										  'text': 'Schedule',
+										  'href': '/myschedule.html'
+									  }, {
+										  'text': 'Clients',
+										  'href': '/myclients.html'
+									  }, {
+										  'text': 'Settings',
+										  'href': '/myprofile.html'
+									  }]
+								  },
+							  });
 							  vendorId = response.id;							  
 							  $.ajax({
 								  url: "http://work0protocol.appspot.com/resources/vendors/" + vendorId,
@@ -80,7 +99,7 @@ $(function (){
 			 $('#page-status').html('Sorry, unable to authenticate')
 							.addClass('alert-error')
 							.show();
-			 $('.page-loading').hide();
+			 $('#view .loading').hide();
 		  }
 	});
 

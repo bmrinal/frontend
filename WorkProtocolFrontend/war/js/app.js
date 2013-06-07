@@ -1,4 +1,4 @@
-var wpGlobal = {};
+var wp = wp || {};
 
 $(function (){
 	$.ajax({
@@ -9,18 +9,20 @@ $(function (){
 			  withCredentials: true
 		  },
 		  success: function (response){
-			  var userName, email;
+			  var userName, email, user;
 			  if(response && response.userId){
-				  email = response.email;
+				  user = {};
+				  $.extend(user, response);
+				  wp.user = user;
+
+				  email = user.email;
 				  userName = email.split('@');
 				  $('#user-info span').html(userName[0]);
-				  $('#user-info a').prop('href', response.signOutUrl + '?ru=' + window.location.protocol + '//' + window.location.host);
+				  $('#user-info a').prop('href', user.signOutUrl + '?ru=' + window.location.protocol + '//' + window.location.host);
 				  $('#user-info').show();
+
+				  wp.user = {};
 				  
-				  wpGlobal.user = {};
-				  wpGlobal.user.id = response.userId;
-				  wpGlobal.user.email = response.email;
-				  wpGlobal.user.name = response.nickname;
 			  }
 		  }
 	});

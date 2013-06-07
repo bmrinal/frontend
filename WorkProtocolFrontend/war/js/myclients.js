@@ -7,14 +7,45 @@ $(function (){
 			  withCredentials: true
 		  },
 		  success: function (response){
-			  var userName, email;
+			  var tnData = {};
 			  if(response && response.userId){
-				  email = response.email;
-				  userName = email.split('@');
-				  $('#user-info span').html(userName[0]);
-				  $('#user-info a').prop('href', response.signOutUrl + '?ru=' + window.location.protocol + '//' + window.location.host);
-				  $('#user-info').show();
-				  
+				  if (response.isVendor){
+					  tnData = [{
+							  'text': 'My Business',
+							  'href': '/mybusiness.html'
+						  }, {
+							  'text': 'Services',
+							  'href': '/myservices.html'
+						  }, {
+							  'text': 'Schedule',
+							  'href': '/myschedule.html'
+						  }, {
+							  'text': 'Clients',
+							  'href': '#',
+							  'active': true
+						  }, {
+							  'text': 'Settings',
+							  'href': '/myprofile.html'
+						  }];
+				  } else {
+					  tnData = [{
+							  'text': 'My appointments',
+							  'href': '#',
+							  'active': true
+						  }, {
+							  'text': 'Schedule',
+							  'href': '/myschedule.html'
+						  }, {
+							  'text': 'Settings',
+							  'href': '/myprofile.html'
+						  }];
+				  }
+				  wp.mynav.load({
+					  targetSelector: '#top-nav',
+					  data : {
+						  tab : tnData
+					  }
+				  });
 				  $.ajax({
 					  url: "http://work0protocol.appspot.com/resources/appointment/myappointments",
 					  dataType: 'json',
@@ -26,12 +57,18 @@ $(function (){
 						  $('.page-loading').hide();
 					  },
 					  success: function (response){
-						  var template, data;
-						  data = {};
-						  data.appointment = response;
-						  template = Handlebars.compile($("#TL_appointments").html());
-					
-						  $('#appointments tbody').html(template(data));
+						  var hTemplate, hData, bTemplate, bData;
+
+						  hData = {};
+						  hData.isVendor = response.length > 0 && response[0].isVendor;
+						  hTemplate = Handlebars.compile($("#TL_appointmentHeader").html());
+						  $('#appointments thead').html(hTemplate(hData));
+
+						  bData = {};
+						  bData.appointment = response;
+						  bTemplate = Handlebars.compile($("#TL_appointments").html());
+						  $('#appointments tbody').html(bTemplate(bData));
+						  
 						  $('#appointments').show();
 					  },
 					  error: function (e){

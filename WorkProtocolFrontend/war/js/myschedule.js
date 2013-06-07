@@ -10,15 +10,45 @@ $(function (){
 			  $('.page-loading').hide();  
 		  },
 		  success: function (response){
-			  var userName, email;
+			  var tnData = {};
 			  if(response && response.userId){
-				  email = response.email;
-				  userName = email.split('@');
-				  $('#user-info span').html(userName[0]);
-				  $('#user-info a').prop('href', response.signOutUrl + '?ru=' + window.location.protocol + '//' + window.location.host);
-				  $('#user-info').show();
-				  $('#view').show();
-				  
+				  if (response.isVendor){
+					  tnData = [{
+							  'text': 'My Business',
+							  'href': '/mybusiness.html'
+						  }, {
+							  'text': 'Services',
+							  'href': '/myservices.html'
+						  }, {
+							  'text': 'Schedule',
+							  'href': '#',
+							  'active': true
+						  }, {
+							  'text': 'Clients',
+							  'href': '/myclients.html'
+						  }, {
+							  'text': 'Settings',
+							  'href': '/myprofile.html'
+						  }];
+				  } else {
+					  tnData = [{
+							  'text': 'My appointments',
+							  'href': '/myclients.html'
+						  }, {
+							  'text': 'Schedule',
+							  'href': '#',
+							  'active': true
+						  }, {
+							  'text': 'Settings',
+							  'href': '/myprofile.html'
+						  }];
+				  }
+				  wp.mynav.load({
+					  targetSelector: '#top-nav',
+					  data : {
+						  tab : tnData
+					  }
+				  });
 				  $('#myCal').prop('src', 'http://www.google.com/calendar/embed?mode=WEEK&showTitle=0&src=' + response.email + '&ctz=America/Los_Angeles');
 			  } else {
 				  window.location.href = response.signInUrl + '?ru=' + window.location.href;
