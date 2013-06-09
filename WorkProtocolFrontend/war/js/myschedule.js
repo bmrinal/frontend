@@ -51,7 +51,7 @@ $(function (){
 				  });
 				  $('#myCal').prop('src', 'http://www.google.com/calendar/embed?mode=WEEK&showTitle=0&src=' + response.email + '&ctz=America/Los_Angeles');
 			  } else {
-				  window.location.href = response.signInUrl + '?ru=' + window.location.href;
+				  window.location.href = 'http://work0protocol.appspot.com/SignIn?ru=' + window.location.href;
 			  }
 		  },
 		  error: function (e){

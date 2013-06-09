@@ -53,3 +53,33 @@
 	color: #999;
 	font-size: 0.84em;
 }
+
+#sr-photo-trigger{
+	cursor: pointer;
+	margin-top: -10px;	
+}
+
+.sr-photo-col{
+	float: left;
+	margin: 0 20px 20px 0;
+	width: 96px;
+	height: 96px;
+}
+
+.sr-photo-prog{
+	width:0;
+	height: 5px;
+	background-color: #FF6600;
+}
+
+.sr-photo{
+	max-width: 100%;
+	max-height: 100%;
+}
+
+.sr-photo-name{
+	white-space: nowrap;
+    text-overflow: ellipsis;
+    display: block;
+    overflow: hidden;
+}

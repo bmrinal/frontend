@@ -92,7 +92,7 @@ $(function (){
 					  }	
 					});				  
 			  } else {
-				  window.location.href = response.signInUrl + '?ru=' + window.location.href;
+				  window.location.href = 'http://work0protocol.appspot.com/SignIn?ru=' + window.location.href;
 			  }
 		  },
 		  error: function (){

@@ -74,7 +74,7 @@
           <div class="well sidebar-nav">
             <ul class="nav nav-list"> 
               <li class="nav-header">Vendor</li>
-              <li><a href="/myprofile.html">My profile</a></li>
+              <li class="active"><a href="/myprofile.html">My profile</a></li>
             </ul>
           </div><!--/.well -->
 
@@ -98,6 +98,9 @@
 				<div id="srForm" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="Service request form" aria-hidden="true">
 				</div>
         	</div>
+			<form enctype="multipart/form-data" method="post" name="picupload" id="picupload" style="display: none;">
+				<input id="file-inp" type="file" name="file[]" multiple />
+			</form>
         </div><!--/span-->
       </div><!--/row-->
 
@@ -143,12 +146,64 @@
 	<script id="TL_requestSrvc" type="text/x-handlebars-template">
 		  <div class="modal-header">
 		    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		    <h3 id="myModalLabel">Submit service request for {{name}}</h3>
+		    <h3 id="myModalLabel">Tell us about your service</h3>
 		  </div>
 		  <div class="modal-body">
 		    <span class="frm-ldg">loading ...</span>
-			<form class="form-horizontal" action="http://work0protocol.appspot.com/resources/services">
+			<form id="sr-form-fields" class="form-horizontal" action="http://work0protocol.appspot.com/resources/services">
 				<input type="hidden" name="serviceDefinitionId" value="" />
+				<div id="srMetaFields">
+					<div class="control-group">
+						<label class="control-label" for="wpName">Name</label>
+    					<div class="controls">
+							<input type="text" id="wpName" name="wpName">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="wpProjectName">Project name</label>
+    					<div class="controls">
+							<input type="text" id="wpProjectName" name="wpProjectName">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label">Photos</label>
+    					<div class="controls">
+							<div class="row-fluid sr-photo-row"></div>
+							<button id="sr-photo-trigger" class="btn btn-mini btn btn-success" type="button"><i class="icon-white icon-plus-sign"/> Add photo</button>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label">Status</label>
+						<div class="controls">
+							<label class="radio">
+								<input type="radio" name="wpStatus" value="active" checked>Active
+							</label>
+							<label class="radio">
+								<input type="radio" name="wpStatus" value="inactive">Inactive
+							</label>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="wpCostPerHour">Cost per hour</label>
+    					<div class="controls">
+							<input type="text" id="wpCostPerHour" name="wpCostPerHour">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="wpFixedCost">Fixed cost</label>
+    					<div class="controls">
+							<input type="text" id="wpFixedCost" name="wpFixedCost">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="wpOpenToQuote">Open to quote</label>
+						<div class="controls">
+							<label class="checkbox">
+								<input type="checkbox" name="wpOpenToQuote" id="wpOpenToQuote">
+							</label>
+						</div>
+					</div>
+				</div>
 				<div id="srTemplate"></div>
 			</form>
 		  </div>
@@ -157,6 +212,14 @@
 		    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
 		    <button class="btn btn-primary" data-action="submit">Submit</button>
 		  </div>
+		</div>
+	</script>
+	
+	<script id="TL_pic" type="text/x-handlebars-template">
+		<div class="sr-photo-col">
+			<img src="http://eofdreams.com/data_images/dreams/dog/dog-01.jpg" class="sr-photo"/>
+			<div class="sr-photo-prog"></div>
+			<div class="sr-photo-name">{{name}}</div>
 		</div>
 	</script>
   </body>

@@ -1,4 +1,5 @@
 $(function (){
+	var profileId;
 	$.ajax({
 		  url: "http://work0protocol.appspot.com/resources/user",
 		  dataType: 'json',
@@ -38,14 +39,17 @@ $(function (){
 						  },
 						  success: function (response){
 							  var urlTypes, urlObj, descTypes, descObj;
-
+							  profileId = 'vendorId';
+							  //load vendor profile template
 							  $.ajax({
 								  url: 'template/vendorprofile.handlebars',
 								  dataType: 'html',
 								  success: function(resp) {
-									  $('#profileForm').html(resp).show();
+									  $('#profileForm').prop('method', 'POST').html(resp)
+									  	.prop('action', 'http://work0protocol.appspot.com/resources/vendors/')
+									  	.show();
 									  if (response.id) {
-										  $('#profileForm').append('<input name="vendorId" type="hidden" value="' +response.id+ '">');
+										  $('#profileForm').append('<input name="'+profileId+'" type="hidden" value="' +response.id+ '">');
 									  }
 									  $('#profileForm input[name="vendorName"]').val(response.name || '');
 									  $('#profileForm input[name="vendorPhone"]').val(response.phone || '');
@@ -115,7 +119,21 @@ $(function (){
 							  'active': true
 						  }];
 					  $('.page-loading').hide();
-					  $('#profileForm').html(response.email).show();
+					  profileId = 'userId';
+					  $.ajax({
+						  url: 'template/userprofile.handlebars',
+						  dataType: 'html',
+						  success: function(resp) {
+							  $('#profileForm').prop('method', 'GET').html(resp)
+							  	.prop('action', 'http://work0protocol.appspot.com/resources/user/insert')
+							  	.show();
+							  if (response.id) {
+								  $('#profileForm').append('<input name="'+profileId+'" type="hidden" value="' +response.userId+ '">');
+							  }
+							  $('#profileForm input[name="email"]').val(response.email || '');
+							  $('#profileForm input[name="mobilePhone"]').val(response.mobilePhone || '');
+						  }
+					  });
 				  }
 				  wp.mynav.load({
 					  targetSelector: '#top-nav',
@@ -124,7 +142,7 @@ $(function (){
 					  }
 				  });
 			  } else {
-				  window.location.href = response.signInUrl + '?ru=' + window.location.href;
+				  window.location.href = 'http://work0protocol.appspot.com/SignIn?ru=' + window.location.href;
 			  }
 		  },
 		  error: function (e){
@@ -138,9 +156,9 @@ $(function (){
 	$('#profileForm').submit(function (e){
 		e.preventDefault();
 		$.ajax({
-			  url: "http://work0protocol.appspot.com/resources/vendors/",
+			  url: $(this).prop('action'),
 			  cache: false,
-			  type: 'POST',
+			  type: $(this).prop('method'),
 			  data: $(this).serialize(),
 			  dataType: 'json',
 			  xhrFields: {
@@ -158,13 +176,13 @@ $(function (){
 			  success: function (response){
 				 var statusMsg;
 
-				 if ($('#profileForm input[name="vendorId"]').length > 0){
+				 /* if ($('#profileForm input[name="'+profileId+'"]').length > 0){
 					 statusMsg = 'Profile updated successfully';					 
 				 } else {
 					 statusMsg = 'Profile created successfully';
-					 $('#profileForm').append('<input name="vendorId" type="hidden" value="' +response.id+ '">');
-				 }
-				 $('#page-status').html(statusMsg)
+					 $('#profileForm').append('<input name="'+profileId+'" type="hidden" value="' +response.id+ '">');
+				 } */
+				 $('#page-status').html('Profile updated successfully')
 					 .addClass('alert-success')
 					 .show();
 			  },

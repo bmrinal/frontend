@@ -13,16 +13,14 @@ $(function (){
 			  if(response && response.userId){
 				  user = {};
 				  $.extend(user, response);
-				  wp.user = user;
-
 				  email = user.email;
 				  userName = email.split('@');
-				  $('#user-info span').html(userName[0]);
+				  user.userName = userName[0];
+				  wp.user = user; //store user info for global access
+
+				  $('#user-info span').html(user.userName);
 				  $('#user-info a').prop('href', user.signOutUrl + '?ru=' + window.location.protocol + '//' + window.location.host);
 				  $('#user-info').show();
-
-				  wp.user = {};
-				  
 			  }
 		  }
 	});

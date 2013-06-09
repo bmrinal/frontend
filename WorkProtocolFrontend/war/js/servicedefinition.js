@@ -82,7 +82,7 @@ $(function (){
 				  }
 				});				
 		  } else {
-			  window.location.href = response.signInUrl + '?ru=' + window.location.href;
+			  window.location.href = 'http://work0protocol.appspot.com/SignIn?ru=' + window.location.href;
 		  }
 	  },
 	  error: function (e){
@@ -103,6 +103,7 @@ $(function (){
 		data.name = $('.srvc-name', this).text();
 		$('#srForm').html(template(data));
 		currServiceDefId = $(this).data('srvcid'); //store service in closure for easy modal access
+		$('#sr-form-fields').hide();
 		$('#srForm').modal();
 	});
 	
@@ -116,6 +117,9 @@ $(function (){
 				  withCredentials: true
 			  },
 			  dataType: "json",
+			  beforeSend: function (){
+				  $('#srForm .frm-ldg').show();
+			  },
 			  complete: function (){
 				  $('#srForm .frm-ldg').hide();
 			  },
@@ -124,6 +128,7 @@ $(function (){
 				  template = response.htmlTemplate;
 				  data = $.parseJSON(response.htmlMetaData);
 
+				  $('#srMetaFields input[name="wpName"]').val(response.name + ' by ' + wp.user.userName);
 				  if (data && template) {
 					  $('#srTemplate').html(Mustache.to_html(template, data));
 				  } else {
@@ -132,6 +137,7 @@ $(function (){
 							  + '</div>'
 					  );
 				  }
+				  $('#sr-form-fields').show();
 			  },
 			  error: function (){
 				  $('#srTemplate').html('<div class="alert alert-error">'
@@ -172,4 +178,53 @@ $(function (){
 		  }
 		});
 	});
+	
+	//photos
+	$('#view').on('click', '#sr-photo-trigger', function (){
+		$('#file-inp').click();
+	});
+	$('#file-inp').on('change', function (e){
+		var template, picpane, files, i;
+
+		files = this.files;
+		template = $('#TL_pic').html();
+		
+		for (i = 0; i < files.length; i++) {
+			picpane = Mustache.to_html(template, { name : files[i].name });
+			$('#sr-form-fields .sr-photo-row').append(picpane);
+			uploadAnImage(i, files[i]);
+		}
+	});
+	
+	var uploadAnImage = function (ind, file){
+		var xhr, fd, upload, loader;
+
+		fd = new FormData();
+		fd.append("images", file, file.name);
+
+		xhr = new XMLHttpRequest();
+        upload = xhr.upload;
+        loader = $('#sr-form-fields .sr-photo-row .sr-photo-col:eq(' + ind + ')').find('.sr-photo-prog');
+
+        upload.addEventListener("progress", function (ev) {
+	        if (ev.lengthComputable) {
+	        	loader.css('width', (ev.loaded / ev.total) * 100 + "%");
+	        }
+	    }, false);
+
+        upload.addEventListener("load", function (ev) {
+        	console.log('upload finished...'+xhr.responseText);
+        	loader.css('background-color', '#00FF00');
+	    }, false);
+
+        upload.addEventListener("error", function (ev) {
+        	console.log('upload failed...');
+        	loader.css({'width': '100%',
+        		'background-color': '#FF0000'
+        	});
+        }, false);
+
+	    xhr.open("POST", "http://work0protocol.appspot.com/resources/images/upload", true);
+	    xhr.send(fd);
+	}
 });

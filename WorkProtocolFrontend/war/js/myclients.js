@@ -78,7 +78,7 @@ $(function (){
 					  }
 				});
 			  } else {
-				  window.location.href = response.signInUrl + '?ru=' + window.location.href;
+				  window.location.href = 'http://work0protocol.appspot.com/SignIn?ru=' + window.location.href;
 			  }
 		  },
 		  error: function (e){
@@ -87,46 +87,5 @@ $(function (){
 							.show();
 			 $('.page-loading').hide();
 		  }
-	});
-
-	$('#profileForm').submit(function (e){
-		e.preventDefault();
-		$.ajax({
-			  url: "http://work0protocol.appspot.com/resources/vendors/",
-			  cache: false,
-			  type: 'POST',
-			  data: $(this).serialize(),
-			  dataType: 'json',
-			  xhrFields: {
-				  withCredentials: true
-			  },
-			  beforeSend: function (){
-				  $('#profileForm .btn-primary').attr('disabled', true);
-				  $('#page-status').removeClass('alert-success')
-	 							.removeClass('alert-error')
-	 							.hide();
-			  },
-			  complete: function (){
-				  $('#profileForm .btn-primary').removeAttr('disabled');
-			  },
-			  success: function (response){
-				 var statusMsg;
-
-				 if ($('#profileForm input[name="vendorId"]').length > 0){
-					 statusMsg = 'Profile updated successfully';					 
-				 } else {
-					 statusMsg = 'Profile created successfully';
-					 $('#profileForm').append('<input name="vendorId" type="hidden" value="' +response.id+ '">');
-				 }
-				 $('#page-status').html(statusMsg)
-					 .addClass('alert-success')
-					 .show();
-			  },
-			  error: function (){
-				 $('#page-status').html('Sorry, unable to process your request at this time')
-	 							.addClass('alert-error')
-	 							.show();
-			  }
-		});
 	});
 });
