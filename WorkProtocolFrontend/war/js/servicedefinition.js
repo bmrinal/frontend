@@ -196,7 +196,7 @@ $(function (){
 	wp = wp || {};
 	wp.jsproxy = {};
 	wp.jsproxy.callback = function (data){
-		var imgIdField, imgIdArr, newImgIdArr, imageIds;
+		var imgIdField, val, imgIdArr, newImgIdArr, imageIds;
 
 		$('#sr-photo-trigger').show();
 		$('#sr-photo-loading').hide();
@@ -206,7 +206,8 @@ $(function (){
 			newImgIdArr = imageIds.split(",");
 			
 			imgIdField = $('#sr-form-fields input[name="wpImageIds"]');
-			imgIdArr = imgIdField.val().split(",");
+			val = imgIdField.val();
+			imgIdArr = val ? val.split(",") : [];
 			$.each(newImgIdArr, function (ind, v){
 				picpane = Mustache.to_html(pictempl, { src : 'http://work0protocol.appspot.com/resources/images/'+v });
 				$('#sr-form-fields .sr-photo-row').append(picpane);
