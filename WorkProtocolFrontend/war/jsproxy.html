@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+	<script>
+	 (function (){
+		 var search, obj;
+		 debugger;
+		 search = location.search.substring(1);
+		 obj = search ? JSON.parse('{"' + search.replace(/&/g, '","').replace(/=/g,'":"') + '"}', function(key, value) { return key === "" ? value : decodeURIComponent(value); }) : {};
+
+		 window.parent.parent.wp.jsproxy.callback(obj);
+	 })();
+	</script>
+  </head>
+</html>

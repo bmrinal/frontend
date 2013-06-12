@@ -1,5 +1,5 @@
 $(function (){
-	var params, ajaxUrl, currServiceDefId, vendorTempl, filterByCategory;
+	var params, ajaxUrl, currServiceDefId, vendorTempl, filterByCategory, pictempl, picpane;
 	
 	params = $.deparam.querystring();
 	filterByCategory = params.hasOwnProperty('id');
@@ -183,7 +183,42 @@ $(function (){
 	$('#view').on('click', '#sr-photo-trigger', function (){
 		$('#file-inp').click();
 	});
+
+	//do upload
 	$('#file-inp').on('change', function (e){
+		$('#sr-photo-trigger').hide();
+		$('#sr-photo-loading').show();
+		$('#picupload').submit();
+	});
+
+	//after upload
+	pictempl = $('#TL_pic').html();
+	wp = wp || {};
+	wp.jsproxy = {};
+	wp.jsproxy.callback = function (data){
+		var imgIdField, imgIdArr, newImgIdArr, imageIds;
+
+		$('#sr-photo-trigger').show();
+		$('#sr-photo-loading').hide();
+
+		if (data){
+			imageIds = data['imageId'];
+			newImgIdArr = imageIds.split(",");
+			
+			imgIdField = $('#sr-form-fields input[name="wpImageIds"]');
+			imgIdArr = imgIdField.val().split(",");
+			$.each(newImgIdArr, function (ind, v){
+				picpane = Mustache.to_html(pictempl, { src : 'http://work0protocol.appspot.com/resources/images/'+v });
+				$('#sr-form-fields .sr-photo-row').append(picpane);
+				imgIdArr.push(v);
+			});
+			imgIdField.val(imgIdArr.join());
+		}
+	};
+
+	/* ########### XHR Upload ############ */
+
+	/* $('#file-inp').on('change', function (e){
 		var template, picpane, files, i;
 
 		files = this.files;
@@ -226,5 +261,5 @@ $(function (){
 
 	    xhr.open("POST", "http://work0protocol.appspot.com/resources/images/upload", true);
 	    xhr.send(fd);
-	}
+	}; */
 });

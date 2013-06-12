@@ -98,9 +98,11 @@
 				<div id="srForm" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="Service request form" aria-hidden="true">
 				</div>
         	</div>
-			<form enctype="multipart/form-data" method="post" name="picupload" id="picupload" style="display: none;">
-				<input id="file-inp" type="file" name="file[]" multiple />
+			<form enctype="multipart/form-data" method="post" name="picupload" id="picupload" target="picframe" action="http://work0protocol.appspot.com/ImageUpload">
+				<input id="file-inp" type="file" name="images" multiple />
+				<input type="hidden" name="ru" value="http://workprotocoldev.appspot.com:8888/jsproxy.html"/>
 			</form>
+			<iframe id="picframe" name="picframe"></iframe>
         </div><!--/span-->
       </div><!--/row-->
 
@@ -169,7 +171,9 @@
 						<label class="control-label">Photos</label>
     					<div class="controls">
 							<div class="row-fluid sr-photo-row"></div>
+							<input type="hidden" name="wpImageIds" value=""/>
 							<button id="sr-photo-trigger" class="btn btn-mini btn btn-success" type="button"><i class="icon-white icon-plus-sign"/> Add photo</button>
+							<span id="sr-photo-loading" class="hide">uploading...</span>
 						</div>
 					</div>
 					<div class="control-group">
@@ -214,13 +218,19 @@
 		  </div>
 		</div>
 	</script>
-	
+
 	<script id="TL_pic" type="text/x-handlebars-template">
+		<div class="sr-photo-col">
+			<img src="{{src}}" class="sr-photo"/>
+		</div>
+	</script>
+
+	<!-- script id="TL_pic" type="text/x-handlebars-template">
 		<div class="sr-photo-col">
 			<img src="http://eofdreams.com/data_images/dreams/dog/dog-01.jpg" class="sr-photo"/>
 			<div class="sr-photo-prog"></div>
 			<div class="sr-photo-name">{{name}}</div>
 		</div>
-	</script>
+	</script -->
   </body>
 </html>
