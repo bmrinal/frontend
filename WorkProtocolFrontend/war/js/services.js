@@ -4,9 +4,9 @@ $(function (){
 	params = $.deparam.querystring();
 	filterByCategory = params.hasOwnProperty('id');
 	if (filterByCategory === true) {
-		ajaxUrl = "http://work0protocol.appspot.com/resources/categories/" + params.id;
+		ajaxUrl = wp.cfg['REST_HOST']+'/resources/categories/' + params.id;
 	} else {
-		ajaxUrl = "http://work0protocol.appspot.com/resources/services/list";
+		ajaxUrl = wp.cfg['REST_HOST']+'/resources/services/list';
 	}
 	$.ajax({
 	  url: ajaxUrl,
@@ -24,6 +24,7 @@ $(function (){
 		  } else {
 			  data.service = response;
 		  }
+		  data['REST_HOST'] = wp.cfg['REST_HOST'];
 		  servicesHTML = $(template(data));
  
 		  servicesHTML.imagesLoaded(function (){
@@ -61,10 +62,11 @@ $(function (){
 	});
 	
 	$('#srForm').on('shown', function (){
+		$('#srForm form').prop('action', wp.cfg['REST_HOST']+'/resources/servicerequests');
 		if (currServiceId) {
 			$("#srForm .serviceData input[name='serviceId']").val(currServiceId);
 			$.ajax({
-			  url: 'http://work0protocol.appspot.com/resources/services/'+currServiceId,
+			  url: wp.cfg['REST_HOST']+'/resources/services/'+currServiceId,
 			  cache: false,
 			  dataType: "jsonp",
 			  complete: function (){
@@ -102,6 +104,7 @@ $(function (){
 		source = $('#TL_vendors').html();
 		template = Handlebars.compile(source);
 		data = {'vendor': param};
+		data['REST_HOST'] = wp.cfg['REST_HOST'];
 		$('#srForm .vendors').html(template(data));
 	}
 	

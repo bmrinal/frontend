@@ -1,6 +1,6 @@
 $(function (){
 	$.ajax({
-	  url: "http://work0protocol.appspot.com/resources/categories/list",
+	  url: wp.cfg['REST_HOST']+'/resources/categories/list',
 	  cache: false,
 	  dataType: "jsonp",
 	  complete: function (){

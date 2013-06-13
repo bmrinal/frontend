@@ -1,6 +1,6 @@
 $(function (){
 	$.ajax({
-	  url: "http://work0protocol.appspot.com/resources/vendors/list",
+	  url: wp.cfg['REST_HOST']+'/resources/vendors/list',
 	  cache: false,
 	  dataType: "json",
 	  complete: function (){
@@ -13,6 +13,7 @@ $(function (){
 		  template = Handlebars.compile(source);
 		  data = {};
 		  data.vendor = response;
+		  data['REST_HOST'] = wp.cfg['REST_HOST'];
 		  vendorsHTML = $(template(data));
 		  
 		  vendorsHTML.imagesLoaded(function (){

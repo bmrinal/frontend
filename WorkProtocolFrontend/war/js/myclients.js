@@ -1,6 +1,6 @@
 $(function (){
 	$.ajax({
-		  url: "http://work0protocol.appspot.com/resources/user",
+		  url: wp.cfg['REST_HOST']+'/resources/user',
 		  dataType: 'json',
 		  cache: false,
 		  xhrFields: {
@@ -47,7 +47,7 @@ $(function (){
 					  }
 				  });
 				  $.ajax({
-					  url: "http://work0protocol.appspot.com/resources/appointment/myappointments",
+					  url: wp.cfg['REST_HOST']+'/resources/appointment/myappointments',
 					  dataType: 'json',
 					  cache: false,
 					  xhrFields: {
@@ -78,7 +78,7 @@ $(function (){
 					  }
 				});
 			  } else {
-				  window.location.href = 'http://work0protocol.appspot.com/SignIn?ru=' + window.location.href;
+				  window.location.href = wp.cfg['REST_HOST']+'/SignIn?ru=' + window.location.href;
 			  }
 		  },
 		  error: function (e){

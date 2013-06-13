@@ -2,7 +2,7 @@ $(function (){
 	var currServiceReqId, vendorId;
 	
 	$.ajax({
-		  url: "http://work0protocol.appspot.com/resources/user",
+		  url: wp.cfg['REST_HOST']+'/resources/user',
 		  dataType: 'json',
 		  cache: false,
 		  xhrFields: {
@@ -16,7 +16,7 @@ $(function (){
 				    	return;
 				    }
 					$.ajax({
-					  url: 'http://work0protocol.appspot.com/resources/vendors/myvendor/',
+					  url: wp.cfg['REST_HOST']+'/resources/vendors/myvendor/',
 					  cache: false,
 					  xhrFields: {
 						  withCredentials: true
@@ -47,9 +47,9 @@ $(function (){
 							  });
 							  vendorId = response.id;							  
 							  $.ajax({
-								  url: "http://work0protocol.appspot.com/resources/vendors/" + vendorId,
+								  url: wp.cfg['REST_HOST']+'/resources/vendors/' + vendorId,
 								  cache: false,
-								  dataType: "json",
+								  dataType: "jsonp",
 								  complete: function (){
 									  $('#view .loading').hide();
 								  },
@@ -92,7 +92,7 @@ $(function (){
 					  }	
 					});				  
 			  } else {
-				  window.location.href = 'http://work0protocol.appspot.com/SignIn?ru=' + window.location.href;
+				  window.location.href = wp.cfg['REST_HOST']+'/SignIn?ru=' + window.location.href;
 			  }
 		  },
 		  error: function (){
@@ -120,9 +120,10 @@ $(function (){
 	});
 
 	$('#svcRespDialog').on('shown', function (){
+		$('#svcRespDialog .responseForm').prop('action', wp.cfg['REST_HOST']+'/resources/serviceresponses');
 		if (currServiceReqId) {
 			$.ajax({
-			  url: 'http://work0protocol.appspot.com/resources/servicerequests/'+currServiceReqId,
+			  url: wp.cfg['REST_HOST']+'/resources/servicerequests/'+currServiceReqId,
 			  cache: false,
 			  dataType: "jsonp",
 			  complete: function (){

@@ -1,7 +1,7 @@
 $(function (){
 	var profileId;
 	$.ajax({
-		  url: "http://work0protocol.appspot.com/resources/user",
+		  url: wp.cfg['REST_HOST']+'/resources/user',
 		  dataType: 'json',
 		  cache: false,
 		  xhrFields: {
@@ -28,7 +28,7 @@ $(function (){
 							  'active': true
 						  }];
 					  $.ajax({
-						  url: "http://work0protocol.appspot.com/resources/vendors/myvendor",
+						  url: wp.cfg['REST_HOST']+'/resources/vendors/myvendor',
 						  dataType: 'json',
 						  cache: false,
 						  xhrFields: {
@@ -46,7 +46,7 @@ $(function (){
 								  dataType: 'html',
 								  success: function(resp) {
 									  $('#profileForm').prop('method', 'POST').html(resp)
-									  	.prop('action', 'http://work0protocol.appspot.com/resources/vendors/')
+									  	.prop('action', wp.cfg['REST_HOST']+'/resources/vendors/')
 									  	.show();
 									  if (response.id) {
 										  $('#profileForm').append('<input name="'+profileId+'" type="hidden" value="' +response.id+ '">');
@@ -125,7 +125,7 @@ $(function (){
 						  dataType: 'html',
 						  success: function(resp) {
 							  $('#profileForm').prop('method', 'GET').html(resp)
-							  	.prop('action', 'http://work0protocol.appspot.com/resources/user/insert')
+							  	.prop('action', wp.cfg['REST_HOST']+'/resources/user/insert')
 							  	.show();
 							  if (response.id) {
 								  $('#profileForm').append('<input name="'+profileId+'" type="hidden" value="' +response.userId+ '">');
@@ -142,7 +142,7 @@ $(function (){
 					  }
 				  });
 			  } else {
-				  window.location.href = 'http://work0protocol.appspot.com/SignIn?ru=' + window.location.href;
+				  window.location.href = wp.cfg['REST_HOST']+'/SignIn?ru=' + window.location.href;
 			  }
 		  },
 		  error: function (e){

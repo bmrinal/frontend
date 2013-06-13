@@ -111,12 +111,14 @@
     <!-- javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
+    <!-- 1. Libraries -->
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 	<script src="lib/mustache.js"></script>
 	<script src="lib/handlebars.js"></script>
 	<script src="lib/jquery.ba-bbq.js"></script>
 	<script src="lib/jquery.masonry.js"></script>
 	<script src="bootstrap/bootstrap.js"></script>
+	<!-- 2. Application javascripts - Order is importatnt! -->
 	<script src="js/app.js"></script>
 	<script src="js/services.js"></script>
 	<script id="TL_services" type="text/x-handlebars-template">
@@ -125,7 +127,7 @@
 					<a href="#">
 						<div class="srvc-name">{{id}}{{name}}</div>
 						{{#each images}}
-							<img src="http://work0protocol.appspot.com/resources/images/{{.}}"/>
+							<img src="{{../../REST_HOST}}/resources/images/{{.}}"/>
 						{{/each}}
 						{{#if description}}
 							<div class="srvc-desc">{{description}}</div>
@@ -145,7 +147,7 @@
 		  </div>
 		  <div class="modal-body">
 		    <span class="frm-ldg">loading ...</span>
-			<form class="form-horizontal" action="http://work0protocol.appspot.com/resources/servicerequests">
+			<form class="form-horizontal">
 			<div class="vendors-wrap">
 				<h5>Choose vendor(s)</h5>
 				<div class="serviceData">
@@ -171,7 +173,7 @@
       				<label class="checkbox">
         				<input type="checkbox" name="vendorIds" value="{{id}}"> {{name}}
 						{{#each images}}
-							<img class="vendor-img" src="http://work0protocol.appspot.com/resources/images/{{.}}"/>
+							<img class="vendor-img" src="{{../../REST_HOST}}/resources/images/{{.}}"/>
 						{{/each}}
       				</label>
 					<div class="vendor-desc">{{description}}</div>

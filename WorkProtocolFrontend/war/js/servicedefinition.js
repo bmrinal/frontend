@@ -4,12 +4,12 @@ $(function (){
 	params = $.deparam.querystring();
 	filterByCategory = params.hasOwnProperty('id');
 	if (filterByCategory === true) {
-		ajaxUrl = "http://work0protocol.appspot.com/resources/categories/" + params.id;
+		ajaxUrl = wp.cfg['REST_HOST']+'/resources/categories/' + params.id;
 	} else {
-		ajaxUrl = "http://work0protocol.appspot.com/resources/servicedefinitions/list";
+		ajaxUrl = wp.cfg['REST_HOST']+'/resources/servicedefinitions/list';
 	}
 	$.ajax({
-	  url: "http://work0protocol.appspot.com/resources/user",
+	  url: wp.cfg['REST_HOST']+'/resources/user',
 	  dataType: 'json',
 	  cache: false,
 	  xhrFields: {
@@ -59,6 +59,7 @@ $(function (){
 					  } else {
 						  data.serviceDefinition = response;
 					  }
+					  data['REST_HOST'] = wp.cfg['REST_HOST'];
 					  servicesHTML = $(template(data));
 			 
 					  servicesHTML.imagesLoaded(function (){
@@ -82,7 +83,7 @@ $(function (){
 				  }
 				});				
 		  } else {
-			  window.location.href = 'http://work0protocol.appspot.com/SignIn?ru=' + window.location.href;
+			  window.location.href = wp.cfg['REST_HOST']+'/SignIn?ru=' + window.location.href;
 		  }
 	  },
 	  error: function (e){
@@ -106,12 +107,13 @@ $(function (){
 		$('#sr-form-fields').hide();
 		$('#srForm').modal();
 	});
-	
+
 	$('#srForm').on('shown', function (){
+		$('#sr-form-fields').prop('action', wp.cfg['REST_HOST']+'/resources/services');
 		if (currServiceDefId) {
 			$("#srForm input[name='serviceDefinitionId']").val(currServiceDefId);
 			$.ajax({
-			  url: 'http://work0protocol.appspot.com/resources/servicedefinitions/'+currServiceDefId,
+			  url: wp.cfg['REST_HOST']+'/resources/servicedefinitions/'+currServiceDefId,
 			  cache: false,
 			  xhrFields: {
 				  withCredentials: true
@@ -179,7 +181,9 @@ $(function (){
 		});
 	});
 	
-	//photos
+	//photos - set up
+	$('#picupload').prop('action', wp.cfg['REST_HOST']+'/ImageUpload');
+	$('#picupload input[name="ru"]').val('http://'+window.location.host+'/jsproxy.html');
 	$('#view').on('click', '#sr-photo-trigger', function (){
 		$('#file-inp').click();
 	});
@@ -193,7 +197,6 @@ $(function (){
 
 	//after upload
 	pictempl = $('#TL_pic').html();
-	wp = wp || {};
 	wp.jsproxy = {};
 	wp.jsproxy.callback = function (data){
 		var imgIdField, val, imgIdArr, newImgIdArr, imageIds;
@@ -209,7 +212,7 @@ $(function (){
 			val = imgIdField.val();
 			imgIdArr = val ? val.split(",") : [];
 			$.each(newImgIdArr, function (ind, v){
-				picpane = Mustache.to_html(pictempl, { src : 'http://work0protocol.appspot.com/resources/images/'+v });
+				picpane = Mustache.to_html(pictempl, { src : wp.cfg['REST_HOST']+'/resources/images/'+v });
 				$('#sr-form-fields .sr-photo-row').append(picpane);
 				imgIdArr.push(v);
 			});
@@ -260,7 +263,7 @@ $(function (){
         	});
         }, false);
 
-	    xhr.open("POST", "http://work0protocol.appspot.com/resources/images/upload", true);
+	    xhr.open("POST", wp.cfg['REST_HOST']+'/resources/images/upload', true);
 	    xhr.send(fd);
 	}; */
 });

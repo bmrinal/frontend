@@ -1,8 +1,12 @@
 var wp = wp || {};
 
 $(function (){
+	wp.cfg = {}; //to store config data
+	wp.user = {}; //to store user data
+
+	wp.cfg['REST_HOST'] = 'http://work0protocol.appspot.com';
 	$.ajax({
-		  url: "http://work0protocol.appspot.com/resources/user",
+		  url: wp.cfg['REST_HOST']+'/resources/user',
 		  dataType: 'json',
 		  cache: false,
 		  xhrFields: {

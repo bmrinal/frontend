@@ -2,7 +2,7 @@ $(function (){
 	var currServiceId;
 
 	$.ajax({
-	  url: "http://work0protocol.appspot.com/resources/user",
+	  url: wp.cfg['REST_HOST']+'/resources/user',
 	  dataType: 'json',
 	  cache: false,
 	  xhrFields: {
@@ -37,7 +37,7 @@ $(function (){
 				  },
 			 });
 			$.ajax({
-				  url: "http://work0protocol.appspot.com/resources/services/myservices",
+				  url: wp.cfg['REST_HOST']+'/resources/services/myservices/',
 				  cache: false,
 				  dataType: "json",
 				  xhrFields: {
@@ -50,6 +50,7 @@ $(function (){
 					  var template, data;
 					  data = {};
 					  data.service = response;
+					  data['REST_HOST'] = wp.cfg['REST_HOST'];
 					  template = Handlebars.compile($("#TL_services").html());
 				
 					  $('#view .services').html(template(data));
@@ -63,7 +64,7 @@ $(function (){
 				  }
 				});
 		  } else {
-			  window.location.href = 'http://work0protocol.appspot.com/SignIn?ru=' + window.location.href;
+			  window.location.href = wp.cfg['REST_HOST']+'/SignIn?ru=' + window.location.href;
 		  }
 	  },
 	  error: function (e){
@@ -90,7 +91,7 @@ $(function (){
 	$('#srvc-details').on('shown', function (){
 		if (currServiceId) {
 			$.ajax({
-			  url: 'http://work0protocol.appspot.com/resources/services/'+currServiceId,
+			  url: wp.cfg['REST_HOST']+'/resources/services/'+currServiceId,
 			  cache: false,
 			  dataType: "jsonp",
 			  complete: function (){

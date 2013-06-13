@@ -4,7 +4,7 @@ $(function (){
 	params = $.deparam.querystring();
 	BUSYEVENT_ID = 'busy';
 	$.ajax({
-	  url: 'http://work0protocol.appspot.com/resources/calendar/freebusy?vendorId=' + params.vendorId,
+	  url: wp.cfg['REST_HOST']+'resources/calendar/freebusy?vendorId=' + params.vendorId,
 	  cache: false,
 	  dataType: "json",
 	  complete: function (){
@@ -85,7 +85,7 @@ $(function (){
 			};
 
 			$.ajax({
-				url: 'http://work0protocol.appspot.com/resources/calendar/event',
+				url: wp.cfg['REST_HOST']+'/resources/calendar/event',
 				cache: false,
 				data: qsParams,
 				dataType: "jsonp",
