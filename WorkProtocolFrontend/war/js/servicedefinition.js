@@ -180,7 +180,26 @@ $(function (){
 		  }
 		});
 	});
-	
+
+	//cost fields
+	$('#view').on('change', 'input[name="wpServicePaymentType"]', function (){
+		var val, fc, cph;
+
+		val = $(this).val();
+
+		fc = $('#wpFixedCost');
+		cph = $('#wpCostPerHour');
+		
+		fc.hide().prop('disabled', true);
+		cph.hide().prop('disabled', true);
+
+		if (val === 'fixedcost'){
+			fc.show().prop('disabled', false).focus();
+		} else if (val === 'timeandmaterials'){
+			cph.show().prop('disabled', false).focus();
+		}
+	});
+
 	//photos - set up
 	$('#picupload').prop('action', wp.cfg['REST_HOST']+'/ImageUpload');
 	$('#picupload input[name="ru"]').val('http://'+window.location.host+'/jsproxy.html');

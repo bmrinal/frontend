@@ -190,22 +190,22 @@
 						</div>
 					</div>
 					<div class="control-group">
-						<label class="control-label" for="wpCostPerHour">Cost per hour</label>
-    					<div class="controls">
-							<input type="text" id="wpCostPerHour" name="wpCostPerHour">
-						</div>
-					</div>
-					<div class="control-group">
-						<label class="control-label" for="wpFixedCost">Fixed cost</label>
-    					<div class="controls">
-							<input type="text" id="wpFixedCost" name="wpFixedCost">
-						</div>
-					</div>
-					<div class="control-group">
-						<label class="control-label" for="wpOpenToQuote">Open to quote</label>
+						<label class="control-label" for="wpServicePaymentType">Open to quote</label>
 						<div class="controls">
-							<label class="checkbox">
-								<input type="checkbox" name="wpOpenToQuote" id="wpOpenToQuote">
+							<label class="radio">
+								<input type="radio" name="wpServicePaymentType" value="opentoquote" checked>Open to quote
+							</label>
+							<label class="radio">
+								<input type="radio" name="wpServicePaymentType" value="fixedcost">Fixed Cost
+							</label>
+							<label>
+								<input class="hide" type="text" id="wpFixedCost" name="wpFixedCost" placeholder="Enter fixed cost" disabled="true">
+							</label>
+							<label class="radio">
+								<input type="radio" name="wpServicePaymentType" value="timeandmaterials">Time and Materials
+							</label>
+							<label>
+								<input class="hide" type="text" id="wpCostPerHour" name="wpCostPerHour" placeholder="Enter cost per hour" disabled="true">
 							</label>
 						</div>
 					</div>
