@@ -183,20 +183,18 @@ $(function (){
 
 	//cost fields
 	$('#view').on('change', 'input[name="wpServicePaymentType"]', function (){
-		var val, fc, cph;
+		var val, checked, fc, cph;
 
 		val = $(this).val();
+		checked = this.checked;
 
 		fc = $('#wpFixedCost');
 		cph = $('#wpCostPerHour');
-		
-		fc.hide().prop('disabled', true);
-		cph.hide().prop('disabled', true);
 
 		if (val === 'fixedcost'){
-			fc.show().prop('disabled', false).focus();
+			$('#wpFixedCost').toggle(checked).prop('disabled', !checked).focus();
 		} else if (val === 'timeandmaterials'){
-			cph.show().prop('disabled', false).focus();
+			$('#wpCostPerHour').toggle(checked).prop('disabled', !checked).focus();
 		}
 	});
 
