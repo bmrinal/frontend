@@ -48,7 +48,13 @@ $(function (){
 	  }
 	});
 
-	$('#view').on('click', '.service', function(e){
+	$('#view').on('click', '.wp-appoint', function(e){
+		e.stopPropagation();
+
+		window.location.href = '/bookappointment.html?serviceId='+ $(this).data('srvcid') +'&vendorId=' + $(this).data('vendorid');
+	});
+
+	$('#view').on('click', '.wp-quote', function(e){
 		var source, template, data, html;
 
 		e.preventDefault();

@@ -123,16 +123,18 @@
 	<script src="js/services.js"></script>
 	<script id="TL_services" type="text/x-handlebars-template">
 			{{#each service}}
-		  		<div class="service" data-srvcid="{{id}}">
-					<a href="#">
-						<div class="srvc-name">{{id}}{{name}}</div>
-						{{#each images}}
-							<img src="{{../../REST_HOST}}/resources/images/{{.}}"/>
-						{{/each}}
-						{{#if description}}
-							<div class="srvc-desc">{{description}}</div>
-						{{/if}}
-					</a>
+		  		<div class="service">
+					<div class="srvc-name">{{id}}{{name}}</div>
+					{{#each images}}
+						<img src="{{../../REST_HOST}}/resources/images/{{.}}"/>
+					{{/each}}
+					{{#if description}}
+						<div class="srvc-desc">{{description}}</div>
+					{{/if}}
+					<button class="wp-appoint btn btn-mini btn-warning" type="button" data-vendorId="{{wpVendorId}}" data-srvcid="{{id}}">Book appointment</button>
+					{{#if wpOpenToQuote}}
+						<button class="wp-quote btn btn-mini btn-warning" type="button" data-srvcid="{{id}}">Request quote</button>
+					{{/if}}
 				</div>
 			{{/each}}
 			{{^service}}
