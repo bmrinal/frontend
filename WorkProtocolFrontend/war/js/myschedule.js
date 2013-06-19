@@ -32,6 +32,9 @@ $(function (){
 						  }];
 				  } else {
 					  tnData = [{
+							  'text': 'My requests',
+							  'href': '/mybusiness.html'
+						  },{
 							  'text': 'My appointments',
 							  'href': '/myclients.html'
 						  }, {

@@ -29,6 +29,9 @@ $(function (){
 						  }];
 				  } else {
 					  tnData = [{
+							  'text': 'My requests',
+							  'href': '/mybusiness.html'
+						  },{
 							  'text': 'My appointments',
 							  'href': '#',
 							  'active': true
@@ -42,9 +45,7 @@ $(function (){
 				  }
 				  wp.mynav.load({
 					  targetSelector: '#top-nav',
-					  data : {
-						  tab : tnData
-					  }
+					  data : {tab : tnData}
 				  });
 				  $.ajax({
 					  url: wp.cfg['REST_HOST']+'/resources/appointment/myappointments',

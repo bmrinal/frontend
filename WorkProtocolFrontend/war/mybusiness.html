@@ -27,8 +27,7 @@
     </style>
     <link href="/bootstrap/bootstrap-responsive.css" rel="stylesheet">
     <link href="/css/app.css" rel="stylesheet">
-    <link href="/css/services.css" rel="stylesheet">
-    <link href="/css/vendor.css" rel="stylesheet">
+    <link href="/css/mybusiness.css" rel="stylesheet">
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="/bootstrap/html5shiv.js"></script>
@@ -92,8 +91,9 @@
 				<span class="loading"> loading service requests ... </span>
 				<div id="page-status" class="alert alert-success hide"></div>				
 				<div class="srs"></div>
-				<div id="svcRespDialog" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="Service response form" aria-hidden="true">
-				</div>
+				<div id="svcRespDialog" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="Service response form" aria-hidden="true"></div>
+				<div id="svcRespDialogRO" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="Service response form" aria-hidden="true"></div>
+				<div id="svcReqtDialog" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="Service response form" aria-hidden="true"></div>
         	</div>
         </div><!--/span-->
       </div><!--/row-->
@@ -127,15 +127,31 @@
 	    <tr class="well">
 	      <th>Service Id</th>
 	      <th>Created Time</th>
+		  <th>Responses</th>
 	    </tr>
 	  </thead>
 	  <tbody>
 		{{#each serviceRequests}}
-			<tr data-srvcreqid="{{id}}">
-		      <td>
+			<tr>
+		      <td class="srv-req" data-srvcreqid="{{id}}">
 				<a href="#">{{id}}</a>
 			  </td>
 		      <td>{{createdDate}}</td>
+			  <td class="srv-res">
+				{{#if responses}}
+					{{#each responses}}
+						<div>
+							<a class="srvc-respro" data-srvcreqid="{{id}}" data-amount="{{amount}}" data-comments="{{comments}}" href="#">{{id}}</a>
+						</div>
+					{{/each}}
+				{{else}}
+					{{#if ../../isVendor}}
+						<button class="srvc-resp btn btn-mini btn btn-warning" data-srvcreqid="{{id}}" type="button">Respond</button>
+					{{else}}
+						--
+					{{/if}}
+				{{/if}}
+			  </td>
 		    </tr>
 		{{/each}}
 		
@@ -148,15 +164,27 @@
 	</table>
 	</script>
 
-	<script id="TL_srsModal" type="text/x-handlebars-template">	
+	<script id="TL_sreqtModal" type="text/x-handlebars-template">	
 	  <div class="modal-header">
 	    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	    <h3 id="myModalLabel">Submit service response for {{name}}</h3>
+	    <h3 id="myModalLabel">Service request {{id}}</h3>
 	  </div>
 	  <div class="modal-body">
-	    <span class="frm-ldg">loading ...</span>
-	    <form class="serviceForm form-horizontal"></form>
-		<form class="responseForm hide form-horizontal">
+		<span class="frm-ldg">loading...</span>
+		<form class="serviceForm form-horizontal"></form>
+	  </div>
+	  <div class="modal-footer">
+	    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+	  </div>
+	</script>
+	
+	<script id="TL_srespModal" type="text/x-handlebars-template">	
+	  <div class="modal-header">
+	    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	    <h3 id="myModalLabel">Service response {{id}}</h3>
+	  </div>
+	  <div class="modal-body">
+		<form class="responseForm form-horizontal">
 			<div class="control-group">
 				 <label class="control-label" for="inputAmount">Amount</label>
 				 <div class="controls">
@@ -170,14 +198,39 @@
     			 </div>
 			</div>
 			<input type="hidden" name="serviceRequestId" value="{{id}}" />
-			<input type="hidden" name="vendorId" value="{{vendorId}}" />
 		</form>
 	  </div>
 	  <div class="modal-footer">
 		<span class="hide">submitting  ...</span>
 	    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-	    <button class="btn btn-primary" data-action="next">Next</button>
+		<button class="btn btn-primary sr-resp">Submit</button>
 	  </div>
+	</script>
+
+	<script id="TL_srespRO" type="text/x-handlebars-template">
+	  <div class="modal-header">
+	    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	    <h3 id="myModalLabel">Service response {{id}}</h3>
+	  </div>
+	  <div class="modal-body">
+		<form class="responseForm form-horizontal">
+			<div class="control-group">
+				 <label class="control-label" for="inputAmount">Amount</label>
+				 <div class="controls">
+      				<input type="text" id="inputAmount" name="amount" placeholder="Amount" value="{{amount}}" readonly />
+    			 </div>
+			</div>
+			<div class="control-group">
+				 <label class="control-label" for="inputComments">Comments</label>
+				 <div class="controls">
+      				<textarea id="inputComments" name="comments" placeholder="Comments" readonly>{{comments}}</textarea>
+    			 </div>
+			</div>
+		</form>
+	  </div>
+	  <div class="modal-footer">
+	    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+ 	  </div>
 	</script>
   </body>
 </html>
