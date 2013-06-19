@@ -216,24 +216,18 @@ $(function (){
 	pictempl = $('#TL_pic').html();
 	wp.jsproxy = {};
 	wp.jsproxy.callback = function (data){
-		var imgIdField, val, imgIdArr, newImgIdArr, imageIds;
+		var imageIds;
 
 		$('#sr-photo-trigger').show();
 		$('#sr-photo-loading').hide();
 
 		if (data){
-			imageIds = data['imageId'];
-			newImgIdArr = imageIds.split(",");
-			
-			imgIdField = $('#sr-form-fields input[name="wpImageIds"]');
-			val = imgIdField.val();
-			imgIdArr = val ? val.split(",") : [];
-			$.each(newImgIdArr, function (ind, v){
-				picpane = Mustache.to_html(pictempl, { src : wp.cfg['REST_HOST']+'/resources/images/'+v });
+			imageIds = data['imageId'].split(",");
+
+			$.each(imageIds, function (ind, v){
+				picpane = Mustache.to_html(pictempl, { src : wp.cfg['REST_HOST']+'/resources/images/'+v, imageId: v });
 				$('#sr-form-fields .sr-photo-row').append(picpane);
-				imgIdArr.push(v);
 			});
-			imgIdField.val(imgIdArr.join());
 		}
 	};
 

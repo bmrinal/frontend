@@ -124,7 +124,7 @@
 	<script id="TL_services" type="text/x-handlebars-template">
 			{{#each service}}
 		  		<div class="service">
-					<div class="srvc-name">{{id}}{{name}}</div>
+					<div class="srvc-name">{{wpName}} ({{id}})</div>
 					{{#each images}}
 						<img src="{{../../REST_HOST}}/resources/images/{{.}}"/>
 					{{/each}}

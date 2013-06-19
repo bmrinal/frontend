@@ -173,7 +173,6 @@
 						<label class="control-label">Photos</label>
     					<div class="controls">
 							<div class="row-fluid sr-photo-row"></div>
-							<input type="hidden" name="wpImageIds" value=""/>
 							<button id="sr-photo-trigger" class="btn btn-mini btn btn-success" type="button"><i class="icon-white icon-plus-sign"/> Add photo</button>
 							<span id="sr-photo-loading" class="hide">uploading...</span>
 						</div>
@@ -190,11 +189,16 @@
 						</div>
 					</div>
 					<div class="control-group">
-						<label class="control-label" for="wpOpenToQuote">Open to quote</label>
+						<label class="control-label"></label>
 						<div class="controls">
 							<label class="checkbox">
 								<input type="checkbox" name="wpOpenToQuote" value="opentoquote">Open to quote
 							</label>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label">Payment type</label>
+						<div class="controls">
 							<label class="checkbox">
 								<input type="checkbox" name="wpServicePaymentType" value="fixedcost">Fixed Cost
 							</label>
@@ -210,9 +214,18 @@
 						</div>
 					</div>
 					<div class="control-group">
-						<label class="control-label" for="wpDuration">Duration (in mins)</label>
+						<label class="control-label" for="wpDuration">Duration</label>
     					<div class="controls">
-							<input type="text" id="wpDuration" name="wpDuration">
+							<select id="wpDuration" name="wpDuration">
+								<option value="15">15 mins</option>
+								<option value="30">30 mins</option>
+								<option value="45">45 mins</option>
+								<option value="60">1 hour</option>
+								<option value="75">1 hour and 15 mins</option>
+								<option value="90">1 hour and 30 mins</option>
+								<option value="105">1 hour and 45 mins</option>
+								<option value="120">2 hours</option>
+							</select>
 						</div>
 					</div>
 				</div>
@@ -230,6 +243,7 @@
 	<script id="TL_pic" type="text/x-handlebars-template">
 		<div class="sr-photo-col">
 			<img src="{{src}}" class="sr-photo"/>
+			<input type="hidden" name="wpImageIds" value="{{imageId}}"/>
 		</div>
 	</script>
 
