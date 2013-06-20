@@ -1,5 +1,5 @@
 $(function (){
-	var params, ajaxUrl, currServiceId, vendorTempl, filterByCategory;
+	var params, ajaxUrl, currServiceId, currServiceDefId, vendorTempl, filterByCategory;
 	
 	params = $.deparam.querystring();
 	filterByCategory = params.hasOwnProperty('id');
@@ -48,12 +48,17 @@ $(function (){
 	  }
 	});
 
+	//appointment
 	$('#view').on('click', '.wp-appoint', function(e){
 		e.stopPropagation();
 
-		window.location.href = '/bookappointment.html?serviceId='+ $(this).data('srvcid') +'&vendorId=' + $(this).data('vendorid');
+		window.location.href = '/bookappointment.html?serviceId='
+				+ $(this).data('srvcid') + '&vendorId='
+				+ $(this).data('vendorid') + '&duration='
+				+ $(this).data('duration');
 	});
 
+	//service request
 	$('#view').on('click', '.wp-quote', function(e){
 		var source, template, data, html;
 
@@ -64,15 +69,17 @@ $(function (){
 		data.name = $('.srvc-name', this).text();
 		$('#srForm').html(template(data));
 		currServiceId = $(this).data('srvcid'); //store service in closure for easy modal access
+		currServiceDefId = $(this).data('srvcdefid');
 		$('#srForm').modal();
 	});
 	
 	$('#srForm').on('shown', function (){
+		//fetching service request form
 		$('#srForm form').prop('action', wp.cfg['REST_HOST']+'/resources/servicerequests');
-		if (currServiceId) {
+		if (currServiceDefId) {
 			$("#srForm .serviceData input[name='serviceId']").val(currServiceId);
 			$.ajax({
-			  url: wp.cfg['REST_HOST']+'/resources/services/'+currServiceId,
+			  url: wp.cfg['REST_HOST']+'/resources/servicedefinitions/'+currServiceDefId,
 			  cache: false,
 			  dataType: "jsonp",
 			  complete: function (){
@@ -80,15 +87,14 @@ $(function (){
 			  },
 			  success: function (response){
 				  var template, data;
-				  template = response.htmlTemplate;
-				  data = $.parseJSON(response.metaDataInstance);
+				  template = response.requestHtmlTemplate;
+				  data = $.parseJSON(response.requestHtmlMetaData);
 
 				  if (data && template) {
 					  $('#srTemplate').html(Mustache.to_html(template, data));
-					  vendorTempl(response.vendors || {});
 				  } else {
 					  $('#srTemplate').html('<div class="alert  alert-error">'
-							  + 'Sorry, service form unavailable'
+							  + 'Sorry, service request form unavailable'
 							  + '</div>'
 					  );
 				  }
@@ -99,6 +105,19 @@ $(function (){
 						  + 'Sorry, unable to load service request form'
 						  + '</div>'
 				  );
+			  }
+			});
+		}
+
+		//fetching vendor details
+		if (currServiceId) {
+			$("#srForm .serviceData input[name='serviceId']").val(currServiceId);
+			$.ajax({
+			  url: wp.cfg['REST_HOST']+'/resources/services/'+currServiceId,
+			  cache: false,
+			  dataType: "jsonp",
+			  success: function (response){
+				  vendorTempl(response.vendors || {});
 			  }
 			});
 		}

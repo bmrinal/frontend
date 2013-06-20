@@ -13,6 +13,7 @@ $(function (){
 		  },
 		  success: function (response){
 			  if(response && response.userId){
+				  $('#addEvent input[name="phone"]').val(response.mobilePhone || '');
 				  $.ajax({
 					  url: wp.cfg['REST_HOST']+'/resources/calendar/freebusy?serviceId='+ params.serviceId +'&vendorId=' + params.vendorId,
 					  cache: false,
@@ -64,7 +65,8 @@ $(function (){
 							  date: d+1,
 							  defaultView: 'agendaWeek',
 							  selectable: true,
-							  selectHelper: true,
+							  slotMinutes:  parseInt(params.duration, 10),
+							  selectHelper: false,
 							  select: function(s, e, allday) {
 								  start = s;
 								  end = e;
@@ -83,7 +85,7 @@ $(function (){
 						  //book new appointment
 						  $('#addEvent .appt-book').on('click', function (){
 							  var qsParams, stStr, etStr;
-							  
+
 							  stStr = (start.getMonth() + 1) + '-' + start.getDate() + '-' + start.getFullYear()
 							  + ' ' + start.getHours() + ':' + start.getMinutes() + ':' + start.getSeconds();
 							  etStr = (end.getMonth() + 1) + '-' + end.getDate() + '-' + end.getFullYear()

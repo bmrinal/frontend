@@ -125,15 +125,22 @@
 			{{#each service}}
 		  		<div class="service">
 					<div class="srvc-name">{{wpName}} ({{id}})</div>
-					{{#each images}}
+					{{#each imageIds}}
 						<img src="{{../../REST_HOST}}/resources/images/{{.}}"/>
 					{{/each}}
 					{{#if description}}
 						<div class="srvc-desc">{{description}}</div>
 					{{/if}}
-					<button class="wp-appoint btn btn-mini btn-warning" type="button" data-vendorId="{{wpVendorId}}" data-srvcid="{{id}}">Book appointment</button>
+					<ul>
+						{{#if wpProjectName}}<li>{{wpProjectName}}</li>{{/if}}
+						{{#if wpStatus}}<li>Status : {{wpStatus}}</li>{{/if}}
+						{{#if wpCostPerHour}}<li>Cost per hour : {{wpCostPerHour}}</li>{{/if}}
+						{{#if wpFixedCost}}<li>Fixed cost : {{wpFixedCost}}</li>{{/if}}
+						{{#if wpDuration}}<li>Duration : {{wpDuration}} mins</li>{{/if}}
+					</ul>
+					<button class="wp-appoint btn btn-mini btn-warning" type="button" data-vendorId="{{wpVendorId}}" data-duration="{{wpDuration}}" data-srvcid="{{id}}">Book appointment</button>
 					{{#if wpOpenToQuote}}
-						<button class="wp-quote btn btn-mini btn-warning" type="button" data-srvcid="{{id}}">Request quote</button>
+						<button class="wp-quote btn btn-mini btn-warning" type="button" data-srvcid="{{id}}" data-srvcdefid="{{wpServiceDefinitionId}}">Request quote</button>
 					{{/if}}
 				</div>
 			{{/each}}

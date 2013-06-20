@@ -3686,7 +3686,7 @@ function AgendaView(element, calendar, viewName) {
 				clearSelection();
 				if (cell && cell.col == origCell.col && !cellIsAllDay(cell)) {
 					var d1 = cellDate(origCell);
-					var d2 = cellDate(cell);
+					var d2 = cellDate(origCell);
 					dates = [
 						d1,
 						addMinutes(cloneDate(d1), snapMinutes), // calculate minutes depending on selection slot minutes 
