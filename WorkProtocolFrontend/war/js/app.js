@@ -25,6 +25,8 @@ $(function (){
 				  $('#user-info span').html(user.userName);
 				  $('#user-info a').prop('href', user.signOutUrl + '?ru=' + window.location.protocol + '//' + window.location.host);
 				  $('#user-info').show();
+			  } else {
+				  $('#wp-signup-banner').html('<div class="alert alert-info"><a href="'+ wp.cfg['REST_HOST'] +'/SignOut?ru='+ wp.cfg['REST_HOST'] +'/SignIn?isVendor=true">Sign up</a></div>');
 			  }
 		  }
 	});

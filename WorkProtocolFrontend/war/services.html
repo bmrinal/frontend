@@ -88,6 +88,7 @@
         </div><!--/span-->
         <div class="span9">
         	<div id="view">
+	        	<div id="wp-signup-banner"></div>
 				<div class="page-header">
 				  <h4>Pick a service</h4>
 				</div>
@@ -125,7 +126,7 @@
 			{{#each service}}
 		  		<div class="service">
 					<div class="srvc-name">{{wpName}} ({{id}})</div>
-					{{#each imageIds}}
+					{{#each wpImageIds}}
 						<img src="{{../../REST_HOST}}/resources/images/{{.}}"/>
 					{{/each}}
 					{{#if description}}
