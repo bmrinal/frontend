@@ -170,10 +170,14 @@
 						</div>
 					</div>
 					<div class="control-group">
+						<label class="control-label" for="wpLocationId">Location</label>
+    					<div id="srvc-location" class="controls"></div>
+					</div>
+					<div class="control-group">
 						<label class="control-label">Photos</label>
     					<div class="controls">
 							<div class="row-fluid sr-photo-row"></div>
-							<button id="sr-photo-trigger" class="btn btn-mini btn btn-success" type="button"><i class="icon-white icon-plus-sign"/> Add photo</button>
+							<button id="sr-photo-trigger" class="btn btn-mini btn btn-success" type="button"><i class="icon-white icon-plus-sign"></i> Add photo</button>
 							<span id="sr-photo-loading" class="hide">uploading...</span>
 						</div>
 					</div>
@@ -245,6 +249,14 @@
 			<img src="{{src}}" class="sr-photo"/>
 			<input type="hidden" name="wpImageIds" value="{{imageId}}"/>
 		</div>
+	</script>
+
+	<script id="TL_location" type="text/x-handlebars-template">
+		<select name="wpLocationId">
+			{{#each location}}
+				<option value="{{id}}">{{streetAddress1}} {{streetAddress2}} {{city}} {{stateOrProvince}} {{zipCode}}</option>
+			{{/each}}
+		</select>
 	</script>
 
 	<!-- script id="TL_pic" type="text/x-handlebars-template">

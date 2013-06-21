@@ -1,3 +1,7 @@
+.services{
+	clear: both;
+}
+
 .service{
 	width: 220px;
 	border: 1px solid #e2e2e2;
@@ -34,6 +38,5 @@
 }
 
 .srvc-add{
-	clear: both;
-}
+	float: right;
 }

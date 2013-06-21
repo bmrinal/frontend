@@ -43,17 +43,26 @@ $(function (){
 				  xhrFields: {
 					  withCredentials: true
 				  },
-				  complete: function (){
-					  $('#view .loading').hide();
-				  },
 				  success: function (response){
-					  var template, data;
+					  var template, data, servicesHTML, container;
+					  
+					  container = $('#view .services');
 					  data = {};
 					  data.service = response;
 					  data['REST_HOST'] = wp.cfg['REST_HOST'];
 					  template = Handlebars.compile($("#TL_services").html());
-				
-					  $('#view .services').html(template(data));
+					  servicesHTML = $(template(data));
+
+					  servicesHTML.imagesLoaded(function (){
+						  container.append(servicesHTML);
+						  container.masonry({
+						    // options
+						    itemSelector : '.service',
+						    columnWidth : 242
+						  }).each(function (){
+							  $('#view .loading').hide();
+						  });
+					  });
 				  },
 				  error: function (){
 					  $('#view .services').html('<div class="alert alert-error">'

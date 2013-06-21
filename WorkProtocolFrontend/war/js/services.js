@@ -66,7 +66,7 @@ $(function (){
 		source = $('#TL_requestSrvc').html();
 		template = Handlebars.compile(source);
 		data = {};
-		data.name = $('.srvc-name', this).text();
+		data.name = $('.srvc-name', $(this).closest('.service')).text();
 		$('#srForm').html(template(data));
 		currServiceId = $(this).data('srvcid'); //store service in closure for easy modal access
 		currServiceDefId = $(this).data('srvcdefid');

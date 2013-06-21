@@ -127,6 +127,7 @@ $(function (){
 			  },
 			  success: function (response){
 				  var template, data;
+
 				  template = response.htmlTemplate;
 				  data = $.parseJSON(response.htmlMetaData);
 
@@ -140,6 +141,24 @@ $(function (){
 					  );
 				  }
 				  $('#sr-form-fields').show();
+
+				  //fetch location data
+				  $.ajax({
+					  url: wp.cfg['REST_HOST']+'/resources/vendors/myvendor',
+					  dataType: 'json',
+					  cache: false,
+					  xhrFields: {
+						  withCredentials: true
+					  },
+					  success: function (response){
+						  var locationTmpl;
+
+						  if (response && response.locations){
+							  locationTmpl = Handlebars.compile($('#TL_location').html());
+							  $('#srvc-location').html(locationTmpl({location: response.locations}));
+						  }
+					  }
+				  });
 			  },
 			  error: function (){
 				  $('#srTemplate').html('<div class="alert alert-error">'

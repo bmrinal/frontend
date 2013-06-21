@@ -59,7 +59,7 @@ $(function (){
 										  $('#profileForm input[name="vendorLocationStreet1"]').val(response.locations[0].streetAddress1 || '');
 										  $('#profileForm input[name="vendorLocationStreet2"]').val(response.locations[0].streetAddress2 || '');
 										  $('#profileForm input[name="vendorLocationCity"]').val(response.locations[0].city || '');
-										  $('#profileForm input[name="vendorLocationState"]').val(response.locations[0].city || '');
+										  $('#profileForm input[name="vendorLocationState"]').val(response.locations[0].stateOrProvince || '');
 										  $('#profileForm input[name="vendorLocationZip"]').val(response.locations[0].zipCode || '');
 										  $('#profileForm input[name="vendorLocationPhone"]').val(response.locations[0].phone || '');
 									  }

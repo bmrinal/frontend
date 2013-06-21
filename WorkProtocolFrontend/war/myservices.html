@@ -88,11 +88,11 @@
         <div class="span9">
         	<div id="view">
         		<div id="top-nav"></div>
-				<span class="loading"> loading services ... </span>
-				<div class="services"></div>
 				<div class="srvc-add">
-					<a href="/addservice.html">Add a new service</a>
+					<a href="/addservice.html" class="btn btn-mini btn btn-success" type="button"><i class="icon-white icon-plus-sign"></i> Add a new service</a>
 				</div>
+				<span class="loading"> loading your services ... </span>
+				<div class="services"></div>
 				<div id="srvc-details" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="Service request form" aria-hidden="true"></div>
         	</div>
         </div><!--/span-->
@@ -113,7 +113,9 @@
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 	<script src="lib/mustache.js"></script>
 	<script src="lib/handlebars.js"></script>
+	<script src="util/handlebarHelpers.js"></script>
 	<script src="lib/jquery.ba-bbq.js"></script>
+	<script src="lib/jquery.masonry.js"></script>
 	<script src="bootstrap/bootstrap.js"></script>
 	<!-- 2. Application javascripts - Order is importatnt! -->
 	<script src="js/app.js"></script>
@@ -122,16 +124,21 @@
 
 	<script id="TL_services" type="text/x-handlebars-template">
 			{{#each service}}
-		  		<div class="service" data-srvcid="{{id}}">
-					<a href="#">
-						<div class="srvc-name">{{id}}{{name}}</div>
-						{{#each images}}
-							<img src="{{../../REST_HOST}}/resources/images/{{.}}"/>
-						{{/each}}
-						{{#if description}}
-							<div class="srvc-desc">{{description}}</div>
-						{{/if}}
-					</a>
+		  		<div class="service">
+					<div class="srvc-name">{{wpName}} ({{id}})</div>
+					{{#one wpImageIds}}
+						<img src="{{../../REST_HOST}}/resources/images/{{.}}"/>
+					{{/one}}
+					{{#if description}}
+						<div class="srvc-desc">{{description}}</div>
+					{{/if}}
+					<ul>
+						{{#if wpProjectName}}<li>{{wpProjectName}}</li>{{/if}}
+						{{#if wpStatus}}<li>Status : {{wpStatus}}</li>{{/if}}
+						{{#if wpCostPerHour}}<li>Cost per hour : {{wpCostPerHour}}</li>{{/if}}
+						{{#if wpFixedCost}}<li>Fixed cost : {{wpFixedCost}}</li>{{/if}}
+						{{#if wpDuration}}<li>Duration : {{wpDuration}} mins</li>{{/if}}
+					</ul>
 				</div>
 			{{/each}}
 			{{^service}}
