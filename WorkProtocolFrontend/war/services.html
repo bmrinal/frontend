@@ -178,11 +178,13 @@
 	</script>
 	
 	<script id="TL_vendors" type="text/x-handlebars-template">
+		<div class="control-group">
 		{{#each vendor}}
-			<div class="control-group">
 				<div class="controls">
       				<label class="checkbox">
-        				<input type="checkbox" name="vendorIds" value="{{id}}"> {{name}}
+						{{#checkbox id ../currentVendorId}}
+	        				<input type="checkbox" name="vendorIds" value="{{value}}" {{#if selected}}checked{{/if}}> {{../name}}
+						{{/checkbox}}
 						{{#each images}}
 							<img class="vendor-img" src="{{../../REST_HOST}}/resources/images/{{.}}"/>
 						{{/each}}
@@ -190,6 +192,7 @@
 					<div class="vendor-desc">{{description}}</div>
 				</div>
 		{{/each}}
+		</div>
 	</script>
   </body>
 </html>

@@ -1,10 +1,17 @@
 var wp = wp || {};
 
 $(function (){
+	var restApiHost;
 	wp.cfg = {}; //to store config data
 	wp.user = {}; //to store user data
 
-	wp.cfg['REST_HOST'] = 'http://work0protocol.appspot.com';
+	if(('myworkprotocol').match(window.location.hostname)){
+		restApiHost = 'http://work1protocol.appspot.com';
+	} else {
+		restApiHost = 'http://work0protocol.appspot.com';
+	}
+
+	wp.cfg['REST_HOST'] = restApiHost;
 	$.ajax({
 		  url: wp.cfg['REST_HOST']+'/resources/user',
 		  dataType: 'json',

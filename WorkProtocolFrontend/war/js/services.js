@@ -27,6 +27,15 @@ $(function (){
 		  data['REST_HOST'] = wp.cfg['REST_HOST'];
 		  servicesHTML = $(template(data));
  
+		  /* container.append(servicesHTML);
+		  container.masonry({
+			    // options
+			    itemSelector : '.service',
+			    columnWidth : 242
+			  }).each(function (){
+				  $('#view .loading').hide();
+			  });	*/
+		  
 		  servicesHTML.imagesLoaded(function (){
 			  container.append(servicesHTML);
 			  container.masonry({
@@ -117,18 +126,22 @@ $(function (){
 			  cache: false,
 			  dataType: "jsonp",
 			  success: function (response){
-				  vendorTempl(response.vendors || {});
+				  var data = {};
+
+				  data.vendor = response.vendors;
+				  data.currentVendorId = response.wpVendorId;
+				  vendorTempl(data);
 			  }
 			});
 		}
 	});
-	
+
 	function vendorTempl(param){
 		var source, template, data;
-		
+
 		source = $('#TL_vendors').html();
 		template = Handlebars.compile(source);
-		data = {'vendor': param};
+		data = param;
 		data['REST_HOST'] = wp.cfg['REST_HOST'];
 		$('#srForm .vendors').html(template(data));
 	}

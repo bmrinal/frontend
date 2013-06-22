@@ -106,8 +106,28 @@
 		    <h3>Request appointment</h3>
 		  </div>
 		  <div class="modal-body">
-		    <p>Phone number</p>
-		    <input name="phone" type="text" />
+		  	<form class="form-horizontal">
+			  <div class="control-group">
+				<label class="control-label" for="phone">Start time</label>		  
+  				<div class="controls">
+					<p id="startTime"></p>
+				</div>
+			  </div>
+
+			  <div class="control-group">
+				<label class="control-label" for="phone">End time</label>		  
+  				<div class="controls">
+					<p id="endTime"></p>
+				</div>
+			  </div>
+
+			  <div class="control-group">
+				<label class="control-label" for="phone">Phone number</label>		  
+  				<div class="controls">
+					<input name="phone" id="phone" type="text" />
+				</div>
+			  </div>
+			</form>
 		  </div>
 		  <div class="modal-footer">
 		    <a href="#" class="appt-cancel btn">Cancel</a>
@@ -134,6 +154,7 @@
 	<script src="bootstrap/bootstrap.js"></script>
 	<!-- 2. Application javascripts - Order is importatnt! -->
 	<script src="js/app.js"></script>
+	<script src="util/dateUtil.js"></script>
 	<script src='js/bookappointment.js'></script>
   </body>
 </html>
