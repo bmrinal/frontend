@@ -5,7 +5,7 @@ $(function (){
 	wp.cfg = {}; //to store config data
 	wp.user = {}; //to store user data
 
-	if(('myworkprotocol').match(window.location.hostname)){
+	if(window.location.hostname.match('myworkprotocol')){
 		restApiHost = 'http://work1protocol.appspot.com';
 	} else {
 		restApiHost = 'http://work0protocol.appspot.com';
