@@ -1,11 +1,10 @@
-.services{
-	clear: both;
+.srvc-add{
+	margin-bottom: 15px;
 }
 
 .service{
-	width: 220px;
 	border: 1px solid #e2e2e2;
-	margin: 10px;
+	margin-bottom: 20px;
 	border-radius: 3px;
 	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
 	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
@@ -35,8 +34,4 @@
 .srvc-desc{
 	padding: 10px;
 	color: #777;
-}
-
-.srvc-add{
-	float: right;
 }

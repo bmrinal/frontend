@@ -1,8 +1,9 @@
 $(function (){
-	var params, OPENEVENT_ID;
+	var params, OPENEVENT_ID, BUSYEVENT_ID, bookEvntStartStr, bookEvntEndStr;
 	
 	params = $.deparam.querystring();
-	OPENEVENT_ID = 'busy';
+	OPENEVENT_ID = 'open';
+	BUSYEVENT_ID = 'busy';
 
 	$.ajax({
 		  url: wp.cfg['REST_HOST']+'/resources/user',
@@ -22,7 +23,7 @@ $(function (){
 						  $('#view .loading').hide();
 					  },
 					  success: function (response){
-						  var date, d, m, y, calendar, eventsArr, openSlots;
+						  var date, d, m, y, calendar, eventsArr, openSlots, busySlots, evntStartDate, evntEndDate;
 						  
 						  if ($.isArray(response.errors) && response.errors.length > 0){
 							  $('#page-status').html("Sorry, unable to load vendor's calendar").addClass('alert-error').show();
@@ -37,16 +38,37 @@ $(function (){
 						  if (response.hasOwnProperty('freeTimePeriods')){
 							  openSlots = response.freeTimePeriods;
 							  for (var i=0; i<openSlots.length; i++){
+								  evntStartDate = wp.dateUtil.parseDate(openSlots[i].startTime);
+								  evntEndDate = wp.dateUtil.parseDate(openSlots[i].endTime);
+
 								  eventsArr.push({
-									  id: OPENEVENT_ID,
-									  title: 'Book',
-									  className: 'wp-event-editable',
+									  id: OPENEVENT_ID+evntStartDate,
+									  title: 'Pick this slot',
+									  className: 'wp-event-open',
 									  allDay: false,
-									  start: wp.dateUtil.parseDate(openSlots[i].startTime),
-									  end: wp.dateUtil.parseDate(openSlots[i].endTime)
+									  start: evntStartDate,
+									  end: evntEndDate
 								  });
 							  }
 						  }
+
+						  if (response.hasOwnProperty('busyTimePeriods')){
+							  busySlots = response.busyTimePeriods;
+							  for (var j=0; j<busySlots.length; j++){
+								  evntStartDate = wp.dateUtil.parseDate(busySlots[j].startTime);
+								  evntEndDate = wp.dateUtil.parseDate(busySlots[j].endTime);
+
+								  eventsArr.push({
+									  id: BUSYEVENT_ID+evntStartDate,
+									  title: 'Not available',
+									  className: 'wp-event-busy',
+									  allDay: false,
+									  start: evntStartDate,
+									  end: evntEndDate
+								  });
+							  }
+						  }
+
 						  calendar = $('#calendar').fullCalendar({
 							  header: {
 								  left: 'prev,next today',
@@ -62,13 +84,12 @@ $(function (){
 							  defaultView: 'agendaWeek',
 							  slotMinutes:  parseInt(params.duration, 10),
 							  eventClick: function(event, jsEvent, view){
-								  if (event.id === OPENEVENT_ID) {
-										//calendar.fullCalendar('removeEvents',event.id);
-									  start = $.fullCalendar.formatDate(event.start, 'MM-dd-yyyy HH:mm:ss');
-									  end = $.fullCalendar.formatDate(event.end, 'MM-dd-yyyy HH:mm:ss');
+								  if (event.id.match(OPENEVENT_ID)) {
+									  bookEvntStartStr = $.fullCalendar.formatDate(event.start, 'MM-dd-yyyy HH:mm:ss');
+									  bookEvntEndStr = $.fullCalendar.formatDate(event.end, 'MM-dd-yyyy HH:mm:ss');
 									  
-									  $('#startTime').html(start);
-									  $('#endTime').html(end);
+									  $('#startTime').html(bookEvntStartStr);
+									  $('#endTime').html(bookEvntEndStr);
 									  $('#addEvent').modal();
 								  }
 							  },
@@ -82,8 +103,8 @@ $(function (){
 							  qsParams = {
 									  vendorId: params.vendorId,
 									  serviceId: params.serviceId,
-									  eventStartTime: start,
-									  eventEndTime: end
+									  eventStartTime: bookEvntStartStr,
+									  eventEndTime: bookEvntEndStr
 							  };
 							  
 							  $.ajax({
@@ -105,13 +126,14 @@ $(function (){
 									  if (title) {
 										  $('#addEvent').modal('hide');
 										  $('#page-status').addClass('alert-success').html('Appointment booked successfully.').show();
+										  calendar.fullCalendar('removeEvents',OPENEVENT_ID+wp.dateUtil.parseDate(bookEvntStartStr));
 										  calendar.fullCalendar('renderEvent',{
-											  id: title,
+											  id: BUSYEVENT_ID+bookEvntStartStr,
 											  title: title,
-											  start: start,
-											  end: end,
+											  start: wp.dateUtil.parseDate(bookEvntStartStr),
+											  end: wp.dateUtil.parseDate(bookEvntEndStr),
 											  allDay: false,
-											  className: 'wp-event-busy'
+											  className: 'wp-event-booked'
 										  }, true); // true makes the event "stick"
 									  } else {
 										  $('#page-status').addClass('alert-error').html('Sorry, unable to book appointment at this time. Please try again later.').show();

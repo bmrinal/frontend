@@ -46,23 +46,18 @@ $(function (){
 				  success: function (response){
 					  var template, data, servicesHTML, container;
 					  
-					  container = $('#view .services');
+					  container = $('#view .services .span3');
 					  data = {};
 					  data.service = response;
 					  data['REST_HOST'] = wp.cfg['REST_HOST'];
 					  template = Handlebars.compile($("#TL_services").html());
-					  servicesHTML = $(template(data));
+					  servicesHTML = $('<div/>').html($(template(data)));
+					  servicesHTML = servicesHTML.find('.service');
 
-					  servicesHTML.imagesLoaded(function (){
-						  container.append(servicesHTML);
-						  container.masonry({
-						    // options
-						    itemSelector : '.service',
-						    columnWidth : 242
-						  }).each(function (){
-							  $('#view .loading').hide();
-						  });
+					  $.each(servicesHTML, function (ind, val){
+						  $(container[ind % 4]).append(val);
 					  });
+					  $('#view .loading').hide();
 				  },
 				  error: function (){
 					  $('#view .services').html('<div class="alert alert-error">'

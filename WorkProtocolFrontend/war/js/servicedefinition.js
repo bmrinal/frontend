@@ -49,7 +49,7 @@ $(function (){
 				  dataType: "jsonp",
 				  success: function (response){
 					  var source, template, data, servicesHTML, container;
-					  container = $('#view .services');
+					  container = $('#view .services .span3');
 					  source = $('#TL_services').html();
 					  template = Handlebars.compile(source);
 					  data = {};
@@ -60,18 +60,14 @@ $(function (){
 						  data.serviceDefinition = response;
 					  }
 					  data['REST_HOST'] = wp.cfg['REST_HOST'];
-					  servicesHTML = $(template(data));
-			 
-					  servicesHTML.imagesLoaded(function (){
-						  container.append(servicesHTML);
-						  container.masonry({
-						    // options
-						    itemSelector : '.service',
-						    columnWidth : 242
-						  }).each(function (){
-							  $('#view .loading').hide();
-						  });
+					  servicesHTML = $('<div/>').html($(template(data)));
+					  servicesHTML = servicesHTML.find('.service');
+
+					  $.each(servicesHTML, function (ind, val){
+						  $(container[ind % 4]).append(val);
 					  });
+					  
+					  $('#view .loading').hide();
 				  },
 				  error: function (){
 					  $('#view .loading').hide();
