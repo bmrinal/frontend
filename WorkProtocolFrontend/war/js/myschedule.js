@@ -54,7 +54,7 @@ $(function (){
 				  });
 				  $('#myCal').prop('src', 'http://www.google.com/calendar/embed?mode=WEEK&showTitle=0&src=' + response.email + '&ctz=America/Los_Angeles');
 			  } else {
-				  window.location.href = wp.cfg['REST_HOST']+'/SignIn?ru=' + window.location.href;
+				  wp.util.redirectToSigin();
 			  }
 		  },
 		  error: function (e){

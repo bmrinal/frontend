@@ -79,7 +79,7 @@ $(function (){
 				  }
 				});				
 		  } else {
-			  window.location.href = wp.cfg['REST_HOST']+'/SignIn?ru=' + window.location.href;
+			  wp.util.redirectToSigin();
 		  }
 	  },
 	  error: function (e){
@@ -92,14 +92,15 @@ $(function (){
 
 	$('#view').on('click', '.service', function(e){
 		var source, template, data, html;
+		currServiceDefId = $(this).data('srvcid'); //store service in closure for easy modal access
 
 		e.preventDefault();
 		source = $('#TL_requestSrvc').html();
 		template = Handlebars.compile(source);
 		data = {};
+		data.id = currServiceDefId
 		data.name = $('.srvc-name', this).text();
 		$('#srForm').html(template(data));
-		currServiceDefId = $(this).data('srvcid'); //store service in closure for easy modal access
 		$('#sr-form-fields').hide();
 		$('#srForm').modal();
 	});
@@ -167,6 +168,7 @@ $(function (){
 		}
 	});
 	
+	//submit new service
 	$('#view').on('click', '.modal-footer .btn-primary', function (){
 		var form, params, action;
 		action = $(this).data('action');
@@ -183,6 +185,15 @@ $(function (){
 		  complete: function (){
 		  },
 		  success: function (response){
+			  if(response.errors){
+				  $('#srForm .modal-body').prepend('<div class="alert alert-error">'
+						  + '<button type="button" class="close" data-dismiss="alert">&times;</button>'
+						  + response.errors[0].message
+						  + '</div>'
+				  );
+				  return;
+			  }
+
 			  $('#srForm').modal('hide');
 			  $('#page-status').html('Service ('+ response.id +') submitted').removeClass('hide');
 		  },

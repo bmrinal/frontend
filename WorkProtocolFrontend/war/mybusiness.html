@@ -141,12 +141,12 @@
 				{{#if responses}}
 					{{#each responses}}
 						<div>
-							<a class="srvc-respro" data-srvcreqid="{{id}}" data-amount="{{amount}}" data-comments="{{comments}}" href="#">{{id}}</a>
+							<a class="srvc-respro" data-srvcreqid="{{id}}" data-srvcresid="{{test}}" href="#">{{id}}</a>
 						</div>
 					{{/each}}
 				{{else}}
 					{{#if ../../isVendor}}
-						<button class="srvc-resp btn btn-mini btn btn-warning" data-srvcreqid="{{id}}" type="button">Respond</button>
+						<button class="srvc-resp btn btn-mini btn btn-warning" data-srvcreqid="{{id}}" data-srvcdefid="{{serviceDefinitionId}}" type="button">Respond</button>
 					{{else}}
 						--
 					{{/if}}
@@ -185,18 +185,8 @@
 	  </div>
 	  <div class="modal-body">
 		<form class="responseForm form-horizontal">
-			<div class="control-group">
-				 <label class="control-label" for="inputAmount">Amount</label>
-				 <div class="controls">
-      				<input type="text" id="inputAmount" name="amount" placeholder="Amount" />
-    			 </div>
-			</div>
-			<div class="control-group">
-				 <label class="control-label" for="inputComments">Comments</label>
-				 <div class="controls">
-      				<textarea id="inputComments" name="comments" placeholder="Comments" />
-    			 </div>
-			</div>
+			<span class="frm-ldg">loading...</span>
+			<div class="srvcResponseForm"></div>
 			<input type="hidden" name="serviceRequestId" value="{{id}}" />
 		</form>
 	  </div>
@@ -207,6 +197,21 @@
 	  </div>
 	</script>
 
+	<script id="TL_srespForm" type="text/x-handlebars-template">
+		<div class="control-group">
+		 <label class="control-label" for="inputAmount">Amount</label>
+		 <div class="controls">
+				<input type="text" id="inputAmount" name="amount" placeholder="Amount" />
+		 </div>
+		</div>
+		<div class="control-group">
+			 <label class="control-label" for="inputComments">Comments</label>
+			 <div class="controls">
+					<textarea id="inputComments" name="comments" placeholder="Comments" />
+			 </div>
+		</div>
+	</script>
+
 	<script id="TL_srespRO" type="text/x-handlebars-template">
 	  <div class="modal-header">
 	    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -214,18 +219,8 @@
 	  </div>
 	  <div class="modal-body">
 		<form class="responseForm form-horizontal">
-			<div class="control-group">
-				 <label class="control-label" for="inputAmount">Amount</label>
-				 <div class="controls">
-      				<input type="text" id="inputAmount" name="amount" placeholder="Amount" value="{{amount}}" readonly />
-    			 </div>
-			</div>
-			<div class="control-group">
-				 <label class="control-label" for="inputComments">Comments</label>
-				 <div class="controls">
-      				<textarea id="inputComments" name="comments" placeholder="Comments" readonly>{{comments}}</textarea>
-    			 </div>
-			</div>
+			<span class="frm-ldg">loading...</span>
+			<div class="srvcResponseROForm"></div>
 		</form>
 	  </div>
 	  <div class="modal-footer">

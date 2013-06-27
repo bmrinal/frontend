@@ -1,5 +1,5 @@
 $(function (){
-	var currServiceReqId, respElement, isVendor;
+	var currServiceReqId, currServiceResId, currServiceDefId, respElement, isVendor;
 	isVendor = false;
 
 	$.ajax({
@@ -81,7 +81,7 @@ $(function (){
 					  }	
 				});
 			  } else {
-				  window.location.href = wp.cfg['REST_HOST']+'/SignIn?ru=' + window.location.href;
+				  wp.util.redirectToSigin();
 			  }
 		  },
 		  error: function (){
@@ -148,14 +148,47 @@ $(function (){
 		e.preventDefault();
 		source = $('#TL_srespRO').html();
 		template = Handlebars.compile(source);
+		currServiceResId = $(this).data('srvcresid');
 		data = {};
-		data.id = $(this).data('srvcreqid');
-		data.amount = $(this).data('amount');
-		data.comments = $(this).data('comments');
+		data.id = currServiceResId;
 		$('#svcRespDialogRO').html(template(data));
 		$('#svcRespDialogRO').modal();
 	});
 
+	$('#svcRespDialogRO').on('shown', function (){
+		if (currServiceResId) {
+			$.ajax({
+			  url: wp.cfg['REST_HOST']+'/resources/serviceresponses/'+currServiceResId,
+			  cache: false,
+			  dataType: "jsonp",
+			  complete: function (){
+				  $('#svcRespDialogRO .frm-ldg').hide();
+			  },
+			  success: function (response){
+				  var template, data;
+				  template = response.htmlTemplate;
+				  data = $.parseJSON(response.metaDataInstance);
+
+				  if (data && template) {
+					  $('#svcRespDialogRO .srvcResponseROForm').html($("#TL_srespForm").html() + Mustache.to_html(template, data));
+				  } else {
+					  $('#svcRespDialogRO .srvcResponseROForm').html('<div class="alert alert-error">'
+							  + 'Sorry, service response details unavailable'
+							  + '</div>'
+					  );
+				  }
+			  },
+			  error: function (){
+				  $('#svcRespDialogRO .srvcResponseROForm').html('<div class="alert alert-error">'
+						  + '<button type="button" class="close" data-dismiss="alert">&times;</button>'
+						  + 'Sorry, unable to load service response form'
+						  + '</div>'
+				  );
+			  }
+			});
+		}
+	});
+	
 	//service response
 	$('#view').on('click', '.srvc-resp', function(e){
 		var source, template, data;
@@ -163,12 +196,45 @@ $(function (){
 		e.preventDefault();
 		source = $('#TL_srespModal').html();
 		template = Handlebars.compile(source);
+		currServiceDefId = $(this).data('srvcdefid');
 		data = {};
 		data.id = $(this).data('srvcreqid');
 		$('#svcRespDialog').html(template(data));
 		$('#svcRespDialog').modal();
 
 		respElement = $(this);
+	});
+
+	$('#svcRespDialog').on('shown', function (){
+		$.ajax({
+			  url: wp.cfg['REST_HOST']+'/resources/servicedefinitions/'+currServiceDefId,
+			  cache: false,
+			  dataType: "jsonp",
+			  complete: function (){
+				  $('#svcRespDialog .frm-ldg').hide();
+			  },
+			  success: function (response){
+				  var template, data;
+				  template = response.responseHtmlTemplate;
+				  data = $.parseJSON(response.responseHtmlMetaData);
+	
+				  if (data && template) {
+					  $('#svcRespDialog .srvcResponseForm').html($("#TL_srespForm").html() + Mustache.to_html(template, data));
+				  } else {
+					  $('#svcRespDialog .srvcResponseForm').html('<div class="alert  alert-error">'
+							  + 'Sorry, service response form unavailable'
+							  + '</div>'
+					  );
+				  }
+			  },
+			  error: function (){
+				  $('#srTemplate').html('<div class="alert alert-error">'
+						  + '<button type="button" class="close" data-dismiss="alert">&times;</button>'
+						  + 'Sorry, unable to load service response form'
+						  + '</div>'
+				  );
+			  }
+			});
 	});
 
 	$('#view').on('click', '.modal-footer .sr-resp', function (){

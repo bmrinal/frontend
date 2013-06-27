@@ -38,12 +38,12 @@ $(function (){
 						  if (response.hasOwnProperty('freeTimePeriods')){
 							  openSlots = response.freeTimePeriods;
 							  for (var i=0; i<openSlots.length; i++){
-								  evntStartDate = wp.dateUtil.parseDate(openSlots[i].startTime);
-								  evntEndDate = wp.dateUtil.parseDate(openSlots[i].endTime);
+								  evntStartDate = wp.util.parseDate(openSlots[i].startTime);
+								  evntEndDate = wp.util.parseDate(openSlots[i].endTime);
 
 								  eventsArr.push({
 									  id: OPENEVENT_ID+evntStartDate,
-									  title: 'Pick this slot',
+									  title: 'Available',
 									  className: 'wp-event-open',
 									  allDay: false,
 									  start: evntStartDate,
@@ -55,8 +55,8 @@ $(function (){
 						  if (response.hasOwnProperty('busyTimePeriods')){
 							  busySlots = response.busyTimePeriods;
 							  for (var j=0; j<busySlots.length; j++){
-								  evntStartDate = wp.dateUtil.parseDate(busySlots[j].startTime);
-								  evntEndDate = wp.dateUtil.parseDate(busySlots[j].endTime);
+								  evntStartDate = wp.util.parseDate(busySlots[j].startTime);
+								  evntEndDate = wp.util.parseDate(busySlots[j].endTime);
 
 								  eventsArr.push({
 									  id: BUSYEVENT_ID+evntStartDate,
@@ -126,12 +126,12 @@ $(function (){
 									  if (title) {
 										  $('#addEvent').modal('hide');
 										  $('#page-status').addClass('alert-success').html('Appointment booked successfully.').show();
-										  calendar.fullCalendar('removeEvents',OPENEVENT_ID+wp.dateUtil.parseDate(bookEvntStartStr));
+										  calendar.fullCalendar('removeEvents',OPENEVENT_ID+wp.util.parseDate(bookEvntStartStr));
 										  calendar.fullCalendar('renderEvent',{
 											  id: BUSYEVENT_ID+bookEvntStartStr,
 											  title: title,
-											  start: wp.dateUtil.parseDate(bookEvntStartStr),
-											  end: wp.dateUtil.parseDate(bookEvntEndStr),
+											  start: wp.util.parseDate(bookEvntStartStr),
+											  end: wp.util.parseDate(bookEvntEndStr),
 											  allDay: false,
 											  className: 'wp-event-booked'
 										  }, true); // true makes the event "stick"
@@ -155,7 +155,7 @@ $(function (){
 					  }
 				  });
 			  } else {
-				  window.location.href = wp.cfg['REST_HOST']+'/SignIn?ru=' + window.location.href;
+				  wp.util.redirectToSigin();
 			  }
 		  },
 		  error: function (e){

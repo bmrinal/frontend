@@ -58,7 +58,7 @@ $(function (){
 				  }
 				});
 		  } else {
-			  window.location.href = wp.cfg['REST_HOST']+'/SignIn?ru=' + window.location.href;
+			  wp.util.redirectToSigin();
 		  }
 	  },
 	  error: function (e){
