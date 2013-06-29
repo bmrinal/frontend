@@ -166,11 +166,11 @@ $(function (){
 			  },
 			  success: function (response){
 				  var template, data;
-				  template = response.htmlTemplate;
-				  data = $.parseJSON(response.metaDataInstance);
+				  template = Handlebars.compile($('#TL_srespROFields').html());
+				  data = response;
 
 				  if (data && template) {
-					  $('#svcRespDialogRO .srvcResponseROForm').html($("#TL_srespForm").html() + Mustache.to_html(template, data));
+					  $('#svcRespDialogRO .srvcResponseROForm').html(template(data));
 				  } else {
 					  $('#svcRespDialogRO .srvcResponseROForm').html('<div class="alert alert-error">'
 							  + 'Sorry, service response details unavailable'

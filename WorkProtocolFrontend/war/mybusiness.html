@@ -141,7 +141,7 @@
 				{{#if responses}}
 					{{#each responses}}
 						<div>
-							<a class="srvc-respro" data-srvcreqid="{{id}}" data-srvcresid="{{test}}" href="#">{{id}}</a>
+							<a class="srvc-respro" data-srvcresid="{{id}}" href="#">{{id}}</a>
 						</div>
 					{{/each}}
 				{{else}}
@@ -187,7 +187,7 @@
 		<form class="responseForm form-horizontal">
 			<span class="frm-ldg">loading...</span>
 			<div class="srvcResponseForm"></div>
-			<input type="hidden" name="serviceRequestId" value="{{id}}" />
+			<input type="hidden" name="wpServiceRequestId" value="{{id}}" />
 		</form>
 	  </div>
 	  <div class="modal-footer">
@@ -199,15 +199,15 @@
 
 	<script id="TL_srespForm" type="text/x-handlebars-template">
 		<div class="control-group">
-		 <label class="control-label" for="inputAmount">Amount</label>
+		 <label class="control-label" for="wpAmount">Amount</label>
 		 <div class="controls">
-				<input type="text" id="inputAmount" name="amount" placeholder="Amount" />
+				<input type="text" id="wpAmount" name="wpAmount" placeholder="Amount" />
 		 </div>
 		</div>
 		<div class="control-group">
-			 <label class="control-label" for="inputComments">Comments</label>
+			 <label class="control-label" for="wpComments">Comments</label>
 			 <div class="controls">
-					<textarea id="inputComments" name="comments" placeholder="Comments" />
+					<textarea id="wpComments" name="wpComments" placeholder="Comments" />
 			 </div>
 		</div>
 	</script>
@@ -226,6 +226,16 @@
 	  <div class="modal-footer">
 	    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
  	  </div>
+	</script>
+	
+	<script id="TL_srespROFields" type="text/x-handlebars-template">
+		<ul>
+			{{#if wpAmount}}<li>Amount : {{wpAmount}}</li>{{/if}}
+			{{#if wpComments}}<li>Comments : {{wpComments}}</li>{{/if}}
+			{{#each columns}}
+				<li> {{key}} : {{values}} </li>
+			{{/each}}
+		</ul>
 	</script>
   </body>
 </html>
