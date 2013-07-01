@@ -126,6 +126,7 @@
 	  <thead>
 	    <tr class="well">
 	      <th>Service Id</th>
+		  <th>Service Request Id</th>
 	      <th>Created Time</th>
 		  <th>Responses</th>
 	    </tr>
@@ -133,6 +134,9 @@
 	  <tbody>
 		{{#each serviceRequests}}
 			<tr>
+			  <td data-srvcid="{{serviceId}}">
+				{{serviceId}}
+			  </td>
 		      <td class="srv-req" data-srvcreqid="{{id}}">
 				<a href="#">{{id}}</a>
 			  </td>

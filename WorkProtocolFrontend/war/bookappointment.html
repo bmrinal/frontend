@@ -104,40 +104,7 @@
 				<div id='calendar'></div>
         	</div>
         </div><!--/span-->
-		<div id="addEvent" class="modal hide fade">
-		  <div class="modal-header">
-		    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		    <h3>Request appointment</h3>
-		  </div>
-		  <div class="modal-body">
-		  	<form class="form-horizontal">
-			  <div class="control-group">
-				<label class="control-label" for="phone">Start time</label>		  
-  				<div class="controls">
-					<p id="startTime"></p>
-				</div>
-			  </div>
-
-			  <div class="control-group">
-				<label class="control-label" for="phone">End time</label>		  
-  				<div class="controls">
-					<p id="endTime"></p>
-				</div>
-			  </div>
-
-			  <div class="control-group">
-				<label class="control-label" for="phone">Phone number</label>		  
-  				<div class="controls">
-					<input name="phone" id="phone" type="text" />
-				</div>
-			  </div>
-			</form>
-		  </div>
-		  <div class="modal-footer">
-		    <a href="#" class="appt-cancel btn">Cancel</a>
-		    <a href="#" class="appt-book btn btn-primary">Book</a>
-		  </div>
-		</div>
+		<div id="addEvent" class="modal hide fade"></div>
       </div><!--/row-->
       <hr>
 
@@ -159,5 +126,61 @@
 	<!-- 2. Application javascripts - Order is importatnt! -->
 	<script src="js/app.js"></script>
 	<script src='js/bookappointment.js'></script>
+	
+	<script id="TL_addEvent" type="text/x-handlebars-template">
+	  <div class="modal-header">
+	    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	    <h3>Request appointment</h3>
+	  </div>
+	  <div class="modal-body">
+	  	<form class="form-horizontal">
+		  <div class="control-group">
+			<label class="control-label" for="phone">Start time</label>		  
+ 				<div class="controls">
+				<p id="startTime"></p>
+			</div>
+		  </div>
+
+		  <div class="control-group">
+			<label class="control-label" for="phone">End time</label>		  
+ 				<div class="controls">
+				<p id="endTime"></p>
+			</div>
+		  </div>
+
+		  {{#if isProxyBooking}}
+			  <div class="control-group">
+				<label class="control-label" for="customerName">Customer name</label>		  
+ 					<div class="controls">
+					<input name="customerName" type="text" />
+				</div>
+			  </div>
+			  <div class="control-group">
+				<label class="control-label" for="customerEmail">Customer email</label>		  
+ 					<div class="controls">
+					<input name="customerEmail" type="text" />
+				</div>
+			  </div>
+			  <div class="control-group">
+				<label class="control-label" for="customerPhone">Customer phone number</label>		  
+ 					<div class="controls">
+					<input name="customerPhone" type="text" />
+				</div>
+			  </div>
+		  {{else}}
+		  	<div class="control-group">
+				<label class="control-label" for="phone">Phone number</label>		  
+ 					<div class="controls">
+					<input name="phone" type="text" value="{{phone}}" />
+				</div>
+			  </div>
+		  {{/if}}
+		</form>
+	  </div>
+	  <div class="modal-footer">
+	    <a href="#" class="appt-cancel btn">Cancel</a>
+	    <a href="#" class="appt-book btn btn-primary">Book</a>
+	  </div>
+	</script>
   </body>
 </html>

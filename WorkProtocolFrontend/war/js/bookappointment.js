@@ -14,7 +14,15 @@ $(function (){
 		  },
 		  success: function (response){
 			  if(response && response.userId){
-				  $('#addEvent input[name="phone"]').val(response.mobilePhone || '');
+				  var data, template;
+				  data = {};
+
+				  data['isProxyBooking'] = (response.vendorId === parseInt(params.vendorId, 10));
+				  data['phone'] = response.mobilePhone;
+				  template = Handlebars.compile($("#TL_addEvent").html());
+
+				  $('#addEvent').html(template(data));
+
 				  $.ajax({
 					  url: wp.cfg['REST_HOST']+'/resources/calendar/freebusy?serviceId='+ params.serviceId +'&vendorId=' + params.vendorId,
 					  cache: false,
