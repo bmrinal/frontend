@@ -151,30 +151,23 @@
 		  {{#if isProxyBooking}}
 			  <div class="control-group">
 				<label class="control-label" for="customerName">Customer name</label>		  
- 					<div class="controls">
+ 				<div class="controls">
 					<input name="customerName" type="text" />
 				</div>
 			  </div>
 			  <div class="control-group">
 				<label class="control-label" for="customerEmail">Customer email</label>		  
- 					<div class="controls">
+ 				<div class="controls">
 					<input name="customerEmail" type="text" />
 				</div>
 			  </div>
-			  <div class="control-group">
-				<label class="control-label" for="customerPhone">Customer phone number</label>		  
- 					<div class="controls">
-					<input name="customerPhone" type="text" />
-				</div>
-			  </div>
-		  {{else}}
-		  	<div class="control-group">
-				<label class="control-label" for="phone">Phone number</label>		  
- 					<div class="controls">
-					<input name="phone" type="text" value="{{phone}}" />
-				</div>
-			  </div>
 		  {{/if}}
+		  <div class="control-group">
+			<label class="control-label" for="customerPhone">Customer phone number</label>		  
+ 			<div class="controls">
+				<input name="customerPhone" type="text" value="{{phone}}"/>
+			</div>
+		   </div>
 		</form>
 	  </div>
 	  <div class="modal-footer">

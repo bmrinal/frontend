@@ -106,7 +106,7 @@ $(function (){
 
 						  //book new appointment
 						  $('#addEvent .appt-book').on('click', function (){
-							  var qsParams;
+							  var qsParams, formParams;
 
 							  qsParams = {
 									  vendorId: params.vendorId,
@@ -114,7 +114,13 @@ $(function (){
 									  eventStartTime: bookEvntStartStr,
 									  eventEndTime: bookEvntEndStr
 							  };
+
+							  formParams = $('#addEvent form').serializeArray();
 							  
+							  $.each(formParams, function (ind, obj){
+								  qsParams[obj.name] = obj.value;
+							  });
+
 							  $.ajax({
 								  url: wp.cfg['REST_HOST']+'/resources/calendar/event',
 								  cache: false,
