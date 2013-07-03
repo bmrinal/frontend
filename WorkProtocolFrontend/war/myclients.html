@@ -120,7 +120,7 @@
 			<tr>
 		    	<th>
 					{{#if isVendor}}
-						Email
+						Customer details
 					{{else}}
 						Vendor
 					{{/if}}
@@ -135,7 +135,15 @@
                 <tr>
 				  <td>
 					{{#if isVendor}}
-						{{userEmail}}
+						{{#if customerEmail}}
+							<ul>
+								<li>{{customerEmail}}</li>
+								{{#if customerName}} <li>{{customerName}}</li> {{/if}}
+								{{#if customerPhone}} <li>{{customerPhone}}</li> {{/if}}
+							</ul>
+						{{else}}
+							{{userEmail}}
+						{{/if}}
 					{{else}}
 						{{vendorName}}
 					{{/if}}
