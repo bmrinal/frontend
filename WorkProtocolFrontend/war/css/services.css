@@ -34,8 +34,8 @@
 }
 
 .srvc-name{
-	font-family: 'Yanone Kaffeesatz';
-	font-size: 16px;
+	/* font-family: 'Yanone Kaffeesatz';
+	font-size: 16px; */
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -51,25 +51,18 @@
 	margin-right: auto;
 }
 
-.wp-oly-close{
-	float: right;
-	margin-top: -15px;
-	color: #B94A48;
-	font-size: 20px;
-    font-weight: bold;
-    line-height: 20px;
+#wp-oly .wp-oly-close{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    color: #B94A48;
 }
 
 #wp-oly{
-	position: fixed;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
 	background-color: #333;
-	overflow-y: scroll;
 	display: none;
 	z-index: 999;
+	padding: 20px;
 }
 
 #wp-oly.open{
@@ -78,17 +71,11 @@
 
 .wp-oly-body{
 	background-color: #fff;
-	margin: 2%;
 	box-shadow: 4px 4px 0 #CDCDCD;
-	padding: 2%;
+	padding: 20px;
 }
 
 .wp-oly-body .srvc-d-name{
-    color: #4A4A43;
-    font-family: 'League_Gothic';
-    font-weight: normal;
-    text-transform: uppercase;
-    font-size: 30px;
 }
 
 .wp-oly-body .srvc-d-images{

@@ -127,13 +127,14 @@ $(function (){
 	});
 
 	var openDetailsView = function (){
+		$('#wp-main').hide();
 		$('#wp-oly').addClass('open');
-		$('body').addClass('noscroll');
+		wp.util.scrollToTop();
 	};
 	
 	var closeDetailsView = function (){
+		$('#wp-main').show();
 		$('#wp-oly').removeClass('open');
-		$('body').removeClass('noscroll');
 	};
 	
 	//service details view

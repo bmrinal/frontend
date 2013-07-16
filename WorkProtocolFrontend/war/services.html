@@ -32,81 +32,84 @@
   </head>
 
   <body>
-	<div class="top_line"><!-- --></div>
 
-    <div id="wp-header" class="container">
-        <div class="row">
-            <div class="span11">
-            	<!--  a href="index.html" title="Tensor" class="logo"><img src="assets/img/tensor_logo.png" alt=""/ class="retina"></a> -->
-            </div>
-            <div id="user-info" class="span1">
-			    <div class="dropdown wp-signedIn hide">
-				    <div class="dropdown-toggle btn" data-toggle="dropdown">
-				    	<i class="icon-user"></i>
+	<div id="wp-main">
+		<div class="top_line"><!-- --></div>
+	
+	    <div id="wp-header" class="container">
+	        <div class="row">
+	            <div class="span11">
+	            	<!--  a href="index.html" title="Tensor" class="logo"><img src="assets/img/tensor_logo.png" alt=""/ class="retina"></a> -->
+	            </div>
+	            <div id="user-info" class="span1">
+				    <div class="dropdown wp-signedIn hide">
+					    <div class="dropdown-toggle btn" data-toggle="dropdown">
+					    	<i class="icon-user"></i>
+					    </div>
+					    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+			              <li>
+			              	<a href="/myprofile.html">My account</a>
+			              </li>
+			              <li>
+			              	<a class="wp-signOut" href="#">Sign out</a>
+			              </li>
+			            </ul>
 				    </div>
-				    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-		              <li>
-		              	<a href="/myprofile.html">My account</a>
-		              </li>
-		              <li>
-		              	<a class="wp-signOut" href="#">Sign out</a>
-		              </li>
-		            </ul>
-			    </div>
-			    <div class="dropdown wp-signedOut">
-				    <div class="dropdown-toggle btn" data-toggle="dropdown">
-				    	<i class="icon-user"></i>
+				    <div class="dropdown wp-signedOut">
+					    <div class="dropdown-toggle btn" data-toggle="dropdown">
+					    	<i class="icon-user"></i>
+					    </div>
+					    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+			              <li>
+			              	<a class="wp-signIn" href="#">Sign In</a>
+			              </li>
+			            </ul>
 				    </div>
-				    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-		              <li>
-		              	<a class="wp-signIn" href="#">Sign In</a>
-		              </li>
-		            </ul>
-			    </div>
-            </div>
-        </div>
-    </div>
-	<div class="hide container" id="wp-signup-banner">
-   	  <div class="row">
-       	<div class="span12">
-			<div class="special">
-		         <div class="so_title">Not a member ? <br><span>Join today</span></div>
-				 <div class="so_text"><a class="btn btn-more" href="#">Sign up here</a></div>
-		         <div class="clearfix"></div>
-		     </div>
-		</div>
-	  </div>
-	</div>
-
-    <div class="container">
-       	<div id="view">
-       		<div class="row section">
-       			<div class="span12 categories"></div>
-       		</div>
-			<div id="page-status" class="alert alert-success hide"></div>
-			<div class="row services">
-				<div class="span3">
-					<div class="box light">
-                		<h6> Map placeholder </h6>
-                    </div>
-                    <div class="category2"></div>
-				</div>
-				<div class="span9">
-					<span class="loading">Loading ...</span>
-					<div id="no-services" class="hide">No services. Try selecting a second level category.</div>
-					<div class="services-box"></div>
-				</div>
+	            </div>
+	        </div>
+	    </div>
+		<div class="hide container" id="wp-signup-banner">
+	   	  <div class="row">
+	       	<div class="span12">
+				<div class="special">
+			         <div class="so_title">Not a member ? <br><span>Join today</span></div>
+					 <div class="so_text"><a class="btn btn-more" href="#">Sign up here</a></div>
+			         <div class="clearfix"></div>
+			     </div>
 			</div>
-       	</div>
-    </div>
+		  </div>
+		</div>
+	
+	    <div class="container">
+	       	<div id="view">
+	       		<div class="row section">
+	       			<div class="span12 categories"></div>
+	       		</div>
+				<div id="page-status" class="alert alert-success hide"></div>
+				<div class="row services">
+					<div class="span3">
+						<div class="box light">
+	                		<h6> Map placeholder </h6>
+	                    </div>
+	                    <div class="category2"></div>
+					</div>
+					<div class="span9">
+						<span class="loading">Loading ...</span>
+						<div id="no-services" class="hide">No services. Try selecting a second level category.</div>
+						<div class="services-box"></div>
+					</div>
+				</div>
+	       	</div>
+	    </div>
+		<footer>
+		  <p>&copy; Company 2013</p>
+		</footer>
+	</div>
+	
     <div id="wp-oly">
+	    <button class="btn btn-small wp-oly-close">Done</button>
 		<div class="wp-oly-body"></div>
     </div>
-
-	<footer>
-	  <p>&copy; Company 2013</p>
-	</footer>
-	
     <!-- javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
@@ -141,7 +144,7 @@
 						</ul>
 					</div>
 					<div class="srvc-details">
-						{{#if wpName}}<div class="srvc-name">{{wpName}}</div>{{/if}}
+						{{#if wpName}}<h6 class="srvc-name">{{wpName}}</h6>{{/if}}
 						<ul class="srvc-info">
 							{{#if wpProjectName}}<li><div>{{wpProjectName}}</div></li>{{/if}}
 							{{#if wpCostPerHour}}<li><div>Cost per hour : {{wpCostPerHour}}</div></li>{{/if}}
@@ -158,11 +161,10 @@
 	</script>
 
 	<script id="TL_service-details" type="text/x-handlebars-template">
-		<a href="#" class="wp-oly-close">&times;</a>
 		<div class="row-fluid">
 			{{#with service}}
 			<div class="span6">
-				{{#if wpName}}<div class="srvc-d-name">{{wpName}}</div>{{/if}}
+				{{#if wpName}}<h4>{{wpName}}</h4>{{/if}}
 				<div class="srvc-d-images">
 					<div id="slider" class="flexslider">
 						<ul class="slides">
