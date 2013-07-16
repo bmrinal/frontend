@@ -9,11 +9,10 @@
     <link href="/assets/css/bootstrap.css" rel="stylesheet">
     <link href="/assets/css/bootstrap-responsive.css" rel="stylesheet">
     <link href="/assets/css/bootstrap-select.css" rel="stylesheet">
-    <link href="/assets/css/fullcalendar.css" rel="stylesheet">
     <link href="/assets/css/template.css" rel="stylesheet">
 
     <link href="/css/app.css" rel="stylesheet">
-	<link href="/css/bookappointment.css" rel="stylesheet">
+	<link href="/css/requestquote.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Lobster+Two:400italic' rel='stylesheet' type='text/css'>
 
@@ -68,26 +67,39 @@
     </div>
 
     <div class="container">
-    	<div class="row">
-	       	<div id="view">
-	    	    <div id="page-status" class="alert hide"></div>
-		       	<span class="loading"> loading calendar ... </span>
-				<div id='calendar'></div>
-				<div class="wp-legend">
-					<i class="wp-open"></i> <span>Open</span>
-					<i class="wp-busy"></i> <span>Busy</span>
-					<i class="wp-booked"></i> <span>Booked now</span>
+       	<div id="view">
+       		<div class="row section">
+       			<h2>Request Quote - <span class="srvc-name"></span></h2>
+       		</div>
+			<div id="page-status" class="alert hide"></div>
+			<div class="row services">
+				<span class="loading"> loading ... </span>
+				<div class="span12">
+					<form class="form-horizontal rq-form">
+						<div class="serviceData">
+							<input type="hidden" name="serviceId" value="" />
+						</div>
+						<div id="srTemplate"></div>
+						<div id="srVendors"></div>
+						<div class="form-actions">
+							<span class="submitting">submitting...</span>
+				            <button class="btn">Cancel</button>
+				            <button type="submit" class="btn btn-success">Request</button>
+						</div>
+					</form>
 				</div>
-				<div id="addEvent" class="modal hide fade"></div>
 			</div>
-		</div>
-	</div>
+       	</div>
+    </div>
+    <div id="wp-oly">
+		<div class="wp-oly-body"></div>
+    </div>
 
 	<footer>
 	  <p>&copy; Company 2013</p>
 	</footer>
-
-	<!-- javascript
+	
+    <!-- javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <!-- 1. Libraries -->
@@ -95,59 +107,29 @@
 	<script src="/assets/js/bootstrap.js"></script>
 	<script src="/assets/js/mustache.js"></script>
 	<script src="/assets/js/handlebars.js"></script>
-	<script src='/assets/js/fullcalendar.js'></script>
 	
 	<!-- 2. Application javascripts - Order is importatnt! -->
+	<script src="js/util/handlebarHelpers.js"></script>
 	<script src="js/app.js"></script>
-	<script src='js/bookappointment.js'></script>
-	
-	<script id="TL_addEvent" type="text/x-handlebars-template">
-	  <div class="modal-header">
-	    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	    <h3>Request appointment</h3>
-	  </div>
-	  <div class="modal-body">
-	  	<form class="form-horizontal">
-		  <div class="control-group">
-			<label class="control-label" for="phone">Start time</label>		  
- 				<div class="controls">
-				<p id="startTime"></p>
-			</div>
-		  </div>
+	<script src="js/requestquote.js"></script>
 
-		  <div class="control-group">
-			<label class="control-label" for="phone">End time</label>		  
- 				<div class="controls">
-				<p id="endTime"></p>
-			</div>
-		  </div>
-
-		  {{#if isProxyBooking}}
-			  <div class="control-group">
-				<label class="control-label" for="customerName">Customer name</label>		  
- 				<div class="controls">
-					<input name="customerName" type="text" />
-				</div>
-			  </div>
-			  <div class="control-group">
-				<label class="control-label" for="customerEmail">Customer email</label>		  
- 				<div class="controls">
-					<input name="customerEmail" type="text" />
-				</div>
-			  </div>
-		  {{/if}}
-		  <div class="control-group">
-			<label class="control-label" for="customerPhone">Customer phone number</label>		  
- 			<div class="controls">
-				<input name="customerPhone" type="text" value="{{phone}}"/>
-			</div>
-		   </div>
-		</form>
-	  </div>
-	  <div class="modal-footer">
-	    <a href="#" class="appt-cancel btn">Cancel</a>
-	    <a href="#" class="appt-book btn btn-success">Book</a>
-	  </div>
+	<script id="TL_vendors" type="text/x-handlebars-template">
+		<div class="control-group">
+			<label class="control-label">Vendors</label>
+			{{#each vendor}}
+					<div class="controls">
+      					<label class="checkbox">
+							{{#checkbox id ../currentVendorId}}
+	        					<input type="checkbox" name="vendorIds" value="{{value}}" {{#if selected}}checked{{/if}}> {{../name}}
+							{{/checkbox}}
+							{{#each images}}
+								<img class="vendor-img" src="{{../../REST_HOST}}/resources/images/{{.}}"/>
+							{{/each}}
+      					</label>
+						<div class="vendor-desc">{{description}}</div>
+					</div>
+			{{/each}}
+		</div>
 	</script>
   </body>
 </html>

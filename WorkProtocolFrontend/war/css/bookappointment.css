@@ -1,0 +1,38 @@
+div.wp-event-busy {
+	background-color: #E9F2DC;
+	color: #555;
+}
+
+div.wp-event-booked {
+	background-color: #B35047;
+    color: #f2f2f2;
+}
+
+div.wp-event-open{
+	background-color: #3A87AD;
+	cursor: pointer;
+	color: #f2f2f2;
+}
+
+.wp-legend{
+	margin-top: 10px;
+	display: none;
+}
+
+.wp-legend i{
+	display: inline-block;
+	width: 15px;
+	height: 15px;
+}
+
+.wp-busy{
+	background-color: #E9F2DC;
+}
+
+.wp-open{
+	background-color: #3A87AD;
+}
+
+.wp-booked{
+	background-color: #B35047;
+}

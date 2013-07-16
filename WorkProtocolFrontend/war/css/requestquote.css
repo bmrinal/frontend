@@ -1,0 +1,14 @@
+.vendor-img{
+	max-width: 100px;
+	max-height: 100px;
+	vertical-align: top;
+}
+
+.vendor-desc{
+	color: #999;
+	font-size: 0.84em;
+}
+
+.submitting{
+	display: none;
+}

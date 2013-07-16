@@ -1,1 +1,1 @@
-window.location.href = "/browsecategory.html";
+window.location.href = "/services.html";

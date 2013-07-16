@@ -1,7 +1,7 @@
 $(function (){
 	var params, OPENEVENT_ID, BUSYEVENT_ID, bookEvntStartStr, bookEvntEndStr;
-	
-	params = $.deparam.querystring();
+
+	params = wp.util.qsToJSON();
 	OPENEVENT_ID = 'open';
 	BUSYEVENT_ID = 'busy';
 
@@ -102,6 +102,12 @@ $(function (){
 								  }
 							  },
 							  events: eventsArr
+						  });
+
+						  $('.wp-legend').show();
+						  $('#addEvent form').on('submit', function (e){
+							  e.preventDefault();
+							  $('#addEvent .appt-book').click();
 						  });
 
 						  //book new appointment

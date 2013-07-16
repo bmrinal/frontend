@@ -29,20 +29,39 @@ $(function (){
 				  user.userName = userName[0];
 				  wp.user = user; //store user info for global access
 
-				  $('#user-info span').html(user.userName);
-				  $('#user-info a').prop('href', user.signOutUrl + '?ru=' + window.location.protocol + '//' + window.location.host);
-				  $('#user-info').show();
+				  /* $('#user-info span').html(user.userName);
+				  $('#user-info a').prop('href', user.signOutUrl + '?ru=' + window.location.protocol + '//' + window.location.host); */
+				  $('#user-info .wp-signOut').prop('href', wp.cfg['REST_HOST'] +'/SignOut?ru=' + window.location.protocol + '//' + window.location.host); 
+				  $('#user-info .wp-signedIn').show();
+				  $('#user-info .wp-signedOut').hide();
 			  } else {
-				  $('#wp-signup-banner').html('<div class="alert alert-info"><a href="'+ wp.cfg['REST_HOST'] +'/SignOut?ru='+ wp.cfg['REST_HOST'] +'/SignIn?isVendor=true">Sign up</a></div>');
+				  $('#user-info .wp-signIn').prop('href', wp.cfg['REST_HOST'] +'/SignIn?ru=' + encodeURIComponent(window.location.href)); 
+				  $('#user-info .wp-signedIn').hide();
+				  $('#user-info .wp-signedOut').show();
+				  $('#wp-signup-banner').show().find('a').prop('href', wp.cfg['REST_HOST'] +'/SignOut?ru='+ wp.cfg['REST_HOST'] +'/SignIn?isVendor=true');
 			  }
 		  }
 	});
 	
 	wp.util = {};
 
+	wp.util.scrollToTop = function(){
+		$("html, body").animate({ scrollTop: 0 }, 600);
+	};
+
+	wp.util.qsToJSON = function (){
+		var search, obj;
+		
+		search = location.search.substring(1);
+		obj = search ? JSON.parse('{"' + search.replace(/&/g, '","').replace(/=/g,'":"') + '"}',
+                function(key, value) { return key===""?value:decodeURIComponent(value) }): {};
+
+		return obj;
+	};
+
 	wp.util.redirectToSigin = function(){
 		window.location.href = wp.cfg['REST_HOST']+'/SignIn?ru=' + encodeURIComponent(window.location.href);
-	}
+	};
 
 	wp.util.parseDate = function(dateStr){
 		var day, month, year, hour, min, sec, re, dateArr;
@@ -58,5 +77,5 @@ $(function (){
 		sec = parseInt(dateArr[11], 10);
 		
 		return new Date(year, month, day, hour, min, sec);
-	}
+	};
 });

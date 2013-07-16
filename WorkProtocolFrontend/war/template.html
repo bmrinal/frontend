@@ -10,8 +10,8 @@
     <link href="/assets/css/bootstrap-responsive.css" rel="stylesheet">
     <link href="/assets/css/bootstrap-select.css" rel="stylesheet">
     <link href="/assets/css/flexslider.css" rel="stylesheet">
-    <link href="/assets/css/template.css" rel="stylesheet">
 
+    <link href="/assets/css/template.css" rel="stylesheet">
     <link href="/css/app.css" rel="stylesheet">
 	<link href="/css/services.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz' rel='stylesheet' type='text/css'>
@@ -77,9 +77,13 @@
 		</div>
 	  </div>
 	</div>
-
     <div class="container">
        	<div id="view">
+       		<div class="row section">
+	       		<div class="span12">
+					<h3> Browse services <span class="title_end"></span> </h3>
+				</div>
+       		</div>
        		<div class="row section">
        			<div class="span12 categories"></div>
        		</div>
@@ -97,16 +101,14 @@
 					<div class="services-box"></div>
 				</div>
 			</div>
+			<div id="srForm" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="Service request form" aria-hidden="true">
+			</div>
        	</div>
-    </div>
-    <div id="wp-oly">
-		<div class="wp-oly-body"></div>
-    </div>
+    </div><!--/.fluid-container-->
+     <footer>
+       <p>&copy; Company 2013</p>
+     </footer>
 
-	<footer>
-	  <p>&copy; Company 2013</p>
-	</footer>
-	
     <!-- javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
@@ -124,7 +126,7 @@
 	<script src="js/services.js"></script>
 	<script id="TL_services" type="text/x-handlebars-template">
 			{{#each service}}
-		  		<div class="span4 service box shadow_effect" data-ind="{{@index}}">
+		  		<div class="span4 service box shadow_effect">
 					<div class="flexslider srvc-imgs">
 						<ul class="slides">
 							{{#if wpImageIds}}
@@ -140,13 +142,14 @@
 							{{/if}}
 						</ul>
 					</div>
+					<div class="clearfix"></div>
 					<div class="srvc-details">
 						{{#if wpName}}<div class="srvc-name">{{wpName}}</div>{{/if}}
-						<ul class="srvc-info">
-							{{#if wpProjectName}}<li><div>{{wpProjectName}}</div></li>{{/if}}
-							{{#if wpCostPerHour}}<li><div>Cost per hour : {{wpCostPerHour}}</div></li>{{/if}}
-							{{#if wpFixedCost}}<li><div>Fixed cost : {{wpFixedCost}}</div></li>{{/if}}
-							{{#if wpDuration}}<li><div>Duration : {{wpDuration}} mins</div></li>{{/if}}
+						<ul class="srvc-info check_list tick">
+							{{#if wpProjectName}}<li>{{wpProjectName}}</li>{{/if}}
+							{{#if wpCostPerHour}}<li>Cost per hour : {{wpCostPerHour}}</li>{{/if}}
+							{{#if wpFixedCost}}<li>Fixed cost : {{wpFixedCost}}</li>{{/if}}
+							{{#if wpDuration}}<li>Duration : {{wpDuration}} mins</li>{{/if}}
 						</ul>
 						<button class="wp-appoint btn btn-mini btn-less" type="button" data-vendorId="{{wpVendorId}}" data-duration="{{wpDuration}}" data-srvcid="{{id}}">Book appointment</button>
 						{{#if wpOpenToQuote}}
@@ -157,54 +160,47 @@
 			{{/each}}
 	</script>
 
-	<script id="TL_service-details" type="text/x-handlebars-template">
-		<a href="#" class="wp-oly-close">&times;</a>
-		<div class="row-fluid">
-			{{#with service}}
-			<div class="span6">
-				{{#if wpName}}<div class="srvc-d-name">{{wpName}}</div>{{/if}}
-				<div class="srvc-d-images">
-					<div id="slider" class="flexslider">
-						<ul class="slides">
-							{{#each wpImageIds}}
-								<li>
-									<img src="{{../../REST_HOST}}/resources/images/{{.}}"/>
-								</li>
-							{{/each}}
-						</ul>
-					</div>
-					<div id="carousel" class="flexslider">
-						<ul class="slides">
-							{{#each wpImageIds}}
-								<li>
-									<img src="{{../../REST_HOST}}/resources/images/{{.}}"/>
-								</li>
-							{{/each}}
-						</ul>
-					</div>
+	<script id="TL_requestSrvc" type="text/x-handlebars-template">
+		  <div class="modal-header">
+		    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		    <h3 id="myModalLabel">Submit service request for {{name}}</h3>
+		  </div>
+		  <div class="modal-body">
+		    <span class="frm-ldg">loading ...</span>
+			<form class="form-horizontal">
+			<div class="vendors-wrap">
+				<h5>Choose vendor(s)</h5>
+				<div class="serviceData">
+					<input type="hidden" name="serviceId" value="" />
 				</div>
+				<div class="vendors"></div>
 			</div>
-
-			<div class="span6">
-				<button class="wp-appoint btn btn-mini btn-success" type="button" data-vendorId="{{wpVendorId}}" data-duration="{{wpDuration}}" data-srvcid="{{id}}">Book appointment</button>
-				{{#if wpOpenToQuote}}
-					<button class="wp-quote btn btn-mini btn-success" type="button" data-srvcid="{{id}}" data-srvcdefid="{{wpServiceDefinitionId}}">Request quote</button>
-				{{/if}}
-				<div class="box shadow_effect">
-					<ul class="srvc-d-info">
-						{{#if wpProjectName}}<li><div>{{wpProjectName}}</div></li>{{/if}}
-						{{#if wpCostPerHour}}<li><div>Cost per hour : {{wpCostPerHour}}</div></li>{{/if}}
-						{{#if wpFixedCost}}<li><div>Fixed cost : {{wpFixedCost}}</div></li>{{/if}}
-						{{#if wpDuration}}<li><div>Duration : {{wpDuration}} mins</div></li>{{/if}}
-						{{#each columns}}
-							{{#each values}}
-								<li>{{.}}</li>
-							{{/each}}
+			<div id="srTemplate"></div>
+			</form>
+		  </div>
+		  <div class="modal-footer">
+			<span class="hide">submitting  ...</span>
+		    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+		    <button class="btn btn-primary" data-action="next">Next</button>
+		  </div>
+		</div>
+	</script>
+	
+	<script id="TL_vendors" type="text/x-handlebars-template">
+		<div class="control-group">
+		{{#each vendor}}
+				<div class="controls">
+      				<label class="checkbox">
+						{{#checkbox id ../currentVendorId}}
+	        				<input type="checkbox" name="vendorIds" value="{{value}}" {{#if selected}}checked{{/if}}> {{../name}}
+						{{/checkbox}}
+						{{#each images}}
+							<img class="vendor-img" src="{{../../REST_HOST}}/resources/images/{{.}}"/>
 						{{/each}}
-					</ul>
+      				</label>
+					<div class="vendor-desc">{{description}}</div>
 				</div>
-			</div>
-			{{/with}}
+		{{/each}}
 		</div>
 	</script>
 
