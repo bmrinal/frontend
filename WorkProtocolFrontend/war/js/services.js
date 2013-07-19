@@ -1,7 +1,19 @@
 $(function (){
-	var currServiceId, currServiceDefId, vendorTempl, fetchServices, categoryHash, servicesXHR, servicesArr;
+	var params, currServiceId, currServiceDefId, vendorTempl, fetchServices, categoryHash, servicesXHR, servicesArr;
 
 	categoryHash = {};
+	params = wp.util.qsToJSON();
+
+	if (params.rdcode){
+		switch (params.rdcode) {
+			case 'ba.yes' :
+				$('#page-status').addClass('alert-success').html('Appointment booked').show();
+				break;
+			case 'rq.yes' :
+				$('#page-status').addClass('alert-success').html('Service request submitted').show();
+				break;
+		}
+	}
 
 	$.ajax({
 	  url: wp.cfg['REST_HOST']+'/resources/categories/list',
@@ -38,13 +50,13 @@ $(function (){
 			cache: false,
 			dataType: "jsonp",
 			beforeSend: function () {
-				$('#view .loading').show();
+				$('#wp-spinner').spin({color:'#B94A48', lines: 12});
 				$('#no-services').hide();
 				
 				$('#view .services-box').html('');
 			},
 			complete: function () {
-				$('#view .loading').hide();
+				$('#wp-spinner').spin(false);
 			},
 			success: function (response){
 				var source, template, data, servicesHTML, container;
@@ -125,6 +137,9 @@ $(function (){
 		val = $(this).data('catid');
 		fetchServices(wp.cfg['REST_HOST']+'/resources/categories/' + val, true);
 	});
+
+	//setting the overlay height as same as view port height
+	$('#wp-oly').css('min-height', $(window).height());
 
 	var openDetailsView = function (){
 		$('#wp-main').hide();

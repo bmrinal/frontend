@@ -12,3 +12,44 @@
 .submitting{
 	display: none;
 }
+
+.wp-srvc-info{
+	margin-bottom: 15px;
+	position: relative;
+}
+
+.wp-srvc-info-h{
+	cursor: pointer;
+	margin-bottom: 5px;
+}
+
+.wp-srvc-info-e{
+	position: absolute;
+	right: 10px;
+}
+
+.srvc-d-info{
+	margin: 0 0 0 5px;
+}
+
+.srvc-d-info li{
+	list-style-type: none;
+}
+
+.srvc-d-info li i{
+	margin-right: 10px;
+}
+
+.srvc-d-info li div{
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+#srVendors, #srReview{
+	display: none;
+}
+
+.wp-step{
+	color: #B94A48;
+}

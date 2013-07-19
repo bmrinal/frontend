@@ -1,8 +1,10 @@
 $(function (){
-	var params;
+	var params, steps, currentStep;
 
 	params = wp.util.qsToJSON();
+	steps = [$('#srTemplate'), $('#srVendors'), $('#srReview')];
 
+	currentStep = 0;
 	$.ajax({
 		  url: wp.cfg['REST_HOST']+'/resources/user',
 		  dataType: 'json',
@@ -16,11 +18,14 @@ $(function (){
 					  url: wp.cfg['REST_HOST']+'/resources/servicedefinitions/' + params.srvcDefId,
 					  cache: false,
 					  dataType: "jsonp",
+					  beforeSend: function (){
+						  $('#wp-spinner').spin({color:'#B94A48', lines: 12});
+					  },
 					  complete: function (){
-						  $('#view .loading').hide();
+						  $('#wp-spinner').spin(false);
 					  },
 					  success: function (response){
-						  var template, data;
+						  var template, data, temp;
 						  template = response.requestHtmlTemplate;
 						  data = $.parseJSON(response.requestHtmlMetaData);
 
@@ -28,8 +33,9 @@ $(function (){
 						  $('#view .rq-form input[name="serviceId"]').val(params.serviceId);
 
 						  if (data && template) {
-							  $('#srTemplate').html(Mustache.to_html(template, data));
-							  
+							  $('#srTemplate').html($('#TL_services').html());
+							  $('#srTemplate .wp-details').html(Mustache.to_html(template, data));
+
 							  $.ajax({
 								  url: wp.cfg['REST_HOST']+'/resources/services/' + params.serviceId,
 								  cache: false,
@@ -44,8 +50,16 @@ $(function (){
 									  $('#view .srvc-name').html(response.wpName || '');
 									  source = $('#TL_vendors').html();
 									  template = Handlebars.compile(source);
-
+									  
 									  $('#srVendors').html(template(data));
+
+									  //service info at the top
+									  $('#view .wp-srvc-info .wp-srvc-info-h span').html(response.wpName);
+									  wp.util.templateLoader({'templateUrl': 'template/serviceinfo.handlebars',
+											  'data': response,
+											  'targetSelector': '#view .wp-srvc-info .wp-srvc-info-b'
+									  });
+									  $('#view .wp-srvc-info').show();								  
 								  }
 								});							  
 						  } else {
@@ -63,7 +77,11 @@ $(function (){
 						  ).addClass('alert-error');
 					  }
 				  });
-			  
+
+				  $('#view .wp-srvc-info-h').on('click', function (e){
+					  e.preventDefault();
+					  $('#view .wp-srvc-info-b').toggle();
+				  });
 			  }else {
 				  wp.util.redirectToSigin();
 			  }
@@ -73,6 +91,21 @@ $(function (){
 				  .addClass('alert-error')
 				  .show();
 		  }
+	});
+
+	$('#view').on('click', '.wp-cancel', function (e){
+		window.location.href = '/services.html';
+	});
+
+	$('#view').on('click', '.wp-back, .wp-next', function (e){
+		var nextStep;
+
+		nextStep = parseInt($(this).data('step'), 10);
+
+		steps[currentStep].hide();
+		steps[nextStep].show();
+		
+		currentStep = nextStep;
 	});
 
 	$('#view .rq-form').submit(function (e){
@@ -92,10 +125,11 @@ $(function (){
 				$('#view .submitting').hide();
 			},
 			success: function (response){
-				wp.util.scrollToTop();
+				/* wp.util.scrollToTop();
 				$('#page-status').html('Service request ('+ response.id +') submitted')
 					.addClass('alert-success')
-					.removeClass('hide');
+					.removeClass('hide'); */
+				window.location.href = '/services.html?rdcode=rq.yes';
 			},
 			error: function (){
 				$('#page-status').html('Sorry, unable to create service request')
@@ -105,74 +139,3 @@ $(function (){
 		});
 	});	
 });
-	
-/*	$('#srForm').on('shown', function (){
-		//fetching service request form
-		$('#srForm form').prop('action', wp.cfg['REST_HOST']+'/resources/servicerequests');
-		if (currServiceDefId) {
-			$("#srForm .serviceData input[name='serviceId']").val(currServiceId);
-
-			});
-		}
-
-		//fetching vendor details
-		if (currServiceId) {
-			$("#srForm .serviceData input[name='serviceId']").val(currServiceId);
-			$.ajax({
-			  url: wp.cfg['REST_HOST']+'/resources/services/'+currServiceId,
-			  cache: false,
-			  dataType: "jsonp",
-			  success: function (response){
-				  var data = {};
-
-				  data.vendor = response.vendors;
-				  data.currentVendorId = response.wpVendorId;
-				  vendorTempl(data);
-			  }
-			});
-		}
-	});
-
-	function vendorTempl(param){
-		var source, template, data;
-
-		source = $('#TL_vendors').html();
-		template = Handlebars.compile(source);
-		data = param;
-		data['REST_HOST'] = wp.cfg['REST_HOST'];
-		$('#srForm .vendors').html(template(data));
-	}
-	
-	$('#view').on('click', '.modal-footer .btn-primary', function (){
-		var form, params, action;
-		action = $(this).data('action');
-		if (action === "next"){
-			$('#srTemplate').hide();
-			$('#srForm .vendors-wrap').show();
-			$(this).data('action', 'submit').html('Submit');
-		} else if (action === "submit"){
-			form = $('#srForm .modal-body form');
-			params = form.serialize();
-			$.ajax({
-			  url: form.attr('action'),
-			  data: params,
-			  dataType: "jsonp",
-			  beforeSend: function (){
-				  $('#srForm .modal-footer span').show();
-			  },
-			  complete: function (){
-			  },
-			  success: function (response){
-				  $('#srForm').modal('hide');
-				  $('#page-status').html('Service request ('+ response.id +') submitted').removeClass('hide');
-			  },
-			  error: function (){
-				  $('#srForm .modal-body').prepend('<div class="alert alert-error">'
-						  + '<button type="button" class="close" data-dismiss="alert">&times;</button>'
-						  + 'Sorry, unable to create a service request'
-						  + '</div>'
-				  );
-			  }
-			});
-		}
-	}); */

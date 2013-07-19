@@ -6,8 +6,11 @@ $(function (){
 		  xhrFields: {
 			  withCredentials: true
 		  },
+		  beforeSend: function (){
+			  $('#wp-spinner').spin({color:'#B94A48', lines: 12});
+		  },
 		  complete: function (){
-			  $('.page-loading').hide();  
+			  $('#wp-spinner').spin(false);
 		  },
 		  success: function (response){
 			  var tnData = {};
@@ -52,7 +55,13 @@ $(function (){
 						  tab : tnData
 					  }
 				  });
-				  $('#myCal').prop('src', 'http://www.google.com/calendar/embed?mode=WEEK&showTitle=0&src=' + response.email + '&ctz=America/Los_Angeles');
+
+				  $('#myCal').append($('<iframe/>', {
+					  'frameborder': '0',
+					  'scrolling': 'no',
+					  'src': 'http://www.google.com/calendar/embed?mode=WEEK&showTitle=0&src=' + response.email + '&ctz=America/Los_Angeles'
+				  	})
+				  );
 			  } else {
 				  wp.util.redirectToSigin();
 			  }

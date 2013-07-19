@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Work protocol - browse services</title>
+    <title>Work protocol - book appointment</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- styles -->
@@ -14,8 +14,6 @@
 
     <link href="/css/app.css" rel="stylesheet">
 	<link href="/css/bookappointment.css" rel="stylesheet">
-    <link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Lobster+Two:400italic' rel='stylesheet' type='text/css'>
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -32,56 +30,77 @@
   </head>
 
   <body>
-	<div class="top_line"><!-- --></div>
-
-    <div id="wp-header" class="container">
-        <div class="row">
-            <div class="span11">
-            	<!--  a href="index.html" title="Tensor" class="logo"><img src="assets/img/tensor_logo.png" alt=""/ class="retina"></a> -->
-            </div>
-            <div id="user-info" class="span1">
-			    <div class="dropdown wp-signedIn hide">
-				    <div class="dropdown-toggle btn" data-toggle="dropdown">
-				    	<i class="icon-user"></i>
+  	<div id="wp-main">
+		<div class="top_line"><!-- --></div>
+	
+	    <div id="wp-header" class="container">
+	        <div class="row">
+	            <div class="span11">
+	            	<!--  a href="index.html" title="Tensor" class="logo"><img src="assets/img/tensor_logo.png" alt=""/ class="retina"></a> -->
+	            </div>
+	            <div id="user-info" class="span1">
+				    <div class="dropdown wp-signedIn hide">
+					    <div class="dropdown-toggle btn" data-toggle="dropdown">
+					    	<i class="icon-user"></i>
+					    </div>
+					    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+			              <li>
+			              	<a href="/myprofile.html">My account</a>
+			              </li>
+			              <li>
+			              	<a class="wp-signOut" href="#">Sign out</a>
+			              </li>
+			            </ul>
 				    </div>
-				    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-		              <li>
-		              	<a href="/myprofile.html">My account</a>
-		              </li>
-		              <li>
-		              	<a class="wp-signOut" href="#">Sign out</a>
-		              </li>
-		            </ul>
-			    </div>
-			    <div class="dropdown wp-signedOut">
-				    <div class="dropdown-toggle btn" data-toggle="dropdown">
-				    	<i class="icon-user"></i>
+				    <div class="dropdown wp-signedOut">
+					    <div class="dropdown-toggle btn" data-toggle="dropdown">
+					    	<i class="icon-user"></i>
+					    </div>
+					    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+			              <li>
+			              	<a class="wp-signIn" href="#">Sign In</a>
+			              </li>
+			            </ul>
 				    </div>
-				    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-		              <li>
-		              	<a class="wp-signIn" href="#">Sign In</a>
-		              </li>
-		            </ul>
-			    </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="container">
-    	<div class="row">
-	       	<div id="view">
-	    	    <div id="page-status" class="alert hide"></div>
-		       	<span class="loading"> loading calendar ... </span>
-				<div id='calendar'></div>
-				<div class="wp-legend">
-					<i class="wp-open"></i> <span>Open</span>
-					<i class="wp-busy"></i> <span>Busy</span>
-					<i class="wp-booked"></i> <span>Booked now</span>
+	            </div>
+	        </div>
+	    </div>
+	
+	    <div class="container">
+	    	<div class="row">
+		       	<div id="view" class="span12">
+		       		<h3> Book appointment </h3>
+	
+		    	    <div id="page-status" class="alert hide"></div>
+	
+		       		<!-- Service info -->
+					<div class="wp-srvc-info box hide">
+					    <div class="wp-srvc-info-h">
+					    	<span></span>
+					    	<a href="#" class="wp-srvc-info-e">
+					    		<i class="icon-arrow-down"></i>
+					    	</a>
+					    </div>
+						<div class="wp-srvc-info-b hide"></div>
+					</div>
+	
+			       	<div id="wp-spinner"></div>
+					<div id='calendar'></div>
+					<div class="wp-legend">
+						<i class="wp-open"></i> <span>Open</span>
+						<i class="wp-busy"></i> <span>Busy</span>
+					</div>
 				</div>
-				<div id="addEvent" class="modal hide fade"></div>
 			</div>
 		</div>
 	</div>
+
+    <div id="wp-oly">
+	    <button class="btn btn-mini btn-close wp-oly-close">&times;</button>
+		<div class="wp-oly-body">
+			<div id="addEvent"></div>
+		</div>
+    </div>
 
 	<footer>
 	  <p>&copy; Company 2013</p>
@@ -96,29 +115,27 @@
 	<script src="/assets/js/mustache.js"></script>
 	<script src="/assets/js/handlebars.js"></script>
 	<script src='/assets/js/fullcalendar.js'></script>
+	<script src="/assets/js/spin.js"></script>
+	<script src="/assets/js/jquery.spin.js"></script>
 	
 	<!-- 2. Application javascripts - Order is importatnt! -->
 	<script src="js/app.js"></script>
 	<script src='js/bookappointment.js'></script>
 	
 	<script id="TL_addEvent" type="text/x-handlebars-template">
-	  <div class="modal-header">
-	    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	    <h3>Request appointment</h3>
-	  </div>
-	  <div class="modal-body">
-	  	<form class="form-horizontal">
+		<h4>Review and book</h4>
+	  	<form class="wp-addEvent form-horizontal">
 		  <div class="control-group">
 			<label class="control-label" for="phone">Start time</label>		  
- 				<div class="controls">
-				<p id="startTime"></p>
+ 			<div class="controls">
+				<div id="startTime"></div>
 			</div>
 		  </div>
 
 		  <div class="control-group">
 			<label class="control-label" for="phone">End time</label>		  
- 				<div class="controls">
-				<p id="endTime"></p>
+ 			<div class="controls">
+				<div id="endTime"></div>
 			</div>
 		  </div>
 
@@ -137,17 +154,16 @@
 			  </div>
 		  {{/if}}
 		  <div class="control-group">
-			<label class="control-label" for="customerPhone">Customer phone number</label>		  
+			<label class="control-label" for="customerPhone">Mobile number</label>		  
  			<div class="controls">
 				<input name="customerPhone" type="text" value="{{phone}}"/>
 			</div>
 		   </div>
+			<div class="form-actions">
+			    <button type="button" class="appt-cancel btn">Cancel</button>
+		    	<button type="submit" class="appt-book btn btn-success">Book</button>
+			</div>
 		</form>
-	  </div>
-	  <div class="modal-footer">
-	    <a href="#" class="appt-cancel btn">Cancel</a>
-	    <a href="#" class="appt-book btn btn-success">Book</a>
-	  </div>
 	</script>
   </body>
 </html>

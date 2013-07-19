@@ -1,0 +1,11 @@
+<ul class="srvc-d-info">
+	{{#if wpProjectName}}<li><div><i class="icon-ok"></i>{{wpProjectName}}</div></li>{{/if}}
+	{{#if wpCostPerHour}}<li></i><div><i class="icon-ok"></i>Cost per hour : {{wpCostPerHour}}</div></li>{{/if}}
+	{{#if wpFixedCost}}<li></i><div><i class="icon-ok"></i>Fixed cost : {{wpFixedCost}}</div></li>{{/if}}
+	{{#if wpDuration}}<li><div><i class="icon-ok"></i>Duration : {{wpDuration}} mins</div></li>{{/if}}
+	{{#each columns}}
+		{{#each values}}
+			<li><div><i class="icon-ok"></i>{{.}}</div></li>
+		{{/each}}
+	{{/each}}
+</ul>

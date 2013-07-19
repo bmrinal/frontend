@@ -16,21 +16,29 @@
 	height: 72px;
 }
 
+.srvc-d-info li{
+	list-style-type: none;
+}
+
 .srvc-info li{
 	list-style-type:square;
 	color: #B94A48;
 	line-height: 18px;
 }
 
-.srvc-info li div{
+.srvc-d-info{
+	margin: 0 0 0 5px;
+}
+
+.srvc-d-info li i{
+	margin-right: 10px;
+}
+
+.srvc-d-info li div, .srvc-info li div{
 	color: #555555;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
-}
-
-.srvc-info li.empty{
-	list-style-type:none;
 }
 
 .srvc-name{
@@ -55,7 +63,7 @@
     position: absolute;
     right: 10px;
     top: 10px;
-    color: #B94A48;
+    font-size: 20px;
 }
 
 #wp-oly{
@@ -76,6 +84,7 @@
 }
 
 .wp-oly-body .srvc-d-name{
+	margin-top: 0;
 }
 
 .wp-oly-body .srvc-d-images{

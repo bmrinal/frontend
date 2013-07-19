@@ -17,7 +17,7 @@ body {
     font-size:12px;
 }
 
-@font-face {
+/* @font-face {
     font-family: 'League_Gothic';
     src: url('../fonts/league_gothic.eot');
     src: url('../fonts/league_gothic.eot?#iefix') format('embedded-opentype'),
@@ -28,7 +28,7 @@ body {
     font-style: normal;
 }
 
-/* @font-face {
+ @font-face {
     font-family: 'Social';
     src: url('../fonts/social.eot');
     src: url('../fonts/social.eot?#iefix') format('embedded-opentype'),
@@ -162,7 +162,7 @@ a.readmore {
     padding-right:15px;
     margin-top:15px;
     float:left;
-    font-family: 'Lobster Two', cursive;
+    /* font-family: 'Lobster Two', cursive; */
     font-style:italic;
     font-size:14px;
     text-shadow:1px 1px #ffffff;
@@ -274,7 +274,7 @@ a.readmore:hover span {
 
 .dropcap {
     float: left;
-    font-family: 'Lobster Two', cursive;
+    /* font-family: 'Lobster Two', cursive; */
     font-style:italic;
     font-size: 30px;
     line-height: 30px;
@@ -282,7 +282,7 @@ a.readmore:hover span {
     text-transform: uppercase;
 }
 .font {
-    font-family:'League_Gothic';
+    /* font-family:'League_Gothic'; */
     font-size: 36px;
     line-height: 30px;
     margin: 5px 10px 0px 7px;
@@ -292,8 +292,28 @@ a.readmore:hover span {
 }
 
 /* btn-more in default font */
+.btn-close{
+    background:#B94A48 !important;
+    color:#fdfdfd;
+    text-shadow:1px 1px #000;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+.btn-close:hover {
+    background:#A11D1B !important;
+    color:#fdfdfd;
+    text-shadow:1px 1px #4A4A43;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
 .btn-less{
-    margin-top:15px;
     background:#4A4A43 !important;
     color:#fdfdfd;
     text-shadow:1px 1px #000;
@@ -313,10 +333,13 @@ a.readmore:hover span {
     -o-transition: all 0.3s ease;
     transition: all 0.3s ease;
 }
+.btn-less:focus{
+	color: #FDFDFD;
+}
 .btn-more {
     margin-top:15px;
     background:#4A4A43 !important;
-    font-family: 'Lobster Two', cursive;
+    /* font-family: 'Lobster Two', cursive; */
     font-style:italic;
     font-size:16px;
     color:#fdfdfd;
@@ -360,8 +383,9 @@ a.btn_prev:hover span {
 -------------------------------------------------- */
 
 .top_line {
-    background: #b94a48 url(../img/top_dashed.png) 0px 5px repeat-x;
-    height:9px;
+    /* background: #b94a48 url(../img/top_dashed.png) 0px 5px repeat-x; */
+    background-color: #b94a48; 
+    height:5px;
     width:100%;
 }
 
@@ -490,7 +514,7 @@ li.sfHover > a > .sf-sub-indicator {
     color: #a8a8a8;
     text-transform:uppercase;
     font-weight:normal;
-    font-family:'League_Gothic';
+    /* font-family:'League_Gothic'; */
     font-size:28px;
     color:#4A4A43;
     text-shadow:#F8F8EF 1px 1px 0px, 2px 2px #CDCDCD;
@@ -518,7 +542,7 @@ li.sfHover > a > .sf-sub-indicator {
     color:#BEBEBE;
     font-size: 16px;
     content: attr(data-description);
-    font-family: 'Lobster Two', cursive;
+    /* font-family: 'Lobster Two', cursive; */
     font-style:italic;
     font-weight: 400;
     line-height: 18px;
@@ -687,7 +711,7 @@ li.sfHover > a > .sf-sub-indicator {
     text-align:left;
 }
 .sub {
-    font-family: 'Lobster Two' !important;
+    /* font-family: 'Lobster Two' !important; */
 	font-style: italic;
 	font-weight: 400;
     line-height:24px;
@@ -695,7 +719,7 @@ li.sfHover > a > .sf-sub-indicator {
     font-size:24px;
 }
 .sub_inside {
-    font-family: 'Lobster Two' !important;
+    /* font-family: 'Lobster Two' !important; */
 	font-style: italic;
 	font-weight: 400;
     text-shadow: #F8F8EF 1px 1px 0px, #CDCDCD 2px 2px 0px;
@@ -724,7 +748,7 @@ li.sfHover > a > .sf-sub-indicator {
     top:0px;
     left:0px;
     text-align:center;
-    font-family: 'Lobster Two' !important;
+    /* font-family: 'Lobster Two' !important; */
 	font-style: italic;
 	font-weight: 400;
     color:#fdfdfd;
@@ -741,7 +765,7 @@ li.sfHover > a > .sf-sub-indicator {
     width:110px;
     height:110px;
     text-align:center;
-    font-family: 'Lobster Two' !important;
+    /* font-family: 'Lobster Two' !important; */
 	font-style: italic;
 	font-weight: 400;
     color:#fdfdfd;
@@ -765,7 +789,7 @@ li.sfHover > a > .sf-sub-indicator {
     left:35px;
     width:110px;
     height:110px;
-    font-family: 'League_Gothic';
+    /* font-family: 'League_Gothic'; */
     color:#fdfdfd;
     text-shadow:1px 1px #4A4A43;
     font-size:40px;
@@ -794,7 +818,7 @@ li.sfHover > a > .sf-sub-indicator {
     right:0px;
     bottom:0px;
     text-align:center;
-    font-family: 'Lobster Two' !important;
+    /* font-family: 'Lobster Two' !important; */
 	font-style: italic;
 	font-weight: 400;
     color:#fdfdfd;
@@ -842,7 +866,7 @@ li.sfHover > a > .sf-sub-indicator {
 
 }
 .nivo-caption h3 {
-    font-family: 'League_Gothic';
+    /* font-family: 'League_Gothic'; */
     color:#B94A48;
     font-size:32px;
     line-height:32px;
@@ -851,7 +875,7 @@ li.sfHover > a > .sf-sub-indicator {
     border-bottom:none;
 }
 .nivo-caption h4 {
-    font-family: 'League_Gothic';
+    /* font-family: 'League_Gothic'; */
     color:#B94A48;
     font-size:26px;
     line-height:26px;
@@ -1061,7 +1085,7 @@ li.sfHover > a > .sf-sub-indicator {
     color:#ffffff;
     opacity:0.1;
     font-size:56px;
-    font-family: 'League_Gothic';
+    /* font-family: 'League_Gothic'; */
     font-weight:normal;
     text-align:center;
     padding-top:40px;
@@ -1088,8 +1112,9 @@ li.sfHover > a > .sf-sub-indicator {
 .box {
     background:#ffffff;
     padding:10px;
-    border:1px solid #cdcdcd;
+    border:1px solid #ddd;
     margin-top:15px;
+	box-shadow: 2px 2px 2px #ddd;
 }
 .light {
     margin-top:0px;
@@ -1138,7 +1163,7 @@ li.sfHover > a > .sf-sub-indicator {
     border-top:none;
 }
 .blog_description {
-    font-family: 'Lobster Two' !important;
+    /* font-family: 'Lobster Two' !important; */
 	font-style: italic;
 	font-weight: 400;
     color:#BEBEBE !important;
@@ -1158,7 +1183,7 @@ li.sfHover > a > .sf-sub-indicator {
 }
 .blog_date {
     position:relative;
-    font-family: 'League_Gothic';
+    /* font-family: 'League_Gothic'; */
     font-weight:normal;
     line-height:normal;
     font-size:18px;
@@ -1182,7 +1207,7 @@ li.sfHover > a > .sf-sub-indicator {
     text-shadow: #F8F8EF 1px 1px 0px, #CDCDCD 2px 4px 0px;
 }
 .blog_description {
-    font-family: 'Lobster Two' !important;
+    /* font-family: 'Lobster Two' !important; */
 	font-style: italic;
 	font-weight: 400;
     color:#cdcdcd;
@@ -1234,8 +1259,8 @@ li.sfHover > a > .sf-sub-indicator {
     position:relative;
     display:block;
     padding:5px 25px;
-    font-family: 'Yanone Kaffeesatz';
-    font-size:18px;
+    /* font-family: 'Yanone Kaffeesatz';
+    font-size:18px; */
     color:#4A4A43 !important;
     line-height:20px;
     background:url(../img/arrow.png) no-repeat;
@@ -1278,13 +1303,13 @@ li.sfHover > a > .sf-sub-indicator {
     margin-bottom:10px;
 }
 .coments .author {
-    font-family:'League_Gothic';
+    /* font-family:'League_Gothic'; */
     font-size:18px;
     text-transform:uppercase;
     padding-right:20px;
 }
 .coments .date {
-    font-family:'League_Gothic';
+    /* font-family:'League_Gothic'; */
     font-size:18px;
     text-transform:uppercase;
 }
@@ -1327,7 +1352,7 @@ li.sfHover > a > .sf-sub-indicator {
     margin-bottom:0px;
 }
 .nav-tabs li a {
-    font-family: 'Yanone Kaffeesatz';
+    /* font-family: 'Yanone Kaffeesatz'; */
     font-size:16px;
     color:#4A4A43;
     border:1px solid #edebeb;
@@ -1346,17 +1371,18 @@ li.sfHover > a > .sf-sub-indicator {
 }
 .nav-tabs .active a {
     background: #fdfdfd url(../img/3.png) repeat;
-    font-family: 'Yanone Kaffeesatz';
+    /* font-family: 'Yanone Kaffeesatz'; */
     font-size:16px;
     border:1px solid #cdcdcd;
     color:#b94a48;
 }
 .tab-pane {
-    border:1px solid #cdcdcd;
+    /* border:1px solid #cdcdcd; */
+    border-bottom:1px solid #cdcdcd;
     padding:10px;
     border-top:none !important;
     background: #fdfdfd url(../img/3.png) repeat;
-    font-size:11px;
+    /* font-size:11px; */
     -webkit-transition:all 0.5s ease;
     -moz-transition:all 0.5s ease;
     -o-transition:all 0.5s ease;
@@ -1427,7 +1453,7 @@ li.sfHover > a > .sf-sub-indicator {
     border-bottom:0px; !important;
 }
 .accordion-group a{
-    font-family: 'Yanone Kaffeesatz';
+    /* font-family: 'Yanone Kaffeesatz'; */
     font-size:16px;
     color:#4A4A43;
     -webkit-transition:all 0.5s ease;
@@ -1478,7 +1504,7 @@ li.sfHover > a > .sf-sub-indicator {
 }
 .special .so_title {
     float:left;
-    font-family: 'League_Gothic';
+    /* font-family: 'League_Gothic'; */
     font-size:36px;
     line-height:22px !important;
     font-weight:normal;
@@ -1492,7 +1518,7 @@ li.sfHover > a > .sf-sub-indicator {
 } 
 .special .so_title span {
     font-size:22px;
-    font-family: 'Lobster Two' !important;
+	/* font-family: 'Lobster Two' !important; */
 	font-style: italic;
 	font-weight: 400;
     color:#4A4A43;
@@ -1551,7 +1577,7 @@ li.sfHover > a > .sf-sub-indicator {
     margin-bottom:0px;    
 }
 .team .prof {
-    font-family: 'Lobster Two' !important;
+    /* font-family: 'Lobster Two' !important; */
 	font-style: italic;
 	font-weight: 400;
     font-size:14px;
@@ -1912,7 +1938,7 @@ hr.soften {
     text-align:center;
 }
 .pf_description h5 {
-    font-family: 'Yanone Kaffeesatz';
+    /* font-family: 'Yanone Kaffeesatz'; */
     font-size:16px;
     color:#b94a48;
     text-shadow:1px 1px #cdcdcd;
@@ -1959,7 +1985,7 @@ hr.soften {
     font-size:22px;
     float:right;
     font-weight:normal;
-    font-family: 'Lobster Two' !important;
+    /* font-family: 'Lobster Two' !important; */
 	font-style: italic;
 	font-weight: 400;
 }
@@ -1978,7 +2004,7 @@ footer {
     font-size:11px;    
 }
 footer h6 {
-    font-family: 'Yanone Kaffeesatz';
+    /* font-family: 'Yanone Kaffeesatz'; */
     color:#cdcdcd;
     text-shadow:1px 1px #1e1e1b;
     font-size:15px;
@@ -1988,7 +2014,7 @@ footer h6 {
     border-bottom:none;
 }
 footer h5 {
-    font-family: 'Yanone Kaffeesatz';
+    /* font-family: 'Yanone Kaffeesatz'; */
     color:#cdcdcd;
     text-shadow:1px 1px #1e1e1b;
     font-size:18px;
@@ -2046,7 +2072,7 @@ ul.footer_blog {
 .footer_blog .date{
     background-color:#cdcdcd;
     color:#4a4a43;
-    font-family: 'League_Gothic';
+    /* font-family: 'League_Gothic'; */
     font-size:22px;
     line-height:22px;
     text-align:center;

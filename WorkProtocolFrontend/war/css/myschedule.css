@@ -1,5 +1,9 @@
 #myCal{
 	border: 0;
-	width: 800px;
 	height: 600px; 
+}
+
+#myCal iframe{
+	width: 100%;
+	height: 100%;
 }

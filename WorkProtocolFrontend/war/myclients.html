@@ -1,160 +1,144 @@
 <!DOCTYPE html>
-	<html lang="en">
-	  <head>
-	    <meta charset="utf-8">
-	    <title>Work protocol</title>
-	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Work protocol - my profile</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- styles -->
+    <link href="/assets/css/bootstrap.css" rel="stylesheet">
+    <link href="/assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="/assets/css/template.css" rel="stylesheet">
+
+    <link href="/css/app.css" rel="stylesheet">
+	<link href="/css/myprofile.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="/assets/js/html5shiv.js"></script>
+    <![endif]-->
+
+    <!-- Fav and touch icons 
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
+      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
+                    <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
+                                   <link rel="shortcut icon" href="../assets/ico/favicon.png">
+    -->
+  </head>
+
+  <body>
+
+	<div id="wp-main">
+		<div class="top_line"><!-- --></div>
 	
-	    <!-- styles -->
-	   <link href="/bootstrap/bootstrap.css" rel="stylesheet">
-	   <style type="text/css">
-	     body {
-	       padding-top: 60px;
-	       padding-bottom: 40px;
-	     }
-	     .sidebar-nav {
-	       padding: 9px 0;
-	     }
-	
-	     @media (max-width: 980px) {
-	       /* Enable use of floated navbar text */
-	       .navbar-text.pull-right {
-	         float: none;
-	         padding-left: 5px;
-	         padding-right: 5px;
-	       }
-	     }
-	   </style>
-	   <link href="/bootstrap/bootstrap-responsive.css" rel="stylesheet">
-	   <link href="/css/app.css" rel="stylesheet">
-	   <link href="/css/myclients.css" rel="stylesheet">
-	   <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-	   <!--[if lt IE 9]>
-	     <script src="/bootstrap/html5shiv.js"></script>
-	   <![endif]-->
-	
-	   <!-- Fav and touch icons 
-	   <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
-	   <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
-	     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
-	                   <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
-	                                  <link rel="shortcut icon" href="../assets/ico/favicon.png">
-	   -->
-	 </head>
-	 <body>
-	   <div class="navbar navbar-inverse navbar-fixed-top">
-	     <div class="navbar-inner">
-	       <div class="container-fluid">
-	         <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-	           <span class="icon-bar"></span>
-	           <span class="icon-bar"></span>
-	           <span class="icon-bar"></span>
-	         </button>
-	         <a class="brand" href="/index.html">Work protocol</a>
-	         <div class="nav-collapse collapse">
-	           <p class="navbar-text pull-right" id="user-info">
-	             Hi <span></span> (<a href="#" class="navbar-link">Sign out</a>)
-	           </p>
-	           <ul class="nav">
-	             <li class="active"><a href="#">Home</a></li>
-	             <li><a href="#about">About</a></li>
-	             <li><a href="#contact">Contact</a></li>
-	           </ul>
-	         </div><!--/.nav-collapse -->
+	    <div id="wp-header" class="container">
+	        <div class="row">
+	            <div class="span11">
+	            	<!--  a href="index.html" title="Tensor" class="logo"><img src="assets/img/tensor_logo.png" alt=""/ class="retina"></a> -->
+	            </div>
+	            <div id="user-info" class="span1">
+				    <div class="dropdown wp-signedIn hide">
+					    <div class="dropdown-toggle btn" data-toggle="dropdown">
+					    	<i class="icon-user"></i>
+					    </div>
+					    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+			              <li>
+			              	<a href="/myprofile.html">My account</a>
+			              </li>
+			              <li>
+			              	<a class="wp-signOut" href="#">Sign out</a>
+			              </li>
+			            </ul>
+				    </div>
+				    <div class="dropdown wp-signedOut">
+					    <div class="dropdown-toggle btn" data-toggle="dropdown">
+					    	<i class="icon-user"></i>
+					    </div>
+					    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+			              <li>
+			              	<a class="wp-signIn" href="#">Sign In</a>
+			              </li>
+			            </ul>
+				    </div>
+	            </div>
+	        </div>
+	    </div>
+		<div class="container">
+			<div class="row">
+		      	<div id="view" class="span12">
+					<div id="top-nav"></div>
+					<div id="page-status" class="alert hide"></div>
+					<div id="wp-spinner"></div>
+					<div class="tab-pane">
+						<table id="appointments" class="table table-striped">
+							<thead></thead>
+							<tbody></tbody>
+						</table>
+					</div>
+	       		</div>
 	       </div>
 	     </div>
-	   </div>
-	
-	   <div class="container-fluid">
-	     <div class="row-fluid">
-	       <div class="span3">
-	         <div class="well sidebar-nav">
-	           <ul class="nav nav-list"> 
-	             <li class="nav-header">Vendor</li>
-	             <li class="active"><a href="/myprofile.html">My profile</a></li>
-	           </ul>
-	         </div><!--/.well -->
-	
-	         <div class="well sidebar-nav">
-	           <ul class="nav nav-list"> 
-	             <li class="nav-header">Consumer</li>
-	             <li><a href="/browsecategory.html">Categories</a></li>
-	             <li><a href="/services.html">Services</a></li>
-	           </ul>
-	         </div><!--/.well -->
-	       </div><!--/span-->
-	       <div class="span9">
-	       	<div id="view">
-				<div id="top-nav"></div>
-		       	<div class="page-loading">Loading...</div>
-				<table id="appointments" class="table table-striped">
-					<thead></thead>
-					<tbody></tbody>
-				</table>
-	       	</div>
-		    <div id="page-status" class="alert hide"></div>
-	       </div><!--/span-->
-	     </div><!--/row-->
 
-	     <hr>
-	
 	     <footer>
 	       <p>&copy; Company 2013</p>
 	     </footer>
-	
-	   </div><!--/.fluid-container-->
-	
-	   <!-- Placed at the end of the document so the pages load faster -->
-	   <!-- 1. Libraries -->
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-		<script src="lib/mustache.js"></script>
-		<script src="lib/handlebars.js"></script>
-		<script src="lib/jquery.ba-bbq.js"></script>
-		<script src="bootstrap/bootstrap.js"></script>
-		<!-- 2. Application javascripts - Order is importatnt! -->
-		<script src="js/app.js"></script>
-		<script src="js/mynav.js"></script>
-		<script src="js/myclients.js"></script>
+	</div>
 
-		<script id="TL_appointmentHeader" type="text/x-handlebars-template">
-			<tr>
-		    	<th>
-					{{#if isVendor}}
-						Customer details
-					{{else}}
-						Vendor
-					{{/if}}
-				</th>
-		        <th>Start time</th>
-		        <th>End time</th>
-			</tr>
-		</script>
+    <!-- Placed at the end of the document so the pages load faster -->
+    <!-- 1. Libraries -->
+	<script src="/assets/js/jquery.js"></script>
+	<script src="/assets/js/bootstrap.js"></script>
+	<script src="/assets/js/mustache.js"></script>
+	<script src="/assets/js/handlebars.js"></script>
+	<script src="/assets/js/spin.js"></script>
+	<script src="/assets/js/jquery.spin.js"></script>
+	
+	<!-- 2. Application javascripts - Order is importatnt! -->
+	<script src="js/util/handlebarHelpers.js"></script>
+	<script src="js/app.js"></script>
+	<script src="js/mynav.js"></script>
+	<script src="js/myclients.js"></script>
 
-		<script id="TL_appointments" type="text/x-handlebars-template">
-			{{#each appointment}}
-                <tr>
-				  <td>
-					{{#if isVendor}}
-						{{#if customerEmail}}
-							<ul>
-								<li>{{customerEmail}}</li>
-								{{#if customerName}} <li>{{customerName}}</li> {{/if}}
-								{{#if customerPhone}} <li>{{customerPhone}}</li> {{/if}}
-							</ul>
-						{{else}}
-							{{userEmail}}
-						{{/if}}
+	<script id="TL_appointmentHeader" type="text/x-handlebars-template">
+		<tr>
+	    	<th>
+				{{#if isVendor}}
+					Customer details
+				{{else}}
+					Vendor
+				{{/if}}
+			</th>
+	        <th>Start time</th>
+	        <th>End time</th>
+		</tr>
+	</script>
+
+	<script id="TL_appointments" type="text/x-handlebars-template">
+		{{#each appointment}}
+	              <tr>
+			  <td>
+				{{#if isVendor}}
+					{{#if customerEmail}}
+						<ul>
+							<li>{{customerEmail}}</li>
+							{{#if customerName}} <li>{{customerName}}</li> {{/if}}
+							{{#if customerPhone}} <li>{{customerPhone}}</li> {{/if}}
+						</ul>
 					{{else}}
-						{{vendorName}}
+						{{userEmail}}
 					{{/if}}
-				  </td>
-                  <td>{{startTime}}</td>
-                  <td>{{endTime}}</td>
-                </tr>
-			{{/each}}
-			{{^appointment}}
-		  		<div>No appointments</div>
-			{{/appointment}}
+				{{else}}
+					{{vendorName}}
+				{{/if}}
+			  </td>
+	                <td>{{startTime}}</td>
+	                <td>{{endTime}}</td>
+	              </tr>
+		{{/each}}
+		{{^appointment}}
+	  		<div>No appointments</div>
+		{{/appointment}}
 	</script>
   </body>
 </html>

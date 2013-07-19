@@ -54,8 +54,11 @@ $(function (){
 					  xhrFields: {
 						  withCredentials: true
 					  },
+					  beforeSend: function (){
+						  $('#wp-spinner').spin({color:'#B94A48', lines: 12});
+					  },
 					  complete: function (){
-						  $('.page-loading').hide();
+						  $('#wp-spinner').spin(false);
 					  },
 					  success: function (response){
 						  var hTemplate, hData, bTemplate, bData;
@@ -86,7 +89,6 @@ $(function (){
 			 $('#page-status').html('Sorry, unable to authenticate')
 							.addClass('alert-error')
 							.show();
-			 $('.page-loading').hide();
 		  }
 	});
 });

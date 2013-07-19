@@ -14,8 +14,6 @@
 
     <link href="/css/app.css" rel="stylesheet">
 	<link href="/css/services.css" rel="stylesheet">
-    <link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Lobster+Two:400italic' rel='stylesheet' type='text/css'>
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -82,10 +80,11 @@
 	
 	    <div class="container">
 	       	<div id="view">
+				<div id="page-status" class="alert hide"></div>
+
 	       		<div class="row section">
 	       			<div class="span12 categories"></div>
 	       		</div>
-				<div id="page-status" class="alert alert-success hide"></div>
 				<div class="row services">
 					<div class="span3">
 						<div class="box light">
@@ -94,7 +93,7 @@
 	                    <div class="category2"></div>
 					</div>
 					<div class="span9">
-						<span class="loading">Loading ...</span>
+						<div id="wp-spinner"></div>
 						<div id="no-services" class="hide">No services. Try selecting a second level category.</div>
 						<div class="services-box"></div>
 					</div>
@@ -107,7 +106,7 @@
 	</div>
 	
     <div id="wp-oly">
-	    <button class="btn btn-small wp-oly-close">Done</button>
+	    <button class="btn btn-mini btn-close wp-oly-close">&times;</button>
 		<div class="wp-oly-body"></div>
     </div>
     <!-- javascript
@@ -120,6 +119,8 @@
 	<script src="/assets/js/handlebars.js"></script>
 	<script src="/assets/js/bootstrap-select.js"></script>
 	<script src="/assets/js/jquery.flexslider.js"></script>
+	<script src="/assets/js/spin.js"></script>
+	<script src="/assets/js/jquery.spin.js"></script>
 	
 	<!-- 2. Application javascripts - Order is importatnt! -->
 	<script src="js/util/handlebarHelpers.js"></script>
@@ -127,7 +128,7 @@
 	<script src="js/services.js"></script>
 	<script id="TL_services" type="text/x-handlebars-template">
 			{{#each service}}
-		  		<div class="span4 service box shadow_effect" data-ind="{{@index}}">
+		  		<div class="span4 service box" data-ind="{{@index}}">
 					<div class="flexslider srvc-imgs">
 						<ul class="slides">
 							{{#if wpImageIds}}
@@ -164,7 +165,7 @@
 		<div class="row-fluid">
 			{{#with service}}
 			<div class="span6">
-				{{#if wpName}}<h4>{{wpName}}</h4>{{/if}}
+				{{#if wpName}}<h4 class="srvc-d-name">{{wpName}}</h4>{{/if}}
 				<div class="srvc-d-images">
 					<div id="slider" class="flexslider">
 						<ul class="slides">
@@ -188,19 +189,21 @@
 			</div>
 
 			<div class="span6">
-				<button class="wp-appoint btn btn-mini btn-success" type="button" data-vendorId="{{wpVendorId}}" data-duration="{{wpDuration}}" data-srvcid="{{id}}">Book appointment</button>
+				<button class="wp-appoint btn btn-mini btn-less" type="button" data-vendorId="{{wpVendorId}}" data-duration="{{wpDuration}}" data-srvcid="{{id}}">Book appointment</button>
 				{{#if wpOpenToQuote}}
-					<button class="wp-quote btn btn-mini btn-success" type="button" data-srvcid="{{id}}" data-srvcdefid="{{wpServiceDefinitionId}}">Request quote</button>
+					<button class="wp-quote btn btn-mini btn-less" type="button" data-srvcid="{{id}}" data-srvcdefid="{{wpServiceDefinitionId}}">Request quote</button>
 				{{/if}}
 				<div class="box shadow_effect">
 					<ul class="srvc-d-info">
-						{{#if wpProjectName}}<li><div>{{wpProjectName}}</div></li>{{/if}}
-						{{#if wpCostPerHour}}<li><div>Cost per hour : {{wpCostPerHour}}</div></li>{{/if}}
-						{{#if wpFixedCost}}<li><div>Fixed cost : {{wpFixedCost}}</div></li>{{/if}}
-						{{#if wpDuration}}<li><div>Duration : {{wpDuration}} mins</div></li>{{/if}}
+						{{#if wpProjectName}}<li><div><i class="icon-ok"></i>{{wpProjectName}}</div></li>{{/if}}
+						{{#if wpCostPerHour}}<li><div><i class="icon-ok"></i>Cost per hour : {{wpCostPerHour}}</div></li>{{/if}}
+						{{#if wpFixedCost}}<li><div><i class="icon-ok"></i>Fixed cost : {{wpFixedCost}}</div></li>{{/if}}
+						{{#if wpDuration}}<li><div><i class="icon-ok"></i>Duration : {{wpDuration}} mins</div></li>{{/if}}
 						{{#each columns}}
 							{{#each values}}
-								<li>{{.}}</li>
+								{{#if .}}
+									<li><div><i class="icon-ok"></i>{{.}}</div></li>
+								{{/if}}
 							{{/each}}
 						{{/each}}
 					</ul>

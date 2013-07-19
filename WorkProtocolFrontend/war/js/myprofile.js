@@ -34,8 +34,8 @@ $(function (){
 						  xhrFields: {
 							  withCredentials: true
 						  },
-						  complete: function (){
-							  $('.page-loading').hide();
+						  beforeSend: function (){
+							  $('#wp-spinner').spin({color:'#B94A48', lines: 12});
 						  },
 						  success: function (response){
 							  var urlTypes, urlObj, descTypes, descObj;
@@ -44,6 +44,7 @@ $(function (){
 							  $.ajax({
 								  url: 'template/vendorprofile.handlebars',
 								  dataType: 'html',
+								  cache: false,
 								  success: function(resp) {
 									  $('#profileForm').prop('method', 'POST').html(resp)
 									  	.prop('action', wp.cfg['REST_HOST']+'/resources/vendors/')
@@ -97,6 +98,8 @@ $(function (){
 											  $('#profileForm textarea[name=' +descTypes[descObj.vendorDescriptionType]+ ']').val(descObj.description || '');
 										  }
 									  }
+									  
+									  $('#wp-spinner').spin(false);
 								  }
 							  });
 						  },
@@ -104,6 +107,7 @@ $(function (){
 							  $('#page-status').html('Sorry, unable to access your profile.')
 											  .addClass('alert-error')
 											  .show();
+							  $('#wp-spinner').spin(false);
 						  }
 					  });
 				  } else {
@@ -120,12 +124,15 @@ $(function (){
 							  'text': 'Settings',
 							  'href': '#',
 							  'active': true
-						  }];
-					  $('.page-loading').hide();
+						  }];					  
 					  profileId = 'userId';
 					  $.ajax({
 						  url: 'template/userprofile.handlebars',
 						  dataType: 'html',
+						  cache: false,
+						  beforeSend: function (){
+							  $('#wp-spinner').spin({color:'#B94A48', lines: 12});
+						  },
 						  success: function(resp) {
 							  $('#profileForm').prop('method', 'GET').html(resp)
 							  	.prop('action', wp.cfg['REST_HOST']+'/resources/user/insert')
@@ -135,6 +142,8 @@ $(function (){
 							  }
 							  $('#profileForm input[name="email"]').val(response.email || '');
 							  $('#profileForm input[name="mobilePhone"]').val(response.mobilePhone || '');
+							  
+							  $('#wp-spinner').spin(false);
 						  }
 					  });
 				  }
@@ -152,7 +161,7 @@ $(function (){
 			 $('#page-status').html('Sorry, unable to authenticate')
 							.addClass('alert-error')
 							.show();
-			 $('.page-loading').hide();
+			 $('#wp-spinner').spin(false);
 		  }
 	});
 

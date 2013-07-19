@@ -42,8 +42,22 @@ $(function (){
 			  }
 		  }
 	});
-	
+
 	wp.util = {};
+
+	wp.util.templateLoader = function (info){
+		$.ajax({
+			  url: info.templateUrl,
+			  cache: false,
+			  dataType: 'html',
+			  success: function(resp) {
+				var tData, template;
+				tData = info.data;
+				template = Handlebars.compile(resp);
+				$(info.targetSelector).html(template(tData));
+			  }
+		});
+	};
 
 	wp.util.scrollToTop = function(){
 		$("html, body").animate({ scrollTop: 0 }, 600);

@@ -3,11 +3,6 @@ div.wp-event-busy {
 	color: #555;
 }
 
-div.wp-event-booked {
-	background-color: #B35047;
-    color: #f2f2f2;
-}
-
 div.wp-event-open{
 	background-color: #3A87AD;
 	cursor: pointer;
@@ -35,4 +30,70 @@ div.wp-event-open{
 
 .wp-booked{
 	background-color: #B35047;
+}
+
+#startTime, #endTime{
+	padding: 5px;
+}
+
+.wp-srvc-info{
+	margin-bottom: 15px;
+	position: relative;
+}
+
+.wp-srvc-info-h{
+	cursor: pointer;
+	margin-bottom: 5px;
+}
+
+.wp-srvc-info-e{
+	position: absolute;
+	right: 10px;
+}
+
+.srvc-d-info{
+	margin: 0 0 0 5px;
+}
+
+.srvc-d-info li{
+	list-style-type: none;
+}
+
+.srvc-d-info li i{
+	margin-right: 10px;
+}
+
+.srvc-d-info li div{
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+#wp-oly .wp-oly-close{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 20px;
+}
+
+#wp-oly{
+	background-color: #333;
+	display: none;
+	z-index: 999;
+	padding: 20px;
+}
+
+#wp-oly.open{
+	display: block;
+}
+
+.wp-oly-body{
+	background-color: #fff;
+	box-shadow: 4px 4px 0 #CDCDCD;
+	padding: 20px;
+}
+
+#calendar h2{
+	font-size: 16px;
+	color: #CD853F
 }
