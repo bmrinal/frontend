@@ -13,6 +13,7 @@
     <link href="/assets/css/template.css" rel="stylesheet">
 
     <link href="/css/app.css" rel="stylesheet">
+    <link href="/css/overlay.css" rel="stylesheet">
 	<link href="/css/bookappointment.css" rel="stylesheet">
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -97,9 +98,7 @@
 
     <div id="wp-oly">
 	    <button class="btn btn-mini btn-close wp-oly-close">&times;</button>
-		<div class="wp-oly-body">
-			<div id="addEvent"></div>
-		</div>
+		<div id="addEvent" class="wp-oly-body"></div>
     </div>
 
 	<footer>
@@ -120,6 +119,7 @@
 	
 	<!-- 2. Application javascripts - Order is importatnt! -->
 	<script src="js/app.js"></script>
+	<script src="js/overlay.js"></script>
 	<script src='js/bookappointment.js'></script>
 	
 	<script id="TL_addEvent" type="text/x-handlebars-template">

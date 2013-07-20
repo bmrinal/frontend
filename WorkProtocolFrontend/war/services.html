@@ -13,6 +13,7 @@
     <link href="/assets/css/template.css" rel="stylesheet">
 
     <link href="/css/app.css" rel="stylesheet">
+    <link href="/css/overlay.css" rel="stylesheet">
 	<link href="/css/services.css" rel="stylesheet">
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -125,40 +126,41 @@
 	<!-- 2. Application javascripts - Order is importatnt! -->
 	<script src="js/util/handlebarHelpers.js"></script>
 	<script src="js/app.js"></script>
+	<script src="js/overlay.js"></script>
 	<script src="js/services.js"></script>
 	<script id="TL_services" type="text/x-handlebars-template">
-			{{#each service}}
-		  		<div class="span4 service box" data-ind="{{@index}}">
-					<div class="flexslider srvc-imgs">
-						<ul class="slides">
-							{{#if wpImageIds}}
-								{{#each wpImageIds}}
-									<li>
-										<img src="{{../../../REST_HOST}}/resources/images/{{.}}"/>
-									</li>
-								{{/each}}
-							{{else}}
+		{{#each service}}
+	  		<div class="span4 service box" data-ind="{{@index}}">
+				<div class="flexslider srvc-imgs">
+					<ul class="slides">
+						{{#if wpImageIds}}
+							{{#each wpImageIds}}
 								<li>
-									<img src=""/>
+									<img src="{{../../../REST_HOST}}/resources/images/{{.}}"/>
 								</li>
-							{{/if}}
-						</ul>
-					</div>
-					<div class="srvc-details">
-						{{#if wpName}}<h6 class="srvc-name">{{wpName}}</h6>{{/if}}
-						<ul class="srvc-info">
-							{{#if wpProjectName}}<li><div>{{wpProjectName}}</div></li>{{/if}}
-							{{#if wpCostPerHour}}<li><div>Cost per hour : {{wpCostPerHour}}</div></li>{{/if}}
-							{{#if wpFixedCost}}<li><div>Fixed cost : {{wpFixedCost}}</div></li>{{/if}}
-							{{#if wpDuration}}<li><div>Duration : {{wpDuration}} mins</div></li>{{/if}}
-						</ul>
-						<button class="wp-appoint btn btn-mini btn-less" type="button" data-vendorId="{{wpVendorId}}" data-duration="{{wpDuration}}" data-srvcid="{{id}}">Book appointment</button>
-						{{#if wpOpenToQuote}}
-							<button class="wp-quote btn btn-mini btn-less" type="button" data-srvcid="{{id}}" data-srvcdefid="{{wpServiceDefinitionId}}">Request quote</button>
+							{{/each}}
+						{{else}}
+							<li>
+								<img src=""/>
+							</li>
 						{{/if}}
-					</div>
+					</ul>
 				</div>
-			{{/each}}
+				<div class="srvc-details">
+					{{#if wpName}}<h6 class="srvc-name">{{wpName}}</h6>{{/if}}
+					<ul class="srvc-info">
+						{{#if wpProjectName}}<li><div>{{wpProjectName}}</div></li>{{/if}}
+						{{#if wpCostPerHour}}<li><div>Cost per hour : {{wpCostPerHour}}</div></li>{{/if}}
+						{{#if wpFixedCost}}<li><div>Fixed cost : {{wpFixedCost}}</div></li>{{/if}}
+						{{#if wpDuration}}<li><div>Duration : {{wpDuration}} mins</div></li>{{/if}}
+					</ul>
+					<button class="wp-appoint btn btn-mini btn-less" type="button" data-vendorId="{{wpVendorId}}" data-duration="{{wpDuration}}" data-srvcid="{{id}}">Book appointment</button>
+					{{#if wpOpenToQuote}}
+						<button class="wp-quote btn btn-mini btn-less" type="button" data-srvcid="{{id}}" data-srvcdefid="{{wpServiceDefinitionId}}">Request quote</button>
+					{{/if}}
+				</div>
+			</div>
+		{{/each}}
 	</script>
 
 	<script id="TL_service-details" type="text/x-handlebars-template">

@@ -69,30 +69,6 @@ div.wp-event-open{
 	text-overflow: ellipsis;
 }
 
-#wp-oly .wp-oly-close{
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    font-size: 20px;
-}
-
-#wp-oly{
-	background-color: #333;
-	display: none;
-	z-index: 999;
-	padding: 20px;
-}
-
-#wp-oly.open{
-	display: block;
-}
-
-.wp-oly-body{
-	background-color: #fff;
-	box-shadow: 4px 4px 0 #CDCDCD;
-	padding: 20px;
-}
-
 #calendar h2{
 	font-size: 16px;
 	color: #CD853F

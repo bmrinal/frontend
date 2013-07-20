@@ -21,7 +21,7 @@ $(function (){
 			  data['phone'] = response.mobilePhone;
 			  template = Handlebars.compile($("#TL_addEvent").html());
 
-			  $('#addEvent').html(template(data));
+			  wp.overlay.setContent(template(data));
 
 			  $.ajax({
 				  url: wp.cfg['REST_HOST']+'/resources/calendar/freebusy?serviceId='+ params.serviceId +'&vendorId=' + params.vendorId,
@@ -101,7 +101,7 @@ $(function (){
 								  
 								  $('#startTime').html(bookEvntStartStr);
 								  $('#endTime').html(bookEvntEndStr);
-								  openAddEventView();
+								  wp.overlay.open();
 							  }
 						  },
 						  events: eventsArr
@@ -171,7 +171,7 @@ $(function (){
 					  });
 
 					  $('#addEvent .appt-cancel').on('click', function (){
-						  closeAddEventView();
+						  wp.overlay.close();
 					  });
 				  },
 				  error: function (){
@@ -211,34 +211,4 @@ $(function (){
 		 $('#wp-spinner').spin(false);
 	  }
 	});
-
-	//setting the overlay height as same as view port height
-	$('#wp-oly').css('min-height', $(window).height());
-
-	var openAddEventView = function (){
-		$('#wp-main').hide();
-		$('#wp-oly').addClass('open');
-		wp.util.scrollToTop();
-	};
-	
-	var closeAddEventView = function (){
-		$('#wp-main').show();
-		$('#wp-oly').removeClass('open');
-	};
-
-	$('#wp-oly').on('click', function(e){
-		var t = $(e.target);
-
-		if (t.is('.wp-oly-close') || t.parent('body').length > 0) {
-			e.preventDefault();
-			closeAddEventView();
-		}
-	});
-
-	$(document).on('keyup', function(e){
-		if (e.which == 27 ) {
-			closeAddEventView();
-		}
-	});
-
 });

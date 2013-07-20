@@ -138,20 +138,6 @@ $(function (){
 		fetchServices(wp.cfg['REST_HOST']+'/resources/categories/' + val, true);
 	});
 
-	//setting the overlay height as same as view port height
-	$('#wp-oly').css('min-height', $(window).height());
-
-	var openDetailsView = function (){
-		$('#wp-main').hide();
-		$('#wp-oly').addClass('open');
-		wp.util.scrollToTop();
-	};
-	
-	var closeDetailsView = function (){
-		$('#wp-main').show();
-		$('#wp-oly').removeClass('open');
-	};
-	
 	//service details view
 	$('#view').on('click', ".service", function(e){
 		var template, data, ind;
@@ -160,16 +146,14 @@ $(function (){
 			return;
 		}
 
-		openDetailsView();
-
+		wp.overlay.open();
 		ind = parseInt($(this).data('ind'), 10);
-
 		template = Handlebars.compile($('#TL_service-details').html());
 		data = {};
 		
 		data['REST_HOST'] = wp.cfg['REST_HOST'];
 		data.service = servicesArr[ind];
-		$('#wp-oly .wp-oly-body').html(template(data));
+		wp.overlay.setContent(template(data));
 
 		$('#carousel').flexslider({
 		    animation: "slide",
@@ -190,23 +174,8 @@ $(function (){
 		  });
 	});
 
-	$('#wp-oly').on('click', function(e){
-		var t = $(e.target);
-
-		if (t.is('.wp-oly-close') || t.parent('body').length > 0) {
-			e.preventDefault();
-			closeDetailsView();
-		}
-	});
-
-	$(document).on('keyup', function(e){
-		if (e.which == 27 ) {
-			closeDetailsView();
-		}
-	});
-
 	//appointment
-	$('body').on('click', '#view .wp-appoint, #wp-oly .wp-appoint', function(e){
+	$('body').on('click', '.wp-appoint', function(e){
 		e.stopPropagation();
 
 		window.location.href = '/bookappointment.html?serviceId='
@@ -216,7 +185,7 @@ $(function (){
 	});
 
 	//service request
-	$('body').on('click', '#view .wp-quote, #wp-oly .wp-quote', function(e){
+	$('body').on('click', '.wp-quote', function(e){
 		e.stopPropagation();
 
 		window.location.href = '/requestquote.html?srvcDefId='

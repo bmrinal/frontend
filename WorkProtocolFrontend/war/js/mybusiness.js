@@ -1,5 +1,5 @@
 $(function (){
-	var currServiceReqId, currServiceResId, currServiceDefId, respElement, isVendor;
+	var currServiceResId, currServiceDefId, respElement, isVendor;
 	isVendor = false;
 
 	$.ajax({
@@ -59,8 +59,11 @@ $(function (){
 						  withCredentials: true
 					  },
 					  dataType: "json",
+					  beforeSend: function (){
+						  $('#wp-spinner').spin({color:'#B94A48', lines: 12});
+					  },
 					  complete: function (){
-						  $('#view .loading').hide();
+						  $('#wp-spinner').spin(false);
 					  },
 					  success: function (response){
 						  var data, template;
@@ -88,50 +91,48 @@ $(function (){
 			 $('#page-status').html('Sorry, unable to authenticate')
 							.addClass('alert-error')
 							.show();
-			 $('#view .loading').hide();
 		  }
 	});
 
 	//service request
 	$('#view').on('click', '.srv-req', function(e){
-		var source, template, data;
+		var currServiceReqId, source, template, data;
 
 		e.preventDefault();
 		currServiceReqId = $(this).data('srvcreqid'); //store service in closure for easy modal access
 
-		source = $('#TL_sreqtModal').html();
-		template = Handlebars.compile(source);
-		data = {};
-		data.id = currServiceReqId;
-		$('#svcReqtDialog').html(template(data));
-		$('#svcReqtDialog').modal();
-	});
-
-	$('#svcReqtDialog').on('shown', function (){
 		if (currServiceReqId) {
+			source = $('#TL_sreqtOly').html();
+			template = Handlebars.compile(source);
+			data = {};
+			data.id = currServiceReqId;
+	
+			wp.overlay.setContent(template(data));
+			wp.overlay.open();
+	
 			$.ajax({
 			  url: wp.cfg['REST_HOST']+'/resources/servicerequests/'+currServiceReqId,
 			  cache: false,
 			  dataType: "jsonp",
 			  complete: function (){
-				  $('#svcReqtDialog .frm-ldg').hide();
+				  $('#oly-container .frm-ldg').hide();
 			  },
 			  success: function (response){
 				  var template, data;
 				  template = response.htmlTemplate;
 				  data = $.parseJSON(response.metaDataInstance);
-
+	
 				  if (data && template) {
-					  $('#svcReqtDialog .serviceForm').html(Mustache.to_html(template, data));
+					  $('#oly-container .serviceForm').html(Mustache.to_html(template, data));
 				  } else {
-					  $('#svcReqtDialog .serviceForm').html('<div class="alert  alert-error">'
+					  $('#oly-container .serviceForm').html('<div class="alert  alert-error">'
 							  + 'Sorry, service request details unavailable'
 							  + '</div>'
 					  );
 				  }
 			  },
 			  error: function (){
-				  $('#svcReqtDialog .serviceForm').html('<div class="alert alert-error">'
+				  $('#oly-container .serviceForm').html('<div class="alert alert-error">'
 						  + '<button type="button" class="close" data-dismiss="alert">&times;</button>'
 						  + 'Sorry, unable to load service request form'
 						  + '</div>'
@@ -141,28 +142,32 @@ $(function (){
 		}
 	});
 
-	//service response read only
-	$('#view').on('click', '.srvc-respro', function(e){
-		var source, template, data;
-
-		e.preventDefault();
-		source = $('#TL_srespRO').html();
-		template = Handlebars.compile(source);
-		currServiceResId = $(this).data('srvcresid');
-		data = {};
-		data.id = currServiceResId;
-		$('#svcRespDialogRO').html(template(data));
-		$('#svcRespDialogRO').modal();
+	$('body').on('click', '.srs-cancel', function(e){
+		wp.overlay.close();
 	});
 
-	$('#svcRespDialogRO').on('shown', function (){
+	//service response read only
+	$('#view').on('click', '.srvc-respro', function(e){
+		var currServiceResId, source, template, data;
+
+		e.preventDefault();
+		currServiceResId = $(this).data('srvcresid');
+
 		if (currServiceResId) {
+			source = $('#TL_srespROOly').html();
+			template = Handlebars.compile(source);
+			data = {};
+			data.id = currServiceResId;
+	
+			wp.overlay.setContent(template(data));
+			wp.overlay.open();
+
 			$.ajax({
 			  url: wp.cfg['REST_HOST']+'/resources/serviceresponses/'+currServiceResId,
 			  cache: false,
 			  dataType: "jsonp",
 			  complete: function (){
-				  $('#svcRespDialogRO .frm-ldg').hide();
+				  $('#oly-container .frm-ldg').hide();
 			  },
 			  success: function (response){
 				  var template, data;
@@ -170,16 +175,16 @@ $(function (){
 				  data = response;
 
 				  if (data && template) {
-					  $('#svcRespDialogRO .srvcResponseROForm').html(template(data));
+					  $('#oly-container .srvcResponseROForm').html(template(data));
 				  } else {
-					  $('#svcRespDialogRO .srvcResponseROForm').html('<div class="alert alert-error">'
+					  $('#oly-container .srvcResponseROForm').html('<div class="alert alert-error">'
 							  + 'Sorry, service response details unavailable'
 							  + '</div>'
 					  );
 				  }
 			  },
 			  error: function (){
-				  $('#svcRespDialogRO .srvcResponseROForm').html('<div class="alert alert-error">'
+				  $('#oly-container .srvcResponseROForm').html('<div class="alert alert-error">'
 						  + '<button type="button" class="close" data-dismiss="alert">&times;</button>'
 						  + 'Sorry, unable to load service response form'
 						  + '</div>'
@@ -188,30 +193,29 @@ $(function (){
 			});
 		}
 	});
-	
+
 	//service response
 	$('#view').on('click', '.srvc-resp', function(e){
 		var source, template, data;
 
 		e.preventDefault();
-		source = $('#TL_srespModal').html();
-		template = Handlebars.compile(source);
 		currServiceDefId = $(this).data('srvcdefid');
-		data = {};
-		data.id = $(this).data('srvcreqid');
-		$('#svcRespDialog').html(template(data));
-		$('#svcRespDialog').modal();
 
-		respElement = $(this);
-	});
+		if (currServiceDefId) {
+			source = $('#TL_srespOly').html();
+			template = Handlebars.compile(source);
+			data = {};
+			data.id = $(this).data('srvcreqid');
 
-	$('#svcRespDialog').on('shown', function (){
-		$.ajax({
+			wp.overlay.setContent(template(data));
+			wp.overlay.open();
+
+			$.ajax({
 			  url: wp.cfg['REST_HOST']+'/resources/servicedefinitions/'+currServiceDefId,
 			  cache: false,
 			  dataType: "jsonp",
 			  complete: function (){
-				  $('#svcRespDialog .frm-ldg').hide();
+				  $('#oly-container .frm-ldg').hide();
 			  },
 			  success: function (response){
 				  var template, data;
@@ -219,42 +223,51 @@ $(function (){
 				  data = $.parseJSON(response.responseHtmlMetaData);
 	
 				  if (data && template) {
-					  $('#svcRespDialog .srvcResponseForm').html($("#TL_srespForm").html() + Mustache.to_html(template, data));
+					  $('#oly-container .srvcResponseForm').html($("#TL_srespForm").html() + Mustache.to_html(template, data));
 				  } else {
-					  $('#svcRespDialog .srvcResponseForm').html('<div class="alert  alert-error">'
+					  $('#oly-container .srvcResponseForm').html('<div class="alert  alert-error">'
 							  + 'Sorry, service response form unavailable'
 							  + '</div>'
 					  );
 				  }
 			  },
 			  error: function (){
-				  $('#srTemplate').html('<div class="alert alert-error">'
+				  $('#oly-container .srvcResponseForm').html('<div class="alert alert-error">'
 						  + '<button type="button" class="close" data-dismiss="alert">&times;</button>'
 						  + 'Sorry, unable to load service response form'
 						  + '</div>'
 				  );
 			  }
 			});
+	
+			respElement = $(this);
+		}
 	});
 
-	$('#view').on('click', '.modal-footer .sr-resp', function (){
+	$('body').on('submit', '.responseForm', function (e){
 		var form, params, action;
-		form = $('#svcRespDialog .responseForm');
+
+		e.preventDefault();
+		form = $('#oly-container .responseForm');
 		params = form.serialize();
 		$.ajax({
 		  url: wp.cfg['REST_HOST']+'/resources/serviceresponses',
 		  data: params,
 		  dataType: "jsonp",
 		  beforeSend: function (){
-			  $('#svcRespDialog .modal-footer span').show();
+			  $('#oly-container .srs-oly-close span').show();
 		  },
 		  success: function (response){
-			  $('#svcRespDialog').modal('hide');
-			  respElement.removeClass('srvc-resp btn-warning').addClass('btn-success').html('Responded');
-			  $('#page-status').html('Service response ('+ response.id +') submitted').removeClass('hide');
+			  wp.overlay.close();
+			  respElement.html('Response Sent')
+			  	.removeClass('srvc-resp btn-success')
+			  	.addClass('btn-info')
+			  	.addClass('srvc-respro')
+			  	.data('srvcresid', response.id);
+			  //$('#page-status').html('Service response ('+ response.id +') submitted').removeClass('hide');
 		  },
 		  error: function (){
-			  $('#srForm .modal-body').prepend('<div class="alert alert-error">'
+			  $('#oly-container .srvcResponseForm').prepend('<div class="alert alert-error">'
 					  + '<button type="button" class="close" data-dismiss="alert">&times;</button>'
 					  + 'Sorry, unable to create a service response'
 					  + '</div>'
