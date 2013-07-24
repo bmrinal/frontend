@@ -8,6 +8,9 @@ $(function (){
 	$.ajax({
 	  url: wp.cfg['REST_HOST']+'/resources/user',
 	  dataType: 'json',
+	  beforeSend: function (){
+		  $('#wp-spinner').spin({color:'#B94A48', lines: 12});
+	  },
 	  cache: false,
 	  xhrFields: {
 		  withCredentials: true
@@ -27,9 +30,6 @@ $(function (){
 				  url: wp.cfg['REST_HOST']+'/resources/calendar/freebusy?serviceId='+ params.serviceId +'&vendorId=' + params.vendorId,
 				  cache: false,
 				  dataType: "json",
-				  beforeSend: function (){
-					  $('#wp-spinner').spin({color:'#B94A48', lines: 12});
-				  },
 				  complete: function (){
 					  $('#wp-spinner').spin(false);
 				  },

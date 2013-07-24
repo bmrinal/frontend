@@ -1,38 +1,85 @@
 .srvc-add{
-	margin-bottom: 15px;
+	margin: 15px 0;
+}
+
+.services-box{
+	margin-top: -15px;
 }
 
 .service{
-	border: 1px solid #e2e2e2;
-	margin-bottom: 20px;
-	border-radius: 3px;
-	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
-	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
-	max-width: 100%;
+	cursor: pointer;
 }
 
-.service:hover{
-	border: 1px solid #aaa;
+.srvc-info{
+	margin-top: 0;
+	margin-bottom: 0;
+	height: 72px;
 }
 
-.service a{
-	display: block;
-	color: #666;
-	text-decoration: none;
-	position: relative;
+.srvc-d-info li{
+	list-style-type: none;
 }
 
-.service img{
-	max-width: 100%;
-	padding: 5px 0;
+.srvc-info li{
+	list-style-type:square;
+	color: #B94A48;
+	line-height: 18px;
+}
+
+.srvc-d-info{
+	margin: 0 0 0 5px;
+}
+
+.srvc-d-info li i{
+	margin-right: 10px;
+}
+
+.srvc-d-info li div, .srvc-info li div{
+	color: #555555;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .srvc-name{
-	padding: 10px;
-	text-align: center;
+	/* font-family: 'Yanone Kaffeesatz';
+	font-size: 16px; */
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
-.srvc-desc{
-	padding: 10px;
-	color: #777;
+.srvc-imgs .slides li{
+	height: 225px;
+}
+
+.srvc-imgs img{
+	max-height: 225px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#slider {
+	margin: 0 0 10px;
+}
+
+#carousel li {
+	margin-right: 5px;
+}
+
+#carousel img {
+	display: block;
+	cursor: pointer;
+	max-width: 100px;
+	max-height: 100px;
+	border: 2px solid transparent;
+}
+
+#carousel img:hover {
+	border: 2px solid #3A87AD;
+}
+
+#carousel .flex-active-slide img {
+	border: 2px solid #3A87AD;
+	cursor: default;
 }

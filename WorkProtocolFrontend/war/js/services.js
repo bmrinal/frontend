@@ -117,6 +117,7 @@ $(function (){
 
 		if (val === '-1') { // all categories
 			fetchServices(wp.cfg['REST_HOST'] + '/resources/services/list', false);
+			$('#view .category2').html('');
 		} else { // filter by one category
 			fetchServices(wp.cfg['REST_HOST']+'/resources/categories/' + val, true);
 

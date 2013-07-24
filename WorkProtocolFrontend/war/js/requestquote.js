@@ -9,6 +9,9 @@ $(function (){
 		  url: wp.cfg['REST_HOST']+'/resources/user',
 		  dataType: 'json',
 		  cache: false,
+		  beforeSend: function (){
+			  $('#wp-spinner').spin({color:'#B94A48', lines: 12});
+		  },
 		  xhrFields: {
 			  withCredentials: true
 		  },
@@ -18,9 +21,6 @@ $(function (){
 					  url: wp.cfg['REST_HOST']+'/resources/servicedefinitions/' + params.srvcDefId,
 					  cache: false,
 					  dataType: "jsonp",
-					  beforeSend: function (){
-						  $('#wp-spinner').spin({color:'#B94A48', lines: 12});
-					  },
 					  complete: function (){
 						  $('#wp-spinner').spin(false);
 					  },

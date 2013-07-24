@@ -1,79 +1,116 @@
-#menu {
-	/* background-color: #000; */
-	height: 25px;
-	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5)
+.mainContent{
+	margin-top: 15px;
 }
 
-#menu a:hover{
-	color: #fff;	
+.services-box{
+	margin-top: -15px;
 }
 
-#menu a span{
-	color: #777;
-	font-size: 0.84em;
+.category2{
+	margin-top: 15px;
 }
 
-#menu a:hover span{
-	color: #fff;
+.service{
+	cursor: pointer;
 }
 
-#menu ul {
+.srvc-info{
+	margin-top: 0;
+	margin-bottom: 0;
+	height: 72px;
+}
+
+.srvc-d-info li{
 	list-style-type: none;
 }
 
-#menu ul li {
-	float: left;
-	position: relative;
-	margin: 20px 0 0 20px;
-	width: 220px;
-	padding: 0;
+.srvc-info li{
+	list-style-type:square;
+	color: #B94A48;
+	line-height: 18px;
 }
 
-#menu ul li:hover {
-	background-color: #999;
+.srvc-d-info{
+	margin: 0 0 0 5px;
 }
 
-#menu ul li a {
-	color: #666;
-	padding: 10px 30px;
-	line-height: 25px;
-	display: block;
-	text-decoration: none;
+.srvc-d-info li i{
+	margin-right: 10px;
 }
 
-#menu ul li a:hover {
-	background-color: #999;
-}
-
-#menu ul li ul li {
-	float: none;
-	position: relative;
-	margin: auto;
-}
-
-#menu ul li ul {
-	position: absolute;
-	z-index: 1;
-	display: none;
-	left: 0;
-	/* background-color: #000;
-	top: 25px;
-	width: 150px; */
-}
-
-#menu ul li:hover>ul {
-	display: block;
-}
-
-#menu ul li ul li a {
+.srvc-d-info li div, .srvc-info li div{
+	color: #555555;
 	white-space: nowrap;
-	line-height: 25px;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
-#menu ul li ul li ul {
-	position: absolute;
+.srvc-name{
+	/* font-family: 'Yanone Kaffeesatz';
+	font-size: 16px; */
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.srvc-imgs .slides li{
+	height: 225px;
+}
+
+.srvc-imgs img{
+	max-height: 225px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#slider {
+	margin: 0 0 10px;
+}
+
+#carousel li {
+	margin-right: 5px;
+}
+
+#carousel img {
+	display: block;
+	cursor: pointer;
+	max-width: 100px;
+	max-height: 100px;
+	border: 2px solid transparent;
+}
+
+#carousel img:hover {
+	border: 2px solid #3A87AD;
+}
+
+#carousel .flex-active-slide img {
+	border: 2px solid #3A87AD;
+	cursor: default;
+}
+
+#sr-photo-trigger{
+	cursor: pointer;
+	margin-top: 5px;	
+}
+
+.sr-photo-row{
+	margin-top: 10px;	
+}
+
+.sr-photo-col{
+	float: left;
+	border: 1px solid #ddd;
+	padding: 2px;
+	margin-right: 10px;
+	width: 96px;
+	height: 96px;
+}
+
+.sr-photo{
+	max-width: 100%;
+	max-height: 100%;
+}
+
+#picupload, #picframe{
 	display: none;
-	/* background-color: #000;
-	width: 150px;
-	top: 0; */
 }
