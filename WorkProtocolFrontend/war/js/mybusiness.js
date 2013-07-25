@@ -13,48 +13,12 @@ $(function (){
 			  withCredentials: true
 		  },
 		  success: function (response){
-			  var tnData = {};
 			  if(response && response.userId){
-				if (response.isVendor){
-					  isVendor = true;
-					  tnData = [{
-							  'text': 'My Business',
-							  'href': '#',
-							  'active': true  
-						  }, {
-							  'text': 'Services',
-							  'href': '/myservices.html'
-						  }, {
-							  'text': 'Schedule',
-							  'href': '/myschedule.html'
-						  }, {
-							  'text': 'Clients',
-							  'href': '/myclients.html'
-						  }, {
-							  'text': 'Settings',
-							  'href': '/myprofile.html'
-						  }];
-				  } else {
-					  tnData = [{
-							  'text': 'My requests',
-							  'href': '#',
-							  'active': true
-						  },{
-							  'text': 'My appointments',
-							  'href': '/myclients.html'
-						  }, {
-							  'text': 'Schedule',
-							  'href': '/myschedule.html'
-						  }, {
-							  'text': 'Settings',
-							  'href': '/myprofile.html'
-						  }];
-				  }
 				wp.mynav.load({
-				  targetSelector: '#top-nav',
-				  data :{tab: tnData}
-				});
-				    
+					targetSelector: '#top-nav',
+					isVendor: response.isVendor 
+				}, 'business');
+
 				$.ajax({
 					  url: wp.cfg['REST_HOST']+'/resources/servicerequests/myrequests',
 					  cache: false,

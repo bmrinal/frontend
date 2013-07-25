@@ -7,46 +7,11 @@ $(function (){
 			  withCredentials: true
 		  },
 		  success: function (response){
-			  var tnData = {};
 			  if(response && response.userId){
-				  if (response.isVendor){
-					  tnData = [{
-							  'text': 'My Business',
-							  'href': '/mybusiness.html'
-						  }, {
-							  'text': 'Services',
-							  'href': '/myservices.html'
-						  }, {
-							  'text': 'Schedule',
-							  'href': '/myschedule.html'
-						  }, {
-							  'text': 'Clients',
-							  'href': '#',
-							  'active': true
-						  }, {
-							  'text': 'Settings',
-							  'href': '/myprofile.html'
-						  }];
-				  } else {
-					  tnData = [{
-							  'text': 'My requests',
-							  'href': '/mybusiness.html'
-						  },{
-							  'text': 'My appointments',
-							  'href': '#',
-							  'active': true
-						  }, {
-							  'text': 'Schedule',
-							  'href': '/myschedule.html'
-						  }, {
-							  'text': 'Settings',
-							  'href': '/myprofile.html'
-						  }];
-				  }
 				  wp.mynav.load({
-					  targetSelector: '#top-nav',
-					  data : {tab : tnData}
-				  });
+						targetSelector: '#top-nav',
+						isVendor: response.isVendor 
+				  }, 'clients');
 				  $.ajax({
 					  url: wp.cfg['REST_HOST']+'/resources/appointment/myappointments',
 					  dataType: 'json',

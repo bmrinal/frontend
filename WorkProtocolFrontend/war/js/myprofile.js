@@ -1,5 +1,5 @@
 $(function (){
-	var profileId;
+	var profileId, isVendor;
 	$.ajax({
 		  url: wp.cfg['REST_HOST']+'/resources/user',
 		  dataType: 'json',
@@ -10,23 +10,7 @@ $(function (){
 		  success: function (response){
 			  if(response && response.userId){
 				  if (response.isVendor){
-					  tnData = [{
-							  'text': 'My Business',
-							  'href': '/mybusiness.html'
-						  }, {
-							  'text': 'Services',
-							  'href': '/myservices.html'
-						  }, {
-							  'text': 'Schedule',
-							  'href': '/myschedule.html'
-						  }, {
-							  'text': 'Clients',
-							  'href': '/myclients.html'
-						  }, {
-							  'text': 'Settings',
-							  'href': '#',
-							  'active': true
-						  }];
+					  isVendor = true;
 					  $.ajax({
 						  url: wp.cfg['REST_HOST']+'/resources/vendors/myvendor',
 						  dataType: 'json',
@@ -111,21 +95,8 @@ $(function (){
 						  }
 					  });
 				  } else {
-					  tnData = [{
-							  'text': 'My requests',
-							  'href': '/mybusiness.html'
-						  },{
-							  'text': 'My appointments',
-							  'href': '/myclients.html'
-						  }, {
-							  'text': 'Schedule',
-							  'href': '/myschedule.html'
-						  }, {
-							  'text': 'Settings',
-							  'href': '#',
-							  'active': true
-						  }];					  
 					  profileId = 'userId';
+					  isVendor = false;
 					  $.ajax({
 						  url: 'template/userprofile.handlebars',
 						  dataType: 'html',
@@ -148,11 +119,9 @@ $(function (){
 					  });
 				  }
 				  wp.mynav.load({
-					  targetSelector: '#top-nav',
-					  data : {
-						  tab : tnData
-					  }
-				  });
+					targetSelector: '#top-nav',
+					isVendor: isVendor 
+				  }, 'settings');
 			  } else {
 				  wp.util.redirectToSigin();
 			  }

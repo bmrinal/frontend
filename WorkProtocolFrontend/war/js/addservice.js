@@ -19,26 +19,9 @@ $(function (){
 				return;
 			}
 			wp.mynav.load({
-				  targetSelector: '#top-nav',
-				  data :{tab: [{
-						  'text': 'My Business',
-						  'href': '/mybusiness.html'
-					  }, {
-						  'text': 'Services',
-						  'href': '#',
-						  'active': true
-					  }, {
-						  'text': 'Schedule',
-						  'href': '/myschedule.html'
-					  }, {
-						  'text': 'Clients',
-						  'href': '/myclients.html'
-					  }, {
-						  'text': 'Settings',
-						  'href': '/myprofile.html'
-					  }]
-				  },
-			});
+				targetSelector: '#top-nav',
+				isVendor: response.isVendor 
+			}, 'services');
 
 			$.ajax({
 			  url: wp.cfg['REST_HOST']+'/resources/categories/list',

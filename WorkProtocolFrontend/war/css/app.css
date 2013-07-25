@@ -1,7 +1,6 @@
 /* for common styles across pages */
 
 #wp-header{
-	margin-top: 5px;
 	margin-bottom: 10px;
 }
 
@@ -13,4 +12,9 @@
     .nav-tabs > li {
         float:none;
     }
+}
+
+.wp-nav li{
+	float: left;
+	list-style-type: none;
 }

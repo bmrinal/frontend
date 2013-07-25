@@ -102,39 +102,45 @@
 
 	<script id="TL_appointmentHeader" type="text/x-handlebars-template">
 		<tr>
-	    	<th>
-				{{#if isVendor}}
-					Customer details
-				{{else}}
-					Vendor
-				{{/if}}
-			</th>
-	        <th>Start time</th>
-	        <th>End time</th>
+			{{#if isVendor}}
+		    	<th>Name</th>
+				<th>Email</th>
+				<th>Phone</th>
+				<th>Service</th>
+		        <th>Start time</th>
+		        <th>End time</th>
+			{{else}}
+		    	<th>Service</th>
+		        <th>Start time</th>
+		        <th>End time</th>
+			{{/if}}
 		</tr>
 	</script>
 
 	<script id="TL_appointments" type="text/x-handlebars-template">
 		{{#each appointment}}
-	              <tr>
-			  <td>
-				{{#if isVendor}}
-					{{#if customerEmail}}
-						<ul>
-							<li>{{customerEmail}}</li>
-							{{#if customerName}} <li>{{customerName}}</li> {{/if}}
-							{{#if customerPhone}} <li>{{customerPhone}}</li> {{/if}}
-						</ul>
-					{{else}}
-						{{userEmail}}
-					{{/if}}
-				{{else}}
-					{{vendorName}}
-				{{/if}}
-			  </td>
-	                <td>{{startTime}}</td>
+			{{#if isVendor}}
+				<tr>
+					<td>{{customerName}}</td>
+					<td>
+						{{#if customerEmail}}
+							{{customerEmail}}
+						{{else}}
+							{{userEmail}}
+						{{/if}}
+					</td>
+					<td>{{customerPhone}}</td>
+					<td>{{serviceName}}</td>
+					<td>{{startTime}}</td>
 	                <td>{{endTime}}</td>
-	              </tr>
+				</tr>
+			{{else}}
+				<tr>
+					<td>{{serviceName}}</td>
+					<td>{{startTime}}</td>
+	                <td>{{endTime}}</td>
+				</tr>
+			{{/if}}
 		{{/each}}
 		{{^appointment}}
 	  		<div>No appointments</div>

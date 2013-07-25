@@ -1,5 +1,5 @@
 <ul class="nav nav-tabs">
-	{{#each tab}}
+	{{#each .}}
 		<li{{#if active}} class="active"{{/if}}><a href="{{href}}">{{text}}</a></li>
 	{{/each}}
 </ul>
