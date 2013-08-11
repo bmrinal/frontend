@@ -31,48 +31,50 @@
   </head>
 
   <body>
-
 	<div id="wp-main">
-	    <div id="wp-header">
-	        <div class="row">
-	            <div class="span3">
-	            	<a href="index.html" class="wp-brand">MorningPlum</a>
-	            </div>
-	            <div id="nav" class="span8">
-			      <ul>
-			        <li class="active"><a href="/services.html">Services</a></li>
-			        <li><a href="#">Providers</a></li>
-			        <li><a href="#">Packages</a></li>
-			        <li><a href="#">TeleHealth</a></li>
-			      </ul>
+		<div class="wp-header cf">
+			<h1><a class="wp-brand" href="index.html">MorningPlum</a></h1>
+			
+			<div class="wp-nav">
+				<input type="checkbox" id="toggle">
+				<label for="toggle" data-open="Browse" data-close="Browse" class="toggle" onclick=""></label>
+				<ul class="menu">
+					<li><a href="/services.html">Services</a></li>
+					<li><a href="#">Providers</a></li>
+					<li><a href="#">Packages</a></li>
+					<li><a href="#">TeleHealth</a></li>	
+				</ul>
+			</div><!-- End of Navigation -->
+		</div>
+
+		<div class="cf">
+			<div id="user-info">
+				<div class="dropdown wp-signedIn hide">
+					<div class="dropdown-toggle btn" data-toggle="dropdown">
+					 	<i class="icon-user"></i>
+					</div>
+					<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+				    	<li>
+				         	<a href="/myprofile.html">My account</a>
+				         </li>
+				         <li>
+				         	<a class="wp-signOut" href="#">Sign out</a>
+				         </li>
+					</ul>
 				</div>
-	            <div id="user-info" class="span1">
-				    <div class="dropdown wp-signedIn hide">
-					    <div class="dropdown-toggle btn" data-toggle="dropdown">
-					    	<i class="icon-user"></i>
-					    </div>
-					    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-			              <li>
-			              	<a href="/myprofile.html">My account</a>
-			              </li>
-			              <li>
-			              	<a class="wp-signOut" href="#">Sign out</a>
-			              </li>
-			            </ul>
-				    </div>
-				    <div class="dropdown wp-signedOut">
-					    <div class="dropdown-toggle btn" data-toggle="dropdown">
-					    	<i class="icon-user"></i>
-					    </div>
-					    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-			              <li>
-			              	<a class="wp-signIn" href="#">Sign In</a>
-			              </li>
-			            </ul>
-				    </div>
-	            </div>
-	        </div>
-	    </div>
+				<div class="dropdown wp-signedOut">
+					<div class="dropdown-toggle btn" data-toggle="dropdown">
+						<i class="icon-user"></i>
+					</div>
+					<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+				    	<li>
+				         	<a class="wp-signIn" href="#">Sign In</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
 		<div class="hide container" id="wp-signup-banner">
 	   	  <div class="row">
 	       	<div class="span12">
@@ -94,10 +96,10 @@
 	       		</div>
 				<div class="row services">
 					<div class="span3">
+	                    <div class="category2"></div>
 						<div class="box light">
 	                		<h6> Map placeholder </h6>
 	                    </div>
-	                    <div class="category2"></div>
 					</div>
 					<div class="span9">
 						<div id="wp-spinner"></div>
@@ -108,7 +110,7 @@
 	       	</div>
 	    </div>
 		<footer>
-		  <p>&copy; Company 2013</p>
+		  <p>&copy; Copyright © 2013 MorningPlum</p>
 		</footer>
 	</div>
 	
@@ -121,6 +123,7 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <!-- 1. Libraries -->
 	<script src="/assets/js/jquery.js"></script>
+	<script src="/assets/js/selectnav.js"></script>
 	<script src="/assets/js/bootstrap.js"></script>
 	<script src="/assets/js/mustache.js"></script>
 	<script src="/assets/js/handlebars.js"></script>
@@ -170,6 +173,12 @@
 	</script>
 
 	<script id="TL_service-details" type="text/x-handlebars-template">
+	 <div class="srvc-det-body">
+		<div class="directionNav">
+			<a class="prevNav">&laquo;</a>
+			<a class="nextNav">&raquo;</a>
+		</div>
+
 		<div class="row-fluid">
 			{{#with service}}
 			<div class="span6">
@@ -219,6 +228,7 @@
 			</div>
 			{{/with}}
 		</div>
+	 </div>
 	</script>
 
 	<script id="TL_categories" type="text/x-handlebars-template">

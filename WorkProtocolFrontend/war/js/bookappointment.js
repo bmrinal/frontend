@@ -192,6 +192,14 @@ $(function (){
 							  'targetSelector': '#view .wp-srvc-info .wp-srvc-info-b'
 					  });
 					  
+					  $('#servicename').html(response.wpProjectName);
+					  
+					  $.each(response.vendors, function (i, v){
+						  if (v.id === response.wpVendorId){
+							  $('#providername').html(v.name);
+						  }
+					  });
+
 					  $('#view .wp-srvc-info').show();
 				  },
 				  error: function (){}

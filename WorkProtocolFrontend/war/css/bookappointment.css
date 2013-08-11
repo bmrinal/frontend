@@ -32,7 +32,14 @@ div.wp-event-open{
 	background-color: #B35047;
 }
 
-#startTime, #endTime{
+.wp-reviewTitle{
+	color: #B95A48;
+}	
+.wp-addEvent label{
+	font-weight: bold;
+}
+
+#startTime, #endTime, #servicename, #providername{
 	padding: 5px;
 }
 

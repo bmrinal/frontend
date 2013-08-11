@@ -314,7 +314,7 @@ a.readmore:hover span {
 }
 
 .btn-less{
-    background:#4A4A43 !important;
+    background:#b94a48 !important;
     color:#fdfdfd;
     text-shadow:1px 1px #000;
     -webkit-transition: all 0.3s ease;
@@ -324,7 +324,7 @@ a.readmore:hover span {
     transition: all 0.3s ease;
 }
 .btn-less:hover {
-    background:#b94a48 !important;
+    background:#4A4A43 !important;
     color:#fdfdfd;
     text-shadow:1px 1px #4A4A43;
     -webkit-transition: all 0.3s ease;

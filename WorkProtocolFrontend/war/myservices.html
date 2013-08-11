@@ -31,46 +31,49 @@
 
   <body>
 	<div id="wp-main">
-	    <div id="wp-header">
-	        <div class="row">
-	            <div class="span3">
-	            	<a href="index.html" class="wp-brand">MorningPlum</a>
-	            </div>
-	            <div id="nav" class="span8">
-			      <ul>
-			        <li class="active"><a href="/services.html">Services</a></li>
-			        <li><a href="#">Providers</a></li>
-			        <li><a href="#">Packages</a></li>
-			        <li><a href="#">TeleHealth</a></li>
-			      </ul>
+	    <div class="wp-header cf">
+			<h1><a class="wp-brand" href="index.html">MorningPlum</a></h1>
+			
+			<div class="wp-nav">
+				<input type="checkbox" id="toggle">
+				<label for="toggle" data-open="Browse" data-close="Browse" class="toggle" onclick=""></label>
+				<ul class="menu">
+					<li><a href="/services.html">Services</a></li>
+					<li><a href="#">Providers</a></li>
+					<li><a href="#">Packages</a></li>
+					<li><a href="#">TeleHealth</a></li>	
+				</ul>
+			</div><!-- End of Navigation -->
+		</div>
+
+		<div class="cf">
+			<div id="user-info">
+				<div class="dropdown wp-signedIn hide">
+					<div class="dropdown-toggle btn" data-toggle="dropdown">
+					 	<i class="icon-user"></i>
+					</div>
+					<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+				    	<li>
+				         	<a href="/myprofile.html">My account</a>
+				         </li>
+				         <li>
+				         	<a class="wp-signOut" href="#">Sign out</a>
+				         </li>
+					</ul>
 				</div>
-	            <div id="user-info" class="span1">
-				    <div class="dropdown wp-signedIn hide">
-					    <div class="dropdown-toggle btn" data-toggle="dropdown">
-					    	<i class="icon-user"></i>
-					    </div>
-					    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-			              <li>
-			              	<a href="/myprofile.html">My account</a>
-			              </li>
-			              <li>
-			              	<a class="wp-signOut" href="#">Sign out</a>
-			              </li>
-			            </ul>
-				    </div>
-				    <div class="dropdown wp-signedOut">
-					    <div class="dropdown-toggle btn" data-toggle="dropdown">
-					    	<i class="icon-user"></i>
-					    </div>
-					    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-			              <li>
-			              	<a class="wp-signIn" href="#">Sign In</a>
-			              </li>
-			            </ul>
-				    </div>
-	            </div>
-	        </div>
-	    </div>
+				<div class="dropdown wp-signedOut">
+					<div class="dropdown-toggle btn" data-toggle="dropdown">
+						<i class="icon-user"></i>
+					</div>
+					<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+				    	<li>
+				         	<a class="wp-signIn" href="#">Sign In</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
 		<div class="container">
 			<div class="row">
 	        	<div id="view" class="span12">

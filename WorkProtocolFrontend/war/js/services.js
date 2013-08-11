@@ -1,9 +1,8 @@
 $(function (){
-	var params, currServiceId, currServiceDefId, vendorTempl, fetchServices, categoryHash, servicesXHR, servicesArr;
+	var params, vendorTempl, fetchServices, categoryHash, servicesXHR, servicesArr, currServiceInd;
 
 	categoryHash = {};
 	params = wp.util.qsToJSON();
-
 	if (params.rdcode){
 		switch (params.rdcode) {
 			case 'ba.yes' :
@@ -141,20 +140,29 @@ $(function (){
 
 	//service details view
 	$('#view').on('click', ".service", function(e){
-		var template, data, ind;
-
 		if ($(e.target).is('a, button')) {
 			return;
 		}
 
+		currServiceInd = parseInt($(this).data('ind'), 10);
+		showServiceDetails(currServiceInd);
+	});
+
+	showServiceDetails = function (ind){
+		var template, data;
+
 		wp.overlay.open();
-		ind = parseInt($(this).data('ind'), 10);
+
+
 		template = Handlebars.compile($('#TL_service-details').html());
 		data = {};
 		
 		data['REST_HOST'] = wp.cfg['REST_HOST'];
 		data.service = servicesArr[ind];
 		wp.overlay.setContent(template(data));
+
+		$('.prevNav').toggleClass('disabled', ind === 0);
+		$('.nextNav').toggleClass('disabled', ind === (servicesArr.length -1));
 
 		$('#carousel').flexslider({
 		    animation: "slide",
@@ -173,6 +181,36 @@ $(function (){
 		    slideshow: false,
 		    sync: "#carousel"
 		  });
+	};
+
+	$(document).on('keyup', function(e){
+		var keycode = e.which;
+
+		if (wp.overlay.isOpen()){
+			if (keycode == 37) {
+				$('.prevNav').click();
+			} else if (keycode == 39) {
+				$('.nextNav').click();
+			}
+		}
+	});
+	
+	$('body').on('click', '.prevNav', function(e){
+		e.stopPropagation();
+
+		if (currServiceInd !== 0){
+			currServiceInd = currServiceInd - 1;
+			showServiceDetails(currServiceInd);
+		}
+	});
+
+	$('body').on('click', '.nextNav', function(e){
+		e.stopPropagation();
+
+		if (currServiceInd !== (servicesArr.length -1)){
+			currServiceInd = currServiceInd + 1;
+			showServiceDetails(currServiceInd);
+		}
 	});
 
 	//appointment

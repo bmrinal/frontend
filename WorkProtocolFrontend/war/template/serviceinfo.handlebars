@@ -5,7 +5,9 @@
 	{{#if wpDuration}}<li><div><i class="icon-ok"></i>Duration : {{wpDuration}} mins</div></li>{{/if}}
 	{{#each columns}}
 		{{#each values}}
-			<li><div><i class="icon-ok"></i>{{.}}</div></li>
+			{{#if .}}
+				<li><div><i class="icon-ok"></i>{{.}}</div></li>
+			{{/if}}
 		{{/each}}
 	{{/each}}
 </ul>
