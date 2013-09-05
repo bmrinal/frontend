@@ -65,12 +65,19 @@ $(function (){
 				data = {};
 				
 				if (filterByCategory === true){
-					data.service = response.services || {};
-					servicesArr = response.services || [];
+					data.service = response.services || [];
+					if (response.children) {
+						$.each(response.children, function(i, v){
+							if (v.services) {
+								$.merge(data.service, v.services);
+							}
+						});
+					}
 				} else {
 					data.service = response;
-					servicesArr = response;
 				}
+
+				servicesArr = data.service;
 				data['REST_HOST'] = wp.cfg['REST_HOST'];
 				servicesHTML = $('<div/>').html($(template(data).trim()));
 				servicesHTML = servicesHTML.find('.service');
@@ -140,7 +147,7 @@ $(function (){
 
 	//service details view
 	$('#view').on('click', ".service", function(e){
-		if ($(e.target).is('a, button')) {
+		if ($(e.target).is('a, button, .ghangout')) {
 			return;
 		}
 
@@ -230,6 +237,11 @@ $(function (){
 		window.location.href = '/requestquote.html?srvcDefId='
 			+ $(this).data('srvcdefid')
 			+ '&serviceId=' + $(this).data('srvcid');
+	});
+
+	//service request
+	$('body').on('click', '.wp-video', function(e){
+		$('#videotrigger').click();
 	});
 
 });

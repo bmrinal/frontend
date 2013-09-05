@@ -4,7 +4,7 @@ wp.overlay = function (){
 	var openOly, closeOly, isOpen;
 
 	//setting the overlay height as same as view port height
-	$('#wp-oly').css('min-height', $(window).height());
+	$('#wp-oly, #wp-oly .wp-oly-body').css('min-height', $(window).height());
 
 	isOpenOly = function (){
 		return isOpen;

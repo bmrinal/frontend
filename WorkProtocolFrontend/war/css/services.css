@@ -89,7 +89,7 @@
 }
 
 .directionNav a{
-	position: absolute;
+	position: fixed;
 	top: 45%;
 	z-index: 9;
 	cursor: pointer;
@@ -98,7 +98,6 @@
 	content: '';
 	background-color: #fff;
     overflow: hidden;
-    padding-bottom: 5px;
 }
 
 .directionNav a.disabled{
@@ -107,7 +106,7 @@
 }
 
 .prevNav{
-    left: -40px;
+    left: 0;
 }
 
 .prevNav:hover, .nextNav:hover{
@@ -115,5 +114,9 @@
 }
 
 .nextNav{
-    right: -40px;
+    right: 0;
+}
+
+.wp-appoint, .wp-quote, .wp-video{
+	margin-top: 5px;
 }

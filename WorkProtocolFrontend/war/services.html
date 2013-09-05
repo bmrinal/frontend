@@ -109,11 +109,12 @@
 				</div>
 	       	</div>
 	    </div>
+
 		<footer>
 		  <p>&copy; Copyright © 2013 MorningPlum</p>
 		</footer>
 	</div>
-	
+
     <div id="wp-oly">
 	    <button class="btn btn-mini btn-close wp-oly-close">&times;</button>
 		<div class="wp-oly-body"></div>
@@ -123,7 +124,6 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <!-- 1. Libraries -->
 	<script src="/assets/js/jquery.js"></script>
-	<script src="/assets/js/selectnav.js"></script>
 	<script src="/assets/js/bootstrap.js"></script>
 	<script src="/assets/js/mustache.js"></script>
 	<script src="/assets/js/handlebars.js"></script>
@@ -167,6 +167,7 @@
 					{{#if wpOpenToQuote}}
 						<button class="wp-quote btn btn-mini btn-less" type="button" data-srvcid="{{id}}" data-srvcdefid="{{wpServiceDefinitionId}}">Service request</button>
 					{{/if}}
+					<a class="wp-video btn btn-mini btn-less" href="https://plus.google.com/hangouts/_?gid=509343837677" target="_blank">Video</a>
 				</div>
 			</div>
 		{{/each}}
@@ -210,6 +211,8 @@
 				{{#if wpOpenToQuote}}
 					<button class="wp-quote btn btn-mini btn-less" type="button" data-srvcid="{{id}}" data-srvcdefid="{{wpServiceDefinitionId}}">Service request</button>
 				{{/if}}
+				<a class="wp-video btn btn-mini btn-less" href="https://plus.google.com/hangouts/_?gid=509343837677" target="_blank">Video</a>
+
 				<div class="box shadow_effect">
 					<ul class="srvc-d-info">
 						{{#if wpProjectName}}<li><div><i class="icon-ok"></i>{{wpProjectName}}</div></li>{{/if}}

@@ -11,11 +11,17 @@
 	margin: 5px;
 }
 
+#user-info ul{
+	right: 0;
+	left: auto;
+}
+
 .wp-brand{
     font-size: 20px;
     line-height: 30px;
     margin-left: 10px;
     text-shadow: 1px 1px 0 #f8f8ef, 2px 2px #cdcdcd;
+    color: #B94A48;
 }
 
 .section{
