@@ -2,18 +2,19 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Work protocol - my profile</title>
+    <title>Work protocol - browse services</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- styles -->
     <link href="/assets/css/bootstrap.css" rel="stylesheet">
     <link href="/assets/css/bootstrap-responsive.css" rel="stylesheet">
-	<link href="/assets/css/flexslider.css" rel="stylesheet">
+    <link href="/assets/css/bootstrap-select.css" rel="stylesheet">
+    <link href="/assets/css/flexslider.css" rel="stylesheet">
     <link href="/assets/css/template.css" rel="stylesheet">
 
     <link href="/css/app.css" rel="stylesheet">
     <link href="/css/overlay.css" rel="stylesheet">
-	<link href="/css/myservices.css" rel="stylesheet">
+	<link href="/css/providers.css" rel="stylesheet">
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -31,7 +32,7 @@
 
   <body>
 	<div id="wp-main">
-	    <div class="wp-header cf">
+		<div class="wp-header cf">
 			<h1><a class="wp-brand" href="index.html">MorningPlum</a></h1>
 			
 			<div class="wp-nav">
@@ -74,35 +75,50 @@
 			</div>
 		</div>
 
-		<div class="container">
-			<div class="row">
-	        	<div id="view" class="span12">
-		        	<div id="top-nav"></div>
-		        	<div id="wp-spinner"></div>
-					<div id="page-status" class="alert alert-success hide"></div>
-					<div class="srvc-add">
-						<a href="/addservice.html" class="btn btn-mini btn btn-success" type="button"><i class="icon-white icon-plus-sign"></i> Add a new service</a>
+		<div class="hide container" id="wp-signup-banner">
+	   	  <div class="row">
+	       	<div class="span12">
+				<div class="special">
+			         <div class="so_title">Not a member ? <br><span>Join today</span></div>
+					 <div class="so_text"><a class="btn btn-more" href="#">Sign up here</a></div>
+			         <div class="clearfix"></div>
+			     </div>
+			</div>
+		  </div>
+		</div>
+	
+	    <div class="container">
+	       	<div id="view">
+				<div id="page-status" class="alert hide"></div>
+
+				<div class="row providers">
+					<div class="span12">
+						<div id="wp-spinner"></div>
+						<div id="no-providers" class="hide">No providers.</div>
+						<div class="providers-box"></div>
 					</div>
-					<div class="services-box"></div>
-					<div id="srvc-details" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="Service request form" aria-hidden="true"></div>
-	        	</div>
-        	</div><!--/span-->
-      </div><!--/row-->
-	</div><!--/.main-->
-	<div id="wp-oly">
+				</div>
+	       	</div>
+	    </div>
+
+		<footer>
+		  <p>&copy; Copyright © 2013 MorningPlum</p>
+		</footer>
+	</div>
+
+    <div id="wp-oly">
 	    <button class="btn btn-mini btn-close wp-oly-close">&times;</button>
 		<div class="wp-oly-body"></div>
-	</div>
-    <footer>
-    	<p>&copy; Company 2013</p>
-    </footer>
-
+    </div>
+    <!-- javascript
+    ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <!-- 1. Libraries -->
 	<script src="/assets/js/jquery.js"></script>
 	<script src="/assets/js/bootstrap.js"></script>
 	<script src="/assets/js/mustache.js"></script>
 	<script src="/assets/js/handlebars.js"></script>
+	<script src="/assets/js/bootstrap-select.js"></script>
 	<script src="/assets/js/jquery.flexslider.js"></script>
 	<script src="/assets/js/spin.js"></script>
 	<script src="/assets/js/jquery.spin.js"></script>
@@ -111,16 +127,14 @@
 	<script src="js/util/handlebarHelpers.js"></script>
 	<script src="js/app.js"></script>
 	<script src="js/overlay.js"></script>
-	<script src="js/mynav.js"></script>
-	<script src="js/myservices.js"></script>
-
-	<script id="TL_services" type="text/x-handlebars-template">
-		{{#each service}}
-	  		<div class="span4 service box" data-ind="{{@index}}">
-				<div class="flexslider srvc-imgs">
+	<script src="js/providers.js"></script>
+	<script id="TL_providers" type="text/x-handlebars-template">
+		{{#each provider}}
+	  		<div class="span4 provider box" data-ind="{{@index}}">
+				<div class="flexslider prvd-imgs">
 					<ul class="slides">
-						{{#if wpImageIds}}
-							{{#each wpImageIds}}
+						{{#if imageIds}}
+							{{#each imageIds}}
 								<li>
 									<img src="{{../../../REST_HOST}}/resources/images/{{.}}"/>
 								</li>
@@ -132,29 +146,53 @@
 						{{/if}}
 					</ul>
 				</div>
-				<div class="srvc-details">
-					{{#if wpName}}<h6 class="srvc-name">{{wpName}}</h6>{{/if}}
-					<ul class="srvc-info">
-						{{#if wpProjectName}}<li><div>{{wpProjectName}}</div></li>{{/if}}
-						{{#if wpCostPerHour}}<li><div>Cost per hour : {{wpCostPerHour}}</div></li>{{/if}}
-						{{#if wpFixedCost}}<li><div>Fixed cost : {{wpFixedCost}}</div></li>{{/if}}
-						{{#if wpDuration}}<li><div>Duration : {{wpDuration}} mins</div></li>{{/if}}
-					</ul>
-					<button class="wp-appoint btn btn-mini btn-less" type="button" data-vendorId="{{wpVendorId}}" data-duration="{{wpDuration}}" data-srvcid="{{id}}">Book appointment</button>
+				<div class="prvd-details">
+					{{#if name}}<h6 class="prvd-name">{{name}}</h6>{{/if}}
+					<div class="prvd-info">
+						{{#each locations}}
+							{{#if streetAddress1}}
+								<div class="prvd-addr">
+									{{streetAddress1}}{{#if streetAddress2}}, {{streetAddress2}}{{/if}}{{#if city}}, {{city}}{{/if}}{{#if stateOrProvince}}, {{stateOrProvince}}{{/if}}{{#if zipCode}}, {{zipCode}}{{/if}}
+								</div>
+							{{/if}}
+						{{/each}}
+					</div>
 				</div>
 			</div>
 		{{/each}}
 	</script>
 
-	<script id="TL_service-details" type="text/x-handlebars-template">
+	<script id="TL_provider-details" type="text/x-handlebars-template">
+	 <div class="prvd-det-body">
+		<div class="directionNav">
+			<a class="prevNav">&laquo;</a>
+			<a class="nextNav">&raquo;</a>
+		</div>
+
 		<div class="row-fluid">
-			{{#with service}}
+			{{#with provider}}
 			<div class="span6">
-				{{#if wpName}}<h4 class="srvc-d-name">{{wpName}}</h4>{{/if}}
-				<div class="srvc-d-images">
+				<div class="prvd-d-top">
+					{{#if name}}<h4 class="prvd-d-name">{{name}}</h4>{{/if}}
+					{{#each locations}}
+						{{#if streetAddress1}}
+							<div class="prvd-addr">
+								{{streetAddress1}}{{#if streetAddress2}}, {{streetAddress2}}{{/if}}{{#if city}}, {{city}}{{/if}}{{#if stateOrProvince}}, {{stateOrProvince}}{{/if}}{{#if zipCode}}, {{zipCode}}{{/if}}
+							</div>
+						{{/if}}
+					{{/each}}
+					{{#each contacts}}
+						<ul class="prvd-contact">
+							{{#if email}}<li class="first">{{email}}</li>{{/if}}
+							{{#if mobilePhone}}<li {{#unless email}} class="first" {{/unless}}>{{mobilePhone}}</li>{{/if}}
+							{{#if textPhone}}<li>{{textPhone}}</li>{{/if}}
+						</ul>
+					{{/each}}
+				</div>
+				<div class="prvd-d-images">
 					<div id="slider" class="flexslider">
 						<ul class="slides">
-							{{#each wpImageIds}}
+							{{#each imageIds}}
 								<li>
 									<img src="{{../../REST_HOST}}/resources/images/{{.}}"/>
 								</li>
@@ -163,7 +201,7 @@
 					</div>
 					<div id="carousel" class="flexslider">
 						<ul class="slides">
-							{{#each wpImageIds}}
+							{{#each imageIds}}
 								<li>
 									<img src="{{../../REST_HOST}}/resources/images/{{.}}"/>
 								</li>
@@ -174,25 +212,28 @@
 			</div>
 
 			<div class="span6">
-				<button class="wp-appoint btn btn-mini btn-less" type="button" data-vendorId="{{wpVendorId}}" data-duration="{{wpDuration}}" data-srvcid="{{id}}">Book appointment</button>
 				<div class="box shadow_effect">
-					<ul class="srvc-d-info">
-						{{#if wpProjectName}}<li><div><i class="icon-ok"></i>{{wpProjectName}}</div></li>{{/if}}
-						{{#if wpCostPerHour}}<li><div><i class="icon-ok"></i>Cost per hour : {{wpCostPerHour}}</div></li>{{/if}}
-						{{#if wpFixedCost}}<li><div><i class="icon-ok"></i>Fixed cost : {{wpFixedCost}}</div></li>{{/if}}
-						{{#if wpDuration}}<li><div><i class="icon-ok"></i>Duration : {{wpDuration}} mins</div></li>{{/if}}
-						{{#each columns}}
-							{{#each values}}
-								{{#if .}}
-									<li><div><i class="icon-ok"></i>{{.}}</div></li>
-								{{/if}}
-							{{/each}}
+					<ul class="prvd-d-info">
+						{{#each descriptions}}
+							<li>
+								<div>
+									<i class="icon-ok" /> {{description}}
+								</div>
+							</li>
+						{{/each}}
+						{{#each urls}}
+							<li>
+								<div>
+									<i class="icon-ok" /> {{urlLocation}}
+								</div>
+							</li>
 						{{/each}}
 					</ul>
 				</div>
 			</div>
 			{{/with}}
 		</div>
+	 </div>
 	</script>
   </body>
 </html>

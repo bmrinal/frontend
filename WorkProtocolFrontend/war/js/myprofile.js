@@ -40,6 +40,13 @@ $(function (){
 									  $('#profileForm input[name="vendorPhone"]').val(response.phone || '');
 									  $('#profileForm input[name="vendorMobilePhone"]').val(response.mobilePhone || '');
 									  
+									  if ($.isArray(response.imageIds)) {
+										$.each(response.imageIds, function (ind, v){
+											var picpane = Mustache.to_html(pictempl, { src : wp.cfg['REST_HOST']+'/resources/images/'+v, imageId: v });
+											$('#profileForm .sr-photo-row').append(picpane);
+										});
+									  }
+									  
 									  if ($.isArray(response.locations)) {
 										  $('#profileForm input[name="vendorLocationStreet1"]').val(response.locations[0].streetAddress1 || '');
 										  $('#profileForm input[name="vendorLocationStreet2"]').val(response.locations[0].streetAddress2 || '');
@@ -134,6 +141,40 @@ $(function (){
 		  }
 	});
 
+	//photos - set up
+	$('#wp-main').append('<iframe id="picframe" name="picframe"></iframe>');
+	$('#picupload').prop('action', wp.cfg['REST_HOST']+'/ImageUpload');
+	$('#picupload input[name="ru"]').val('http://'+window.location.host+'/jsproxy.html');
+	$('body').on('click', '#sr-photo-trigger', function (){
+		$('#file-inp').click();
+	});
+
+	//do upload
+	$('#file-inp').on('change', function (e){
+		$('#sr-photo-trigger').hide();
+		$('#sr-photo-loading').show();
+		$('#picupload').submit();
+	});
+
+	//after upload
+	var pictempl = $('#TL_pic').html();
+	wp.jsproxy = {};
+	wp.jsproxy.callback = function (data){
+		var imageIds;
+
+		$('#sr-photo-trigger').show();
+		$('#sr-photo-loading').hide();
+
+		if (data){
+			imageIds = data['imageId'].split(",");
+
+			$.each(imageIds, function (ind, v){
+				var picpane = Mustache.to_html(pictempl, { src : wp.cfg['REST_HOST']+'/resources/images/'+v, imageId: v });
+				$('#profileForm .sr-photo-row').append(picpane);
+			});
+		}
+	};
+	
 	$('#profileForm').submit(function (e){
 		e.preventDefault();
 		$.ajax({
@@ -146,13 +187,13 @@ $(function (){
 				  withCredentials: true
 			  },
 			  beforeSend: function (){
-				  $('#profileForm .btn-primary').attr('disabled', true);
+				  $('#profileForm .btn-success').attr('disabled', true);
 				  $('#page-status').removeClass('alert-success')
 	 							.removeClass('alert-error')
 	 							.hide();
 			  },
 			  complete: function (){
-				  $('#profileForm .btn-primary').removeAttr('disabled');
+				  $('#profileForm .btn-success').removeAttr('disabled');
 			  },
 			  success: function (response){
 				 var statusMsg;
@@ -163,6 +204,7 @@ $(function (){
 					 statusMsg = 'Profile created successfully';
 					 $('#profileForm').append('<input name="'+profileId+'" type="hidden" value="' +response.id+ '">');
 				 } */
+				 $('html').scrollTop(0);
 				 $('#page-status').html('Profile updated successfully')
 					 .addClass('alert-success')
 					 .show();

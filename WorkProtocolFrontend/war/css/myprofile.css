@@ -6,3 +6,30 @@ fieldset{
 	display: none;
 	margin-top: 20px;
 }
+
+#sr-photo-trigger{
+	cursor: pointer;
+	margin-top: 5px;	
+}
+
+.sr-photo-row{
+	margin-top: 10px;	
+}
+
+.sr-photo-col{
+	float: left;
+	border: 1px solid #ddd;
+	padding: 2px;
+	margin-right: 10px;
+	width: 96px;
+	height: 96px;
+}
+
+.sr-photo{
+	max-width: 100%;
+	max-height: 100%;
+}
+
+#picupload, #picframe{
+	display: none;
+}

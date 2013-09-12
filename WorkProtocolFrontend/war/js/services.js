@@ -1,5 +1,5 @@
 $(function (){
-	var params, vendorTempl, fetchServices, categoryHash, servicesXHR, servicesArr, currServiceInd;
+	var params, vendorTempl, fetchServices, categoryHash, servicesXHR, servicesArr, currServiceInd, showServiceDetails;
 
 	categoryHash = {};
 	params = wp.util.qsToJSON();

@@ -18,6 +18,7 @@ $(function (){
 				$('#page-status').html('Sorry, please register as a vendor to view this page.').addClass('alert-error').show();
 				return;
 			}
+
 			wp.mynav.load({
 				targetSelector: '#top-nav',
 				isVendor: response.isVendor 
@@ -222,6 +223,7 @@ $(function (){
 			});
 
 			//photos - set up
+			$('#wp-main').append('<iframe id="picframe" name="picframe"></iframe>');
 			$('#picupload').prop('action', wp.cfg['REST_HOST']+'/ImageUpload');
 			$('#picupload input[name="ru"]').val('http://'+window.location.host+'/jsproxy.html');
 			$('body').on('click', '#sr-photo-trigger', function (){
@@ -236,7 +238,7 @@ $(function (){
 			});
 
 			//after upload
-			pictempl = $('#TL_pic').html();
+			var pictempl = $('#TL_pic').html();
 			wp.jsproxy = {};
 			wp.jsproxy.callback = function (data){
 				var imageIds;
@@ -248,7 +250,7 @@ $(function (){
 					imageIds = data['imageId'].split(",");
 
 					$.each(imageIds, function (ind, v){
-						picpane = Mustache.to_html(pictempl, { src : wp.cfg['REST_HOST']+'/resources/images/'+v, imageId: v });
+						var picpane = Mustache.to_html(pictempl, { src : wp.cfg['REST_HOST']+'/resources/images/'+v, imageId: v });
 						$('#sr-form-fields .sr-photo-row').append(picpane);
 					});
 				}
@@ -292,8 +294,6 @@ $(function (){
 				  }
 				});
 			});
-
-			
 		  } else {
 			  wp.util.redirectToSigin();
 		  }
