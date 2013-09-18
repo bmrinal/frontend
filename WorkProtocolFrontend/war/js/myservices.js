@@ -6,7 +6,7 @@ $(function (){
 	  dataType: 'json',
 	  cache: false,
 	  beforeSend: function () {
-		  $('#wp-spinner').spin({color:'#B94A48', lines: 12});
+		  $('#wp-spinner').spin('custom');
 	  },
 	  xhrFields: {
 		  withCredentials: true

@@ -120,3 +120,15 @@
 .wp-appoint, .wp-quote, .wp-video{
 	margin-top: 5px;
 }
+
+.srvc-d-name{
+	margin-top: 0;
+}
+
+.srvc-d-images{
+	margin-top: 15px;
+}
+
+.srvc-d-info{
+	margin-top: 10px;	
+}

@@ -6,7 +6,7 @@ $(function (){
 	  url: wp.cfg['REST_HOST']+'/resources/user',
 	  dataType: 'json',
 	  beforeSend: function(){
-		  $('#wp-spinner').spin({color:'#B94A48', lines: 12});
+		  $('#wp-spinner').spin('custom');
 	  },
 	  cache: false,
 	  xhrFields: {
@@ -59,7 +59,7 @@ $(function (){
 					cache: false,
 					dataType: "jsonp",
 					beforeSend: function () {
-						$('#wp-spinner').spin({color:'#B94A48', lines: 12});
+						$('#wp-spinner').spin('custom');
 						$('#no-services').hide();
 						
 						$('#view .services-box').html('');

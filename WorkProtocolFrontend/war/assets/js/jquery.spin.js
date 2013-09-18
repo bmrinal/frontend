@@ -74,7 +74,8 @@ $('#el').spin('flower', 'red');
   $.fn.spin.presets = {
     tiny: { lines: 8, length: 2, width: 2, radius: 3 },
     small: { lines: 8, length: 4, width: 3, radius: 5 },
-    large: { lines: 10, length: 8, width: 4, radius: 8 }
+    large: { lines: 10, length: 8, width: 4, radius: 8 },
+    custom: { color: '#B94A48', lines: 11, length: 4, width: 2, radius: 5 }
   }
 
 }));

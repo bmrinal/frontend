@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Work protocol - browse services</title>
+    <title>Work protocol - browse providers</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- styles -->
@@ -92,7 +92,12 @@
 				<div id="page-status" class="alert hide"></div>
 
 				<div class="row providers">
-					<div class="span12">
+					<div class="span3">
+						<div class="box light">
+		              		<h6> Map placeholder </h6>
+		                  </div>
+					</div>
+					<div class="span9">
 						<div id="wp-spinner"></div>
 						<div id="no-providers" class="hide">No providers.</div>
 						<div class="providers-box"></div>
@@ -168,10 +173,8 @@
 			<a class="prevNav">&laquo;</a>
 			<a class="nextNav">&raquo;</a>
 		</div>
-
 		<div class="row-fluid">
 			{{#with provider}}
-			<div class="span6">
 				<div class="prvd-d-top">
 					{{#if name}}<h4 class="prvd-d-name">{{name}}</h4>{{/if}}
 					{{#each locations}}
@@ -189,6 +192,11 @@
 						</ul>
 					{{/each}}
 				</div>
+			{{/with}}
+		</div>
+		<div class="row-fluid">
+			{{#with provider}}
+			<div class="span6">
 				<div class="prvd-d-images">
 					<div id="slider" class="flexslider">
 						<ul class="slides">
@@ -212,8 +220,8 @@
 			</div>
 
 			<div class="span6">
-				<div class="box shadow_effect">
-					<ul class="prvd-d-info">
+				<div class="box shadow_effect prvd-d-info">
+					<ul>
 						{{#each descriptions}}
 							<li>
 								<div>
@@ -230,10 +238,39 @@
 						{{/each}}
 					</ul>
 				</div>
+				<h5>Services offered</h5>
+				<div id="services">
+					<div class="loading"></div>
+				</div>
 			</div>
 			{{/with}}
 		</div>
 	 </div>
+	</script>
+
+	<script id="TL_services" type="text/x-handlebars-template">
+		<div id="srvc-carousel" class="flexslider">
+			<ul class="slides">
+			{{#each services}}
+				<li class="srvc">
+					<div class="srvc-imgw">
+					{{#one wpImageIds}}
+						<img class="srvc-img" src="{{../../REST_HOST}}/resources/images/{{.}}" />
+					{{else}}
+						<img class="srvc-img" src="/assets/img/3.png" />
+					{{/one}}
+					</div>
+					{{#if wpName}}<h6 class="srvc-d-name">{{wpName}}</h6>{{/if}}
+					<ul class="srvc-info">
+						{{#if wpProjectName}}<li><div>{{wpProjectName}}</div></li>{{/if}}
+						{{#if wpCostPerHour}}<li><div>Cost per hour : {{wpCostPerHour}}</div></li>{{/if}}
+						{{#if wpFixedCost}}<li><div>Fixed cost : {{wpFixedCost}}</div></li>{{/if}}
+						{{#if wpDuration}}<li><div>Duration : {{wpDuration}} mins</div></li>{{/if}}
+					</ul>
+				</li>
+			{{/each}}
+			</ul>
+		</div>
 	</script>
   </body>
 </html>

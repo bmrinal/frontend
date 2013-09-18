@@ -9,7 +9,20 @@
 .prvd-info{
 	margin-top: 0;
 	margin-bottom: 0;
-	/* height: 72px; */
+	height: 72px;
+}
+
+.srvc-info{
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.srvc-info li{
+	list-style-type: square;
+	color: #B94A48;
+}
+.srvc-info li div{
+	color: #555555;
 }
 
 .prvd-addr{
@@ -40,6 +53,10 @@
 }
 
 .prvd-d-info{
+	margin: 0;
+}
+
+.prvd-d-info ul{
 	margin: 0 0 0 5px;
 }
 
@@ -141,4 +158,23 @@
 
 .wp-appoint, .wp-quote, .wp-video{
 	margin-top: 5px;
+}
+
+#srvc-carousel{
+	margin-top: 15px;
+}
+
+#srvc-carousel .srvc{
+	margin-right: 15px;
+}
+
+#srvc-carousel .srvc-imgw{
+	border: 1px solid #ddd;
+	width: 245px;
+	height: 225px;
+}
+
+#srvc-carousel .srvc-img{
+	max-height: 100%;
+	max-width: 100%;
 }

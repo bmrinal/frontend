@@ -20,7 +20,7 @@ $(function (){
 						  withCredentials: true
 					  },
 					  beforeSend: function (){
-						  $('#wp-spinner').spin({color:'#B94A48', lines: 12});
+						  $('#wp-spinner').spin('custom');
 					  },
 					  complete: function (){
 						  $('#wp-spinner').spin(false);

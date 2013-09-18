@@ -19,7 +19,7 @@ $(function (){
 							  withCredentials: true
 						  },
 						  beforeSend: function (){
-							  $('#wp-spinner').spin({color:'#B94A48', lines: 12});
+							  $('#wp-spinner').spin('custom');
 						  },
 						  success: function (response){
 							  var urlTypes, urlObj, descTypes, descObj;
@@ -109,7 +109,7 @@ $(function (){
 						  dataType: 'html',
 						  cache: false,
 						  beforeSend: function (){
-							  $('#wp-spinner').spin({color:'#B94A48', lines: 12});
+							  $('#wp-spinner').spin('custom');
 						  },
 						  success: function(resp) {
 							  $('#profileForm').prop('method', 'GET').html(resp)

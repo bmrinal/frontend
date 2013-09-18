@@ -1,5 +1,5 @@
 $(function (){
-	var fetchProviders, providersXHR, providersArr, currProviderInd, showProviderDetails;
+	var fetchProviders, providersXHR, providersArr, currProviderInd, showProviderDetails, servicesXHR;
 
 	fetchProviders = function (url, filterByCategory){
 		if (providersXHR) {
@@ -11,7 +11,7 @@ $(function (){
 			cache: false,
 			dataType: "jsonp",
 			beforeSend: function () {
-				$('#wp-spinner').spin({color:'#B94A48', lines: 12});
+				$('#wp-spinner').spin('custom');
 				$('#no-providers').hide();
 				
 				$('#view .providers-box').html('');
@@ -84,6 +84,41 @@ $(function (){
 		$('.prevNav').toggleClass('disabled', ind === 0);
 		$('.nextNav').toggleClass('disabled', ind === (providersArr.length -1));
 
+		if (servicesXHR){
+			servicesXHR.abort();
+			$('#services .loading').spin(false);
+		}
+
+		servicesXHR = $.ajax({
+			url: wp.cfg['REST_HOST'] + '/resources/vendors/' + data.provider.id,
+			cache: false,
+			dataType: "jsonp",
+			beforeSend: function (){
+				$('#services .loading').spin('custom');
+			},
+			complete: function (){
+				$('#services .loading').spin(false);
+			},
+			success: function (res){
+				var template, data;
+
+				template = Handlebars.compile($('#TL_services').html());
+				data = {};
+				data['REST_HOST'] = wp.cfg['REST_HOST'];
+				data.services = res.services;
+
+				$('#services').html(template(data));
+				
+				$('#srvc-carousel').flexslider({
+				    animation: "slide",
+				    controlNav: false,
+				    animationLoop: false,
+				    slideshow: false,
+				    itemWidth: 245,
+				    itemMargin: 15
+				  });
+			}
+		});
 		$('#carousel').flexslider({
 		    animation: "slide",
 		    controlNav: false,
@@ -93,7 +128,7 @@ $(function (){
 		    itemMargin: 5,
 		    asNavFor: '#slider'
 		  });
-		   
+
 		  $('#slider').flexslider({
 		    animation: "slide",
 		    controlNav: false,
