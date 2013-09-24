@@ -12,19 +12,6 @@
 	height: 72px;
 }
 
-.srvc-info{
-	margin-top: 0;
-	margin-bottom: 0;
-}
-
-.srvc-info li{
-	list-style-type: square;
-	color: #B94A48;
-}
-.srvc-info li div{
-	color: #555555;
-}
-
 .prvd-addr{
 	color: #999;
 	font-size: 11px;
@@ -166,15 +153,66 @@
 
 #srvc-carousel .srvc{
 	margin-right: 15px;
+	position: relative;
+}
+
+#srvc-carousel .srvc:hover .srvc-infow{
+	display: block;
 }
 
 #srvc-carousel .srvc-imgw{
 	border: 1px solid #ddd;
 	width: 245px;
 	height: 225px;
+	cursor: pointer;
 }
 
 #srvc-carousel .srvc-img{
 	max-height: 100%;
 	max-width: 100%;
+}
+
+.srvc-infow{
+    background-color: #fff;
+    border: 1px solid #ddd;
+    bottom: 0;
+    display: none;
+    left: 0;
+    padding: 5px;
+    position: absolute;
+    right: -2px;
+    top: 0;
+    cursor: pointer;
+}
+
+.srvc-info{
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.srvc-info li{
+	list-style-type: square;
+	color: #B94A48;
+}
+.srvc-info li div{
+	color: #555555;
+}
+
+.srvc-d-info{
+	margin: 0 0 0 5px;
+}
+
+.srvc-d-info li{
+	list-style-type: none;
+}
+
+.srvc-d-info li i{
+	margin-right: 10px;
+}
+
+.srvc-d-info li div{
+	color: #555555;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }

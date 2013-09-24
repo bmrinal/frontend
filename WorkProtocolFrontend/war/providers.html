@@ -123,6 +123,7 @@
 	<script src="/assets/js/bootstrap.js"></script>
 	<script src="/assets/js/mustache.js"></script>
 	<script src="/assets/js/handlebars.js"></script>
+	<script src="/assets/js/pubsub.js"></script>
 	<script src="/assets/js/bootstrap-select.js"></script>
 	<script src="/assets/js/jquery.flexslider.js"></script>
 	<script src="/assets/js/spin.js"></script>
@@ -252,7 +253,7 @@
 		<div id="srvc-carousel" class="flexslider">
 			<ul class="slides">
 			{{#each services}}
-				<li class="srvc">
+				<li class="srvc" data-ind="{{@index}}">
 					<div class="srvc-imgw">
 					{{#one wpImageIds}}
 						<img class="srvc-img" src="{{../../REST_HOST}}/resources/images/{{.}}" />
@@ -260,17 +261,81 @@
 						<img class="srvc-img" src="/assets/img/3.png" />
 					{{/one}}
 					</div>
-					{{#if wpName}}<h6 class="srvc-d-name">{{wpName}}</h6>{{/if}}
-					<ul class="srvc-info">
-						{{#if wpProjectName}}<li><div>{{wpProjectName}}</div></li>{{/if}}
-						{{#if wpCostPerHour}}<li><div>Cost per hour : {{wpCostPerHour}}</div></li>{{/if}}
-						{{#if wpFixedCost}}<li><div>Fixed cost : {{wpFixedCost}}</div></li>{{/if}}
-						{{#if wpDuration}}<li><div>Duration : {{wpDuration}} mins</div></li>{{/if}}
-					</ul>
+					<div class="srvc-infow">
+						{{#if wpName}}<h6>{{wpName}}</h6>{{/if}}
+						<ul class="srvc-info">
+							{{#if wpProjectName}}<li><div>{{wpProjectName}}</div></li>{{/if}}
+							{{#if wpCostPerHour}}<li><div>Cost per hour : {{wpCostPerHour}}</div></li>{{/if}}
+							{{#if wpFixedCost}}<li><div>Fixed cost : {{wpFixedCost}}</div></li>{{/if}}
+							{{#if wpDuration}}<li><div>Duration : {{wpDuration}} mins</div></li>{{/if}}
+						</ul>
+					</div>
 				</li>
 			{{/each}}
 			</ul>
 		</div>
 	</script>
+
+	<script id="TL_service-details" type="text/x-handlebars-template">
+	 <div class="srvc-det-body">
+		<div class="directionNav">
+			<a class="prevNav">&laquo;</a>
+			<a class="nextNav">&raquo;</a>
+		</div>
+
+		<div class="row-fluid">
+			{{#with service}}
+			<div class="span6">
+				{{#if wpName}}<h4 class="srvc-d-name">{{wpName}}</h4>{{/if}}
+				<div class="srvc-d-images">
+					<div id="slider" class="flexslider">
+						<ul class="slides">
+							{{#each wpImageIds}}
+								<li>
+									<img src="{{../../REST_HOST}}/resources/images/{{.}}"/>
+								</li>
+							{{/each}}
+						</ul>
+					</div>
+					<div id="carousel" class="flexslider">
+						<ul class="slides">
+							{{#each wpImageIds}}
+								<li>
+									<img src="{{../../REST_HOST}}/resources/images/{{.}}"/>
+								</li>
+							{{/each}}
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<div class="span6">
+				<button class="wp-appoint btn btn-mini btn-less" type="button" data-vendorId="{{wpVendorId}}" data-duration="{{wpDuration}}" data-srvcid="{{id}}">Book appointment</button>
+				{{#if wpOpenToQuote}}
+					<button class="wp-quote btn btn-mini btn-less" type="button" data-srvcid="{{id}}" data-srvcdefid="{{wpServiceDefinitionId}}">Service request</button>
+				{{/if}}
+				<a class="wp-video btn btn-mini btn-less" href="https://plus.google.com/hangouts/_?gid=509343837677" target="_blank">Video</a>
+
+				<div class="box shadow_effect">
+					<ul class="srvc-d-info">
+						{{#if wpProjectName}}<li><div><i class="icon-ok"></i>{{wpProjectName}}</div></li>{{/if}}
+						{{#if wpCostPerHour}}<li><div><i class="icon-ok"></i>Cost per hour : {{wpCostPerHour}}</div></li>{{/if}}
+						{{#if wpFixedCost}}<li><div><i class="icon-ok"></i>Fixed cost : {{wpFixedCost}}</div></li>{{/if}}
+						{{#if wpDuration}}<li><div><i class="icon-ok"></i>Duration : {{wpDuration}} mins</div></li>{{/if}}
+						{{#each columns}}
+							{{#each values}}
+								{{#if .}}
+									<li><div><i class="icon-ok"></i>{{.}}</div></li>
+								{{/if}}
+							{{/each}}
+						{{/each}}
+					</ul>
+				</div>
+			</div>
+			{{/with}}
+		</div>
+	 </div>
+	</script>
+
   </body>
 </html>

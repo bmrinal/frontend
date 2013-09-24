@@ -14,12 +14,16 @@ wp.overlay = function (){
 		$('#wp-oly').addClass('open');
 		wp.util.scrollToTop();
 		isOpen = true;
+		
+		PubSub.publish('WPOLY_OPEN', {});
 	};
 
 	closeOly = function (){
 		$('#wp-main').show();
 		$('#wp-oly').removeClass('open');
 		isOpen = false;
+		
+		PubSub.publish('WPOLY_CLOSE', {});
 	};
 
 	$('#wp-oly').on('click', function(e){

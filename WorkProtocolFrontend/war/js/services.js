@@ -1,5 +1,5 @@
 $(function (){
-	var params, vendorTempl, fetchServices, categoryHash, servicesXHR, servicesArr, currServiceInd, showServiceDetails;
+	var params, vendorTempl, fetchServices, categoryHash, servicesXHR, servicesArr, currServiceInd, showServiceDetails, scrollPos;
 
 	categoryHash = {};
 	params = wp.util.qsToJSON();
@@ -151,6 +151,7 @@ $(function (){
 			return;
 		}
 
+		scrollPos = $(document).scrollTop();
 		currServiceInd = parseInt($(this).data('ind'), 10);
 		showServiceDetails(currServiceInd);
 	});
@@ -159,7 +160,6 @@ $(function (){
 		var template, data;
 
 		wp.overlay.open();
-
 
 		template = Handlebars.compile($('#TL_service-details').html());
 		data = {};
@@ -239,9 +239,7 @@ $(function (){
 			+ '&serviceId=' + $(this).data('srvcid');
 	});
 
-	//service request
-	$('body').on('click', '.wp-video', function(e){
-		$('#videotrigger').click();
+	PubSub.subscribe('WPOLY_CLOSE', function (){
+		$(document).scrollTop(scrollPos);
 	});
-
 });

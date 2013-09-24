@@ -1,5 +1,6 @@
 $(function (){
-	var fetchProviders, providersXHR, providersArr, currProviderInd, showProviderDetails, servicesXHR;
+	var fetchProviders, providersXHR, providersArr, currProviderInd, showProviderDetails, servicesXHR, servicesArr, isProviderView, isServiceView,
+		showServiceDetails, currServiceInd, scrollPos;
 
 	fetchProviders = function (url, filterByCategory){
 		if (providersXHR) {
@@ -65,6 +66,7 @@ $(function (){
 			return;
 		}
 
+		scrollPos = $(document).scrollTop();
 		currProviderInd = parseInt($(this).data('ind'), 10);
 		showProviderDetails(currProviderInd);
 	});
@@ -73,7 +75,8 @@ $(function (){
 		var template, data;
 
 		wp.overlay.open();
-
+		isProviderView = true;
+		isServiceView = false;
 		template = Handlebars.compile($('#TL_provider-details').html());
 		data = {};
 
@@ -106,6 +109,7 @@ $(function (){
 				data = {};
 				data['REST_HOST'] = wp.cfg['REST_HOST'];
 				data.services = res.services;
+				servicesArr = res.services;
 
 				$('#services').html(template(data));
 				
@@ -138,6 +142,51 @@ $(function (){
 		  });
 	};
 
+	//service details view
+	$('#wp-oly').on('click', "li.srvc", function(e){
+		if ($(e.target).is('a, button, .ghangout')) {
+			return;
+		}
+
+		currServiceInd = parseInt($(this).data('ind'), 10);
+		showServiceDetails(currServiceInd);
+	});
+
+	showServiceDetails = function (ind){
+		var template, data;
+
+		wp.overlay.open();
+		isProviderView = false;
+		isServiceView = true;
+		template = Handlebars.compile($('#TL_service-details').html());
+		data = {};
+
+		data['REST_HOST'] = wp.cfg['REST_HOST'];
+		data.service = servicesArr[ind];
+		wp.overlay.setContent(template(data));
+
+		$('.prevNav').toggleClass('disabled', ind === 0);
+		$('.nextNav').toggleClass('disabled', ind === (servicesArr.length -1));
+
+		$('#carousel').flexslider({
+		    animation: "slide",
+		    controlNav: false,
+		    animationLoop: false,
+		    slideshow: false,
+		    itemWidth: 100,
+		    itemMargin: 5,
+		    asNavFor: '#slider'
+		  });
+
+		  $('#slider').flexslider({
+		    animation: "slide",
+		    controlNav: false,
+		    animationLoop: false,
+		    slideshow: false,
+		    sync: "#carousel"
+		  });
+	};
+	
 	$(document).on('keyup', function(e){
 		var keycode = e.which;
 
@@ -149,22 +198,36 @@ $(function (){
 			}
 		}
 	});
-	
+
 	$('body').on('click', '.prevNav', function(e){
 		e.stopPropagation();
 
-		if (currProviderInd !== 0){
-			currProviderInd = currProviderInd - 1;
-			showProviderDetails(currProviderInd);
+		if (isProviderView === true){
+			if (currProviderInd !== 0){
+				currProviderInd = currProviderInd - 1;
+				showProviderDetails(currProviderInd);
+			}
+		} else if (isServiceView === true){
+			if (currServiceInd !== 0){
+				currServiceInd = currServiceInd - 1;
+				showServiceDetails(currServiceInd);
+			}
 		}
 	});
 
 	$('body').on('click', '.nextNav', function(e){
 		e.stopPropagation();
-
-		if (currProviderInd !== (providersArr.length -1)){
-			currProviderInd = currProviderInd + 1;
-			showProviderDetails(currProviderInd);
+		
+		if (isProviderView === true){
+			if (currProviderInd !== (providersArr.length -1)){
+				currProviderInd = currProviderInd + 1;
+				showProviderDetails(currProviderInd);
+			}
+		} else if (isServiceView === true){
+			if (currServiceInd !== (servicesArr.length -1)){
+				currServiceInd = currServiceInd + 1;
+				showServiceDetails(currServiceInd);
+			}
 		}
 	});
 
@@ -186,10 +249,9 @@ $(function (){
 			+ $(this).data('srvcdefid')
 			+ '&serviceId=' + $(this).data('srvcid');
 	});
-
-	//service request
-	$('body').on('click', '.wp-video', function(e){
-		$('#videotrigger').click();
+	
+	PubSub.subscribe('WPOLY_CLOSE', function (){
+		$(document).scrollTop(scrollPos);
 	});
 
 });
