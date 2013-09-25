@@ -116,13 +116,13 @@ $(function (){
 							  $('#wp-spinner').spin('custom');
 						  },
 						  success: function(resp) {
-							  $('#profileForm').prop('method', 'GET').html(resp)
+							  /* $('#profileForm').prop('method', 'GET').html(resp)
 							  	.prop('action', wp.cfg['REST_HOST']+'/resources/user/upsertVendorUser')
 							  	.show();
 							  $('#profileForm input[name="email"]').val(response.email || '');
 							  //$('#profileForm input[name="mobilePhone"]').val(response.mobilePhone || '');
 
-							  $('#wp-spinner').spin(false);
+							  $('#wp-spinner').spin(false); */
 						  }
 					  });
 					  wp.mynav.load({

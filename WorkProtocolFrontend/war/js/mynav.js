@@ -7,6 +7,10 @@ $(function (){
 							'text': 'My Business',
 							'href': '/myprofile.html'				
 						},
+						{'id' : 'specialists',
+							'text': 'Specialists',
+							'href': '/addspecialist.html'				
+						},
 						{'id' : 'services',
 							'text': 'Services',
 							'href': '/myservices.html'

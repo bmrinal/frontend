@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Work protocol - my profile</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- styles -->
+    <link href="/assets/css/bootstrap.css" rel="stylesheet">
+    <link href="/assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="/assets/css/template.css" rel="stylesheet">
+
+    <link href="/css/app.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="/assets/js/html5shiv.js"></script>
+    <![endif]-->
+
+    <!-- Fav and touch icons 
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
+      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
+                    <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
+                                   <link rel="shortcut icon" href="../assets/ico/favicon.png">
+    -->
+  </head>
+
+  <body>
+
+	<div id="wp-main">
+		<div class="wp-header cf">
+			<h1><a class="wp-brand" href="index.html">MorningPlum</a></h1>
+			
+			<div class="wp-nav">
+				<input type="checkbox" id="toggle">
+				<label for="toggle" data-open="Browse" data-close="Browse" class="toggle" onclick=""></label>
+				<ul class="menu">
+					<li><a href="/services.html">Services</a></li>
+					<li><a href="/providers.html">Providers</a></li>
+					<li><a href="#">Packages</a></li>
+					<li><a href="#">TeleHealth</a></li>	
+				</ul>
+			</div><!-- End of Navigation -->
+		</div>
+
+		<div class="cf">
+			<div id="user-info">
+				<div class="dropdown wp-signedIn hide">
+					<div class="dropdown-toggle btn" data-toggle="dropdown">
+					 	<i class="icon-user"></i>
+					</div>
+					<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+				    	<li>
+				         	<a href="/myprofile.html">My account</a>
+				         </li>
+				         <li>
+				         	<a class="wp-signOut" href="#">Sign out</a>
+				         </li>
+					</ul>
+				</div>
+				<div class="dropdown wp-signedOut">
+					<div class="dropdown-toggle btn" data-toggle="dropdown">
+						<i class="icon-user"></i>
+					</div>
+					<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+				    	<li>
+				         	<a class="wp-signIn" href="#">Sign In</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<div class="container">
+			<div class="row">
+		      	<div id="view" class="span12">
+					<div id="page-status" class="alert hide"></div>
+		       		<div id="top-nav"></div>
+			       	<div id="wp-spinner"></div>
+			       	<div class="tab-pane">
+						<form id="addspecialist" class="form-horizontal hide">
+						   <h5>Add a specialist</h5>
+
+						  <div class="control-group">
+						    <label class="control-label" for="vendorUserEmail">Email address</label>
+						    <div class="controls">
+						      <input type="text" id="vendorUserEmail" name="vendorUserEmail">
+						    </div>
+						  </div>
+						
+						  <div class="form-actions">
+							<button type="submit" class="btn btn-success">Save changes</button>
+						  </div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<footer>
+			<p>&copy; Copyright © 2013 MorningPlum</p>
+		</footer>
+
+	</div><!--/.main -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <!-- 1. Libraries -->
+	<script src="/assets/js/jquery.js"></script>
+	<script src="/assets/js/bootstrap.js"></script>
+	<script src="/assets/js/mustache.js"></script>
+	<script src="/assets/js/handlebars.js"></script>
+	<script src="/assets/js/spin.js"></script>
+	<script src="/assets/js/jquery.spin.js"></script>
+	
+	<!-- 2. Application javascripts - Order is importatnt! -->
+	<script src="js/util/handlebarHelpers.js"></script>
+	<script src="js/app.js"></script>
+	<script src="js/mynav.js"></script>
+	<script src="js/addspecialist.js"></script>
+
+  </body>
+</html>
