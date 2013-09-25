@@ -1,5 +1,8 @@
 $(function (){
-	var profileId, isVendor;
+	var profileId, isVendorAdmin, isVendorUser;
+
+	isVendorAdmin = false;
+	isVendorUser = false;
 	$.ajax({
 		  url: wp.cfg['REST_HOST']+'/resources/user',
 		  dataType: 'json',
@@ -9,8 +12,7 @@ $(function (){
 		  },
 		  success: function (response){
 			  if(response && response.userId){
-				  if (response.isVendor){
-					  isVendor = true;
+				  if (response.isVendorAdmin){
 					  $.ajax({
 						  url: wp.cfg['REST_HOST']+'/resources/vendors/myvendor',
 						  dataType: 'json',
@@ -101,9 +103,34 @@ $(function (){
 							  $('#wp-spinner').spin(false);
 						  }
 					  });
+					  wp.mynav.load({
+						targetSelector: '#top-nav',
+						isVendorAdmin: true
+					  }, 'settings');
+				  } else if (response.isVendorUser){
+					  $.ajax({
+						  url: 'template/vendoruserprofile.handlebars',
+						  dataType: 'html',
+						  cache: false,
+						  beforeSend: function (){
+							  $('#wp-spinner').spin('custom');
+						  },
+						  success: function(resp) {
+							  $('#profileForm').prop('method', 'GET').html(resp)
+							  	.prop('action', wp.cfg['REST_HOST']+'/resources/user/upsertVendorUser')
+							  	.show();
+							  $('#profileForm input[name="email"]').val(response.email || '');
+							  //$('#profileForm input[name="mobilePhone"]').val(response.mobilePhone || '');
+
+							  $('#wp-spinner').spin(false);
+						  }
+					  });
+					  wp.mynav.load({
+						targetSelector: '#top-nav',
+						isVendorAdmin: true
+					  }, 'settings');
 				  } else {
-					  profileId = 'userId';
-					  isVendor = false;
+					  //profileId = 'userId';
 					  $.ajax({
 						  url: 'template/userprofile.handlebars',
 						  dataType: 'html',
@@ -115,20 +142,20 @@ $(function (){
 							  $('#profileForm').prop('method', 'GET').html(resp)
 							  	.prop('action', wp.cfg['REST_HOST']+'/resources/user/insert')
 							  	.show();
-							  if (response.id) {
+							  /* if (response.id) {
 								  $('#profileForm').append('<input name="'+profileId+'" type="hidden" value="' +response.userId+ '">');
-							  }
+							  } */
 							  $('#profileForm input[name="email"]').val(response.email || '');
 							  $('#profileForm input[name="mobilePhone"]').val(response.mobilePhone || '');
 							  
 							  $('#wp-spinner').spin(false);
 						  }
 					  });
+					  wp.mynav.load({
+						targetSelector: '#top-nav',
+						isVendorAdmin: false
+					  }, 'settings');
 				  }
-				  wp.mynav.load({
-					targetSelector: '#top-nav',
-					isVendor: isVendor 
-				  }, 'settings');
 			  } else {
 				  wp.util.redirectToSigin();
 			  }

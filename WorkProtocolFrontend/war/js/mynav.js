@@ -47,7 +47,7 @@ $(function (){
 	wp.mynav.load = function (info, activeTab){
 		var navData = {};
 		
-		if (info.isVendor) {
+		if (info.isVendorAdmin) {
 			info.data = $.extend({}, wp.mynav.data['vendor']);
 		} else {
 			info.data = $.extend({}, wp.mynav.data['user']);

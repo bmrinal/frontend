@@ -10,7 +10,7 @@ $(function (){
 			  if(response && response.userId){
 				  wp.mynav.load({
 						targetSelector: '#top-nav',
-						isVendor: response.isVendor 
+						isVendorAdmin: response.isVendorAdmin 
 				  }, 'clients');
 				  $.ajax({
 					  url: wp.cfg['REST_HOST']+'/resources/appointment/myappointments',
@@ -29,7 +29,7 @@ $(function (){
 						  var hTemplate, hData, bTemplate, bData;
 
 						  hData = {};
-						  hData.isVendor = response.length > 0 && response[0].isVendor;
+						  hData.isVendorAdmin = response.length > 0 && response[0].isVendorAdmin;
 						  hTemplate = Handlebars.compile($("#TL_appointmentHeader").html());
 						  $('#appointments thead').html(hTemplate(hData));
 

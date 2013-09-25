@@ -38,7 +38,7 @@ $(function (){
 				  $('#user-info .wp-signIn').prop('href', wp.cfg['REST_HOST'] +'/SignIn?ru=' + encodeURIComponent(window.location.href)); 
 				  $('#user-info .wp-signedIn').hide();
 				  $('#user-info .wp-signedOut').show();
-				  $('#wp-signup-banner').show().find('a').prop('href', wp.cfg['REST_HOST'] +'/SignOut?ru='+ wp.cfg['REST_HOST'] +'/SignIn?isVendor=true');
+				  $('#wp-signup-banner').show().find('a').prop('href', wp.cfg['REST_HOST'] +'/SignOut?ru='+ wp.cfg['REST_HOST'] +'/SignIn?isVendorAdmin=true');
 			  }
 		  }
 	});

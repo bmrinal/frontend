@@ -13,13 +13,13 @@ $(function (){
 	  },
 	  success: function (response){
 		  if(response && response.userId){
-			  if (!response.isVendor){
+			  if (!response.isVendorAdmin){
 				  $('#page-status').html('Sorry, please register as a vendor to view this page.').addClass('alert-error').show();
 				  return;
 			  }
 			  wp.mynav.load({
 				targetSelector: '#top-nav',
-				isVendor: response.isVendor 
+				isVendorAdmin: response.isVendorAdmin 
 			  }, 'services');
 
 			  $.ajax({

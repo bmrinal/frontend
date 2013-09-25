@@ -112,7 +112,7 @@
 
 	<script id="TL_appointmentHeader" type="text/x-handlebars-template">
 		<tr>
-			{{#if isVendor}}
+			{{#if isVendorAdmin}}
 		    	<th>Name</th>
 				<th>Email</th>
 				<th>Phone</th>
@@ -129,7 +129,7 @@
 
 	<script id="TL_appointments" type="text/x-handlebars-template">
 		{{#each appointment}}
-			{{#if isVendor}}
+			{{#if isVendorAdmin}}
 				<tr>
 					<td>{{customerName}}</td>
 					<td>

@@ -16,7 +16,7 @@ $(function (){
 			  if(response && response.userId){
 					wp.mynav.load({
 						targetSelector: '#top-nav',
-						isVendor: response.isVendor 
+						isVendorAdmin: response.isVendorAdmin 
 					}, 'schedule');
 
 					$('#myCal').append($('<iframe/>', {
