@@ -79,27 +79,10 @@
 		       		<div id="top-nav"></div>
 			       	<div id="wp-spinner"></div>
 			       	<div class="tab-pane">
-						<form id="addspecialist" class="form-horizontal hide">
-						   <h5>Add a specialist</h5>
-
-						  <div class="control-group">
-						    <label class="control-label" for="vendorUserName">Name</label>
-						    <div class="controls">
-						      <input type="text" id="vendorUserName" name="vendorUserName">
-						    </div>
-						  </div>
-
-						  <div class="control-group">
-						    <label class="control-label" for="vendorUserEmail">Email address</label>
-						    <div class="controls">
-						      <input type="text" id="vendorUserEmail" name="vendorUserEmail">
-						    </div>
-						  </div>
-
-						  <div class="form-actions">
-							<button type="submit" class="btn btn-success">Save changes</button>
-						  </div>
-						</form>
+			       		<div class="srvc-add">
+							<a href="/addspecialist.html" class="btn btn-mini btn btn-success" type="button"><i class="icon-white icon-plus-sign"></i> Add a new specialist</a>
+						</div>
+			       		<div id="vendorUsers"></div>
 					</div>
 				</div>
 			</div>
@@ -122,6 +105,26 @@
 	<script src="js/util/handlebarHelpers.js"></script>
 	<script src="js/app.js"></script>
 	<script src="js/mynav.js"></script>
-	<script src="js/addspecialist.js"></script>
+	<script src="js/myspecialists.js"></script>
+
+	<script id="TL_vendorUsers" type="text/x-handlebars-template">
+		{{#if vendorUsers}}
+			<h4>My specialists</h4>
+			<table class="table table-bordered">
+				<thead>
+					<th>Name</th>
+					<th>Email</th>
+				</thead>
+				<tbody>
+					{{#each vendorUsers}}
+						<tr>
+							<td>{{nickName}}</td>
+							<td>{{email}}</td>
+						</tr>
+					{{/each}}
+				</tbody>
+			</table>
+		{{/if}}
+	</script>
   </body>
 </html>

@@ -10,7 +10,7 @@ $(function (){
 		},
 		{'id' : 'specialists',
 			'text': 'Specialists',
-			'href': '/addspecialist.html'				
+			'href': '/myspecialists.html'				
 		},
 		{'id' : 'services',
 			'text': 'Services',
