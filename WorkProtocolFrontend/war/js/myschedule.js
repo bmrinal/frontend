@@ -14,9 +14,11 @@ $(function (){
 		  },
 		  success: function (response){
 			  if(response && response.userId){
-					wp.mynav.load({
-						targetSelector: '#top-nav',
-						isVendorAdmin: response.isVendorAdmin 
+				    var userType = wp.util.getUserType(response);
+
+				    wp.mynav.load({
+						'targetSelector': '#top-nav',
+						'userType': userType
 					}, 'schedule');
 
 					$('#myCal').append($('<iframe/>', {

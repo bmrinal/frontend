@@ -1,5 +1,11 @@
 var wp = wp || {};
 
+wp.constants = {};
+
+wp.constants.USER = 'user';
+wp.constants.VENDORADMIN = 'vendorAdmin';
+wp.constants.VENDORUSER = 'vendorUser';
+
 $(function (){
 	var restApiHost;
 	wp.cfg = {}; //to store config data
@@ -92,4 +98,15 @@ $(function (){
 		
 		return new Date(year, month, day, hour, min, sec);
 	};
+	
+	wp.util.getUserType = function (userObj){
+		if (userObj.isVendorAdmin){
+			return 'vendorAdmin';
+		} else if (userObj.isVendor){
+			return 'vendorUser';
+		} else {
+			return 'user';
+		}
+	}
+
 });

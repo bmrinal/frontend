@@ -101,6 +101,7 @@
 	<script src="/assets/js/bootstrap.js"></script>
 	<script src="/assets/js/mustache.js"></script>
 	<script src="/assets/js/handlebars.js"></script>
+	<script src="/assets/js/pubsub.js"></script>
 	<script src="/assets/js/spin.js"></script>
 	<script src="/assets/js/jquery.spin.js"></script>
 	
@@ -139,7 +140,7 @@
 						</div>
 					{{/each}}
 				{{else}}
-					{{#if ../../isVendorAdmin}}
+					{{#if ../../isVendor}}
 						<button class="srvc-resp btn btn-mini btn btn-success" data-srvcreqid="{{id}}" data-srvcdefid="{{serviceDefinitionId}}" type="button">Respond</button>
 					{{else}}
 						--

@@ -3,14 +3,19 @@ $(function (){
 		  url: wp.cfg['REST_HOST']+'/resources/user',
 		  dataType: 'json',
 		  cache: false,
+		  beforeSend: function (){
+			  $('#wp-spinner').spin('custom');
+		  },
 		  xhrFields: {
 			  withCredentials: true
 		  },
 		  success: function (response){
 			  if(response && response.userId){
+				  var userType = wp.util.getUserType(response);
+
 				  wp.mynav.load({
-						targetSelector: '#top-nav',
-						isVendorAdmin: response.isVendorAdmin 
+						'targetSelector': '#top-nav',
+						'userType': userType 
 				  }, 'clients');
 				  $.ajax({
 					  url: wp.cfg['REST_HOST']+'/resources/appointment/myappointments',
@@ -19,9 +24,6 @@ $(function (){
 					  xhrFields: {
 						  withCredentials: true
 					  },
-					  beforeSend: function (){
-						  $('#wp-spinner').spin('custom');
-					  },
 					  complete: function (){
 						  $('#wp-spinner').spin(false);
 					  },
@@ -29,7 +31,7 @@ $(function (){
 						  var hTemplate, hData, bTemplate, bData;
 
 						  hData = {};
-						  hData.isVendorAdmin = response.length > 0 && response[0].isVendorAdmin;
+						  hData.isVendor = response.length > 0 && response[0].isVendor;
 						  hTemplate = Handlebars.compile($("#TL_appointmentHeader").html());
 						  $('#appointments thead').html(hTemplate(hData));
 

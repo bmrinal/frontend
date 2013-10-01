@@ -1,8 +1,6 @@
 $(function (){
-	var profileId, isVendorAdmin, isVendorUser;
+	var profileId, userType;
 
-	isVendorAdmin = false;
-	isVendorUser = false;
 	$.ajax({
 		  url: wp.cfg['REST_HOST']+'/resources/user',
 		  dataType: 'json',
@@ -12,7 +10,8 @@ $(function (){
 		  },
 		  success: function (response){
 			  if(response && response.userId){
-				  if (response.isVendorAdmin){
+				  userType = wp.util.getUserType(response);
+				  if (userType === wp.constants.VENDORADMIN){
 					  $.ajax({
 						  url: wp.cfg['REST_HOST']+'/resources/vendors/myvendor',
 						  dataType: 'json',
@@ -103,11 +102,7 @@ $(function (){
 							  $('#wp-spinner').spin(false);
 						  }
 					  });
-					  wp.mynav.load({
-						targetSelector: '#top-nav',
-						isVendorAdmin: true
-					  }, 'settings');
-				  } else if (response.isVendorUser){
+				  } else if (userType === wp.constants.VENDORUSER){
 					  $.ajax({
 						  url: 'template/vendoruserprofile.handlebars',
 						  dataType: 'html',
@@ -116,19 +111,15 @@ $(function (){
 							  $('#wp-spinner').spin('custom');
 						  },
 						  success: function(resp) {
-							  /* $('#profileForm').prop('method', 'GET').html(resp)
+							  $('#profileForm').prop('method', 'GET').html(resp)
 							  	.prop('action', wp.cfg['REST_HOST']+'/resources/user/upsertVendorUser')
 							  	.show();
 							  $('#profileForm input[name="email"]').val(response.email || '');
-							  //$('#profileForm input[name="mobilePhone"]').val(response.mobilePhone || '');
+							  $('#profileForm input[name="mobilePhone"]').val(response.mobilePhone || '');
 
-							  $('#wp-spinner').spin(false); */
+							  $('#wp-spinner').spin(false);
 						  }
 					  });
-					  wp.mynav.load({
-						targetSelector: '#top-nav',
-						isVendorAdmin: true
-					  }, 'settings');
 				  } else {
 					  //profileId = 'userId';
 					  $.ajax({
@@ -151,11 +142,13 @@ $(function (){
 							  $('#wp-spinner').spin(false);
 						  }
 					  });
-					  wp.mynav.load({
-						targetSelector: '#top-nav',
-						isVendorAdmin: false
-					  }, 'settings');
 				  }
+				  
+				  wp.mynav.load({
+					'targetSelector': '#top-nav',
+					'userType': userType
+				  }, 'settings');
+
 			  } else {
 				  wp.util.redirectToSigin();
 			  }

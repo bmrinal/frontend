@@ -1,6 +1,6 @@
 $(function (){
-	var currServiceResId, currServiceDefId, respElement, isVendorAdmin;
-	isVendorAdmin = false;
+	var currServiceResId, currServiceDefId, respElement, isVendor, userType;
+	isVendor = false;
 
 	$.ajax({
 		  url: wp.cfg['REST_HOST']+'/resources/user',
@@ -14,9 +14,12 @@ $(function (){
 		  },
 		  success: function (response){
 			  if(response && response.userId){
+				userType = wp.util.getUserType(response);
+
+				isVendor = response.isVendorAdmin || response.isVendorUser;
 				wp.mynav.load({
-					targetSelector: '#top-nav',
-					isVendorAdmin: response.isVendorAdmin 
+					'targetSelector': '#top-nav',
+					'userType': userType
 				}, 'business');
 
 				$.ajax({
@@ -34,7 +37,7 @@ $(function (){
 						  data = {};
 						  
 						  data.serviceRequests = response;
-						  data['isVendorAdmin'] = isVendorAdmin;
+						  data['isVendor'] = isVendor;
 						  template = Handlebars.compile($("#TL_srs").html());
 
 						  $('#view .srs').html(template(data));

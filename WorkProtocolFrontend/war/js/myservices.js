@@ -1,5 +1,5 @@
 $(function (){
-	var servicesArr;
+	var servicesArr, userType;
 
 	$.ajax({
 	  url: wp.cfg['REST_HOST']+'/resources/user',
@@ -13,13 +13,16 @@ $(function (){
 	  },
 	  success: function (response){
 		  if(response && response.userId){
-			  if (!response.isVendorAdmin){
+			  userType = wp.util.getUserType(response);
+
+			  if (userType === wp.constants.USER){
 				  $('#page-status').html('Sorry, please register as a vendor to view this page.').addClass('alert-error').show();
 				  return;
 			  }
+
 			  wp.mynav.load({
-				targetSelector: '#top-nav',
-				isVendorAdmin: response.isVendorAdmin 
+				'targetSelector': '#top-nav',
+				'userType': userType 
 			  }, 'services');
 
 			  $.ajax({

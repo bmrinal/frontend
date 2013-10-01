@@ -1,8 +1,6 @@
 $(function (){
-	var profileId, isVendorAdmin, isVendorUser;
+	var profileId, userType;
 
-	isVendorAdmin = false;
-	isVendorUser = false;
 	$.ajax({
 		  url: wp.cfg['REST_HOST']+'/resources/user',
 		  dataType: 'json',
@@ -18,17 +16,19 @@ $(function (){
 		  },
 		  success: function (response){
 			  if(response && response.userId){
-				  if (!response.isVendorAdmin){
+				  userType = wp.util.getUserType(response);
+
+				  if (userType === wp.constants.USER){
 					  $('#page-status').html('Sorry, please register as a vendor to view this page.').addClass('alert-error').show();
 					  return;
 				  }
-				  
+
 				  wp.mynav.load({
-					targetSelector: '#top-nav',
-					isVendorAdmin: response.isVendorAdmin 
+					'targetSelector': '#top-nav',
+					'userType': userType
 				  }, 'specialists');
 
-				  $('#addspecialist').prop('method', 'POST')
+				  $('#addspecialist').prop('method', 'GET')
 				  	.prop('action', wp.cfg['REST_HOST']+'/resources/user/upsertVendorUser')
 				  	.show();
 			  } else {
