@@ -1,54 +1,61 @@
 $(function (){
-	var fetchProviders, providersXHR, providersArr, currProviderInd, showProviderDetails, servicesXHR, servicesArr, isProviderView, isServiceView,
+	var fetchSpecialists, specialistsXHR, specialistsArr, currSpecialistInd, showSpecialistDetails, servicesXHR, servicesArr, isSpecialistView, isServiceView,
 		showServiceDetails, currServiceInd, scrollPos;
 
-	fetchProviders = function (url){
-		if (providersXHR) {
-			providersXHR.abort();
+	fetchSpecialists = function (url){
+		if (specialistsXHR) {
+			specialistsXHR.abort();
 		}
 
-		providersXHR = $.ajax({
+		specialistsXHR = $.ajax({
 			url: url,
 			cache: false,
 			dataType: "jsonp",
 			beforeSend: function () {
 				$('#wp-spinner').spin('custom');
-				$('#no-providers').hide();
+				$('#no-specialists').hide();
 				
-				$('#view .providers-box').html('');
+				$('#view .specialists-box').html('');
 			},
 			complete: function () {
 				$('#wp-spinner').spin(false);
 			},
 			success: function (response){
-				var source, template, data, providersHTML, container;
-				container = $('#view .providers-box');
-				source = $('#TL_providers').html();
+				var source, template, data, specialistsHTML, container, specialists;
+				container = $('#view .specialists-box');
+				source = $('#TL_specialists').html();
 				template = Handlebars.compile(source);
 				data = {};
+				specialists = [];
 
-				data.provider = response;
+				$.each(response, function (ind, val){
+					if (val.isVendor || val.isVendorAdmin){
+						specialists.push(val);
+					}
+				});
 
-				providersArr = data.provider;
+				data.specialist = specialists;
+
+				specialistsArr = data.specialist;
 				data['REST_HOST'] = wp.cfg['REST_HOST'];
-				providersHTML = $('<div/>').html($(template(data).trim()));
-				providersHTML = providersHTML.find('.provider');
+				specialistsHTML = $('<div/>').html($(template(data).trim()));
+				specialistsHTML = specialistsHTML.find('.specialist');
 
-				if (providersHTML && providersHTML.length > 0){
+				if (specialistsHTML && specialistsHTML.length > 0){
 					var temp = $('<div class="row-fluid"/>');
-					$.each(providersHTML, function (ind, val){
+					$.each(specialistsHTML, function (ind, val){
 						//$(container).append(val);
 						temp.append(val);
-						if ((ind +1) % 3 === 0 || ((ind+1) === providersHTML.length)) { //every 3rd (or) last set of elements
+						if ((ind +1) % 3 === 0 || ((ind+1) === specialistsHTML.length)) { //every 3rd (or) last set of elements
 							$(container).append(temp); //add to main container
 							temp = $('<div class="row-fluid"/>');
 						}
 					});
 				} else {
-					$('#no-providers').show();
+					$('#no-specialists').show();
 				}
 
-				$('#view .providers .flexslider').flexslider({
+				$('#view .specialists .flexslider').flexslider({
 					animation: 'slide',
 					slideshow: false
 				});
@@ -57,35 +64,35 @@ $(function (){
 		});
 	};
 
-	//loading all providers on page load
-	fetchProviders(wp.cfg['REST_HOST'] + '/resources/vendors/list');
+	//loading all specialists on page load
+	fetchSpecialists(wp.cfg['REST_HOST'] + '/resources/user/list');
 
-	//provider details view
-	$('#view').on('click', ".provider", function(e){
+	//specialist details view
+	$('#view').on('click', ".specialist", function(e){
 		if ($(e.target).is('a, button, .ghangout')) {
 			return;
 		}
 
 		scrollPos = $(document).scrollTop();
-		currProviderInd = parseInt($(this).data('ind'), 10);
-		showProviderDetails(currProviderInd);
+		currSpecialistInd = parseInt($(this).data('ind'), 10);
+		showSpecialistDetails(currSpecialistInd);
 	});
 
-	showProviderDetails = function (ind){
+	showSpecialistDetails = function (ind){
 		var template, data;
 
 		wp.overlay.open();
-		isProviderView = true;
+		isSpecialistView = true;
 		isServiceView = false;
-		template = Handlebars.compile($('#TL_provider-details').html());
+		template = Handlebars.compile($('#TL_specialist-details').html());
 		data = {};
 
 		data['REST_HOST'] = wp.cfg['REST_HOST'];
-		data.provider = providersArr[ind];
+		data.specialist = specialistsArr[ind];
 		wp.overlay.setContent(template(data));
 
 		$('.prevNav').toggleClass('disabled', ind === 0);
-		$('.nextNav').toggleClass('disabled', ind === (providersArr.length -1));
+		$('.nextNav').toggleClass('disabled', ind === (specialistsArr.length -1));
 
 		if (servicesXHR){
 			servicesXHR.abort();
@@ -93,7 +100,7 @@ $(function (){
 		}
 
 		servicesXHR = $.ajax({
-			url: wp.cfg['REST_HOST'] + '/resources/vendors/' + data.provider.id,
+			url: wp.cfg['REST_HOST'] + '/resources/vendors/' + data.specialist.vendorId,
 			cache: false,
 			dataType: "jsonp",
 			beforeSend: function (){
@@ -156,7 +163,7 @@ $(function (){
 		var template, data;
 
 		wp.overlay.open();
-		isProviderView = false;
+		isSpecialistView = false;
 		isServiceView = true;
 		template = Handlebars.compile($('#TL_service-details').html());
 		data = {};
@@ -202,10 +209,10 @@ $(function (){
 	$('body').on('click', '.prevNav', function(e){
 		e.stopPropagation();
 
-		if (isProviderView === true){
-			if (currProviderInd !== 0){
-				currProviderInd = currProviderInd - 1;
-				showProviderDetails(currProviderInd);
+		if (isSpecialistView === true){
+			if (currSpecialistInd !== 0){
+				currSpecialistInd = currSpecialistInd - 1;
+				showSpecialistDetails(currSpecialistInd);
 			}
 		} else if (isServiceView === true){
 			if (currServiceInd !== 0){
@@ -218,10 +225,10 @@ $(function (){
 	$('body').on('click', '.nextNav', function(e){
 		e.stopPropagation();
 		
-		if (isProviderView === true){
-			if (currProviderInd !== (providersArr.length -1)){
-				currProviderInd = currProviderInd + 1;
-				showProviderDetails(currProviderInd);
+		if (isSpecialistView === true){
+			if (currSpecialistInd !== (specialistsArr.length -1)){
+				currSpecialistInd = currSpecialistInd + 1;
+				showSpecialistDetails(currSpecialistInd);
 			}
 		} else if (isServiceView === true){
 			if (currServiceInd !== (servicesArr.length -1)){

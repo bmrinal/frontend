@@ -4,9 +4,12 @@ $(function (){
 	wp.mynav = {};
 	wp.mynav.data = {};
 
-	wp.mynav.data[wp.constants.VENDORADMIN] = [{'id' : 'settings',
-			'text': 'My Business',
+	wp.mynav.data[wp.constants.VENDORADMIN] = [{'id' : 'profile',
+			'text': 'Profile',
 			'href': '/myprofile.html'				
+		},{'id' : 'settings',
+			'text': 'My Business',
+			'href': '/mysetting.html'				
 		},
 		{'id' : 'specialists',
 			'text': 'Specialists',
@@ -30,11 +33,10 @@ $(function (){
 		}
 	];
 
-	wp.mynav.data[wp.constants.VENDORUSER] = [{'id' : 'settings',
+	wp.mynav.data[wp.constants.VENDORUSER] = [{'id' : 'profile',
 			'text': 'Profile',
-			'href': '/myprofile.html'
-		},
-		{'id' : 'services',
+			'href': '/myprofile.html'				
+		},{'id' : 'services',
 			'text': 'Services',
 			'href': '/myservices.html'
 		},
@@ -53,7 +55,7 @@ $(function (){
 	];
 	
 	wp.mynav.data[wp.constants.USER] = [
-      { 'id' : 'settings',
+      { 'id' : 'profile',
     	  'text': 'Profile',
     	  'href': '/myprofile.html'
       },

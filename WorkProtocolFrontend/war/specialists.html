@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Work protocol - browse providers</title>
+    <title>Work protocol - browse specialists</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- styles -->
@@ -14,7 +14,7 @@
 
     <link href="/css/app.css" rel="stylesheet">
     <link href="/css/overlay.css" rel="stylesheet">
-	<link href="/css/providers.css" rel="stylesheet">
+	<link href="/css/specialists.css" rel="stylesheet">
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -92,7 +92,7 @@
 	       	<div id="view">
 				<div id="page-status" class="alert hide"></div>
 
-				<div class="row providers">
+				<div class="row specialists">
 					<div class="span3">
 						<div class="box light">
 		              		<h6> Map placeholder </h6>
@@ -100,8 +100,8 @@
 					</div>
 					<div class="span9">
 						<div id="wp-spinner"></div>
-						<div id="no-providers" class="hide">No providers.</div>
-						<div class="providers-box"></div>
+						<div id="no-specialists" class="hide">No specialists.</div>
+						<div class="specialists-box"></div>
 					</div>
 				</div>
 	       	</div>
@@ -134,11 +134,11 @@
 	<script src="js/util/handlebarHelpers.js"></script>
 	<script src="js/app.js"></script>
 	<script src="js/overlay.js"></script>
-	<script src="js/providers.js"></script>
-	<script id="TL_providers" type="text/x-handlebars-template">
-		{{#each provider}}
-	  		<div class="span4 provider box" data-ind="{{@index}}">
-				<div class="flexslider prvd-imgs">
+	<script src="js/specialists.js"></script>
+	<script id="TL_specialists" type="text/x-handlebars-template">
+		{{#each specialist}}
+	  		<div class="span4 specialist box" data-ind="{{@index}}">
+				<div class="flexslider spcl-imgs">
 					<ul class="slides">
 						{{#if imageIds}}
 							{{#each imageIds}}
@@ -153,53 +153,49 @@
 						{{/if}}
 					</ul>
 				</div>
-				<div class="prvd-details">
-					{{#if name}}<h6 class="prvd-name">{{name}}</h6>{{/if}}
-					<div class="prvd-info">
-						{{#each locations}}
-							{{#if streetAddress1}}
-								<div class="prvd-addr">
-									{{streetAddress1}}{{#if streetAddress2}}, {{streetAddress2}}{{/if}}{{#if city}}, {{city}}{{/if}}{{#if stateOrProvince}}, {{stateOrProvince}}{{/if}}{{#if zipCode}}, {{zipCode}}{{/if}}
-								</div>
-							{{/if}}
-						{{/each}}
-					</div>
+				<div class="spcl-details">
+					{{#if name}}<h6 class="spcl-name">{{name}}</h6>{{/if}}
+					<ul class="spcl-info">
+						{{#if userDescription3}}<li><div>{{userDescription3}}</div></li>{{/if}}
+						{{#if userDescription2}}<li><div>Cost per hour : {{userDescription2}}</div></li>{{/if}}
+					</ul>
 				</div>
 			</div>
 		{{/each}}
 	</script>
 
-	<script id="TL_provider-details" type="text/x-handlebars-template">
-	 <div class="prvd-det-body">
+	<script id="TL_specialist-details" type="text/x-handlebars-template">
+	 <div class="spcl-det-body">
 		<div class="directionNav">
 			<a class="prevNav">&laquo;</a>
 			<a class="nextNav">&raquo;</a>
 		</div>
 		<div class="row-fluid">
-			{{#with provider}}
-				<div class="prvd-d-top">
-					{{#if name}}<h4 class="prvd-d-name">{{name}}</h4>{{/if}}
+			{{#with specialist}}
+				<div class="spcl-d-top">
+					{{#if name}}<h4 class="spcl-d-name">{{name}}</h4>{{/if}}
+					{{#if userDescription3}}userDescription3{{/if}}
 					{{#each locations}}
 						{{#if streetAddress1}}
-							<div class="prvd-addr">
+							<div class="spcl-addr">
 								{{streetAddress1}}{{#if streetAddress2}}, {{streetAddress2}}{{/if}}{{#if city}}, {{city}}{{/if}}{{#if stateOrProvince}}, {{stateOrProvince}}{{/if}}{{#if zipCode}}, {{zipCode}}{{/if}}
 							</div>
 						{{/if}}
 					{{/each}}
 					{{#each contacts}}
-						<ul class="prvd-contact">
-							{{#if email}}<li class="first">{{email}}</li>{{/if}}
-							{{#if mobilePhone}}<li {{#unless email}} class="first" {{/unless}}>{{mobilePhone}}</li>{{/if}}
-							{{#if textPhone}}<li>{{textPhone}}</li>{{/if}}
+						<ul class="spcl-contact">
+							{{#if userUrlLinkedIn}}<li class="first">{{userUrlLinkedIn}}</li>{{/if}}
+							{{#if userUrlFacebook}}<li {{#unless userUrlLinkedIn}} class="first" {{/unless}}>{{userUrlFacebook}}</li>{{/if}}
+							{{#if userUrlWeb}}<li>{{userUrlWeb}}</li>{{/if}}
 						</ul>
 					{{/each}}
 				</div>
 			{{/with}}
 		</div>
 		<div class="row-fluid">
-			{{#with provider}}
+			{{#with specialist}}
 			<div class="span6">
-				<div class="prvd-d-images">
+				<div class="spcl-d-images">
 					<div id="slider" class="flexslider">
 						<ul class="slides">
 							{{#each imageIds}}
@@ -222,22 +218,23 @@
 			</div>
 
 			<div class="span6">
-				<div class="box shadow_effect prvd-d-info">
+				<div class="box shadow_effect spcl-d-info">
 					<ul>
-						{{#each descriptions}}
+						{{#if userDescription1}}
 							<li>
 								<div>
-									<i class="icon-ok" /> {{description}}
+									<i class="icon-ok" /> {{userDescription1}}
 								</div>
 							</li>
-						{{/each}}
-						{{#each urls}}
+						{{/if}}
+
+						{{#if userDescription2}}
 							<li>
 								<div>
-									<i class="icon-ok" /> {{urlLocation}}
+									<i class="icon-ok" /> {{userDescription2}}
 								</div>
 							</li>
-						{{/each}}
+						{{/if}}
 					</ul>
 				</div>
 				<h5>Services offered</h5>

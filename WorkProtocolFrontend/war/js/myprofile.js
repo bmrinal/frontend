@@ -11,111 +11,59 @@ $(function (){
 		  success: function (response){
 			  if(response && response.userId){
 				  userType = wp.util.getUserType(response);
-				  if (userType === wp.constants.VENDORADMIN){
+				  if (userType === wp.constants.VENDORUSER || userType === wp.constants.VENDORADMIN){
 					  $.ajax({
-						  url: wp.cfg['REST_HOST']+'/resources/vendors/myvendor',
-						  dataType: 'json',
-						  cache: false,
-						  xhrFields: {
-							  withCredentials: true
-						  },
-						  beforeSend: function (){
-							  $('#wp-spinner').spin('custom');
-						  },
-						  success: function (response){
-							  var urlTypes, urlObj, descTypes, descObj;
-							  profileId = 'vendorId';
-							  //load vendor profile template
-							  $.ajax({
-								  url: 'template/vendorprofile.handlebars',
-								  dataType: 'html',
-								  cache: false,
-								  success: function(resp) {
-									  $('#profileForm').prop('method', 'POST').html(resp)
-									  	.prop('action', wp.cfg['REST_HOST']+'/resources/vendors/')
-									  	.show();
-									  if (response.id) {
-										  $('#profileForm').append('<input name="'+profileId+'" type="hidden" value="' +response.id+ '">');
-									  }
-									  $('#profileForm input[name="vendorName"]').val(response.name || '');
-									  $('#profileForm input[name="vendorPhone"]').val(response.phone || '');
-									  $('#profileForm input[name="vendorMobilePhone"]').val(response.mobilePhone || '');
-									  
-									  if ($.isArray(response.imageIds)) {
-										$.each(response.imageIds, function (ind, v){
-											var picpane = Mustache.to_html(pictempl, { src : wp.cfg['REST_HOST']+'/resources/images/'+v, imageId: v });
-											$('#profileForm .sr-photo-row').append(picpane);
-										});
-									  }
-									  
-									  if ($.isArray(response.locations)) {
-										  $('#profileForm input[name="vendorLocationStreet1"]').val(response.locations[0].streetAddress1 || '');
-										  $('#profileForm input[name="vendorLocationStreet2"]').val(response.locations[0].streetAddress2 || '');
-										  $('#profileForm input[name="vendorLocationCity"]').val(response.locations[0].city || '');
-										  $('#profileForm input[name="vendorLocationState"]').val(response.locations[0].stateOrProvince || '');
-										  $('#profileForm input[name="vendorLocationZip"]').val(response.locations[0].zipCode || '');
-										  $('#profileForm input[name="vendorLocationPhone"]').val(response.locations[0].phone || '');
-									  }
-									  
-									  $('#profileForm input[name="vendorNumberOfEmployees"]').val(response.numberOfEmployees || '');
-									  
-									  if ($.isArray(response.contacts)) {
-										  $('#profileForm input[name="vendorContactEmail"]').val(response.contacts[0].email || '');
-										  $('#profileForm input[name="vendorContactPhone"]').val(response.contacts[0].mobilePhone || '');
-										  $('#profileForm input[name="vendorContactText"]').val(response.contacts[0].textPhone || '');
-									  }
-									  
-									  if ($.isArray(response.urls)) {
-										  urlTypes = {
-												  'WEB': 'vendorUrlWeb',
-												  'FACEBOOK': 'vendorUrlFacebook',
-												  'TWITTER': 'vendorUrlTwitter',
-												  'LINKEDIN': 'vendorUrlLinkedIn'
-										  }
-										  for (var i=0; i<response.urls.length; i++) {
-											  urlObj = response.urls[i];
-											  $('#profileForm input[name=' +urlTypes[urlObj.urlType]+ ']').val(urlObj.urlLocation || '');
-										  }
-									  }
-									  
-									  if ($.isArray(response.descriptions)) {
-										  descTypes = {
-												  'BASIC': 'vendorDescription1',
-												  'PASSION': 'vendorDescription2',
-												  'DIFFERENTIATOR': 'vendorDescription3',
-												  'TRAINING': 'vendorDescription4'
-										  }
-										  for (var j=0; j<response.descriptions.length; j++) {
-											  descObj = response.descriptions[j];
-											  $('#profileForm textarea[name=' +descTypes[descObj.vendorDescriptionType]+ ']').val(descObj.description || '');
-										  }
-									  }
-									  
-									  $('#wp-spinner').spin(false);
-								  }
-							  });
-						  },
-						  error: function (e){
-							  $('#page-status').html('Sorry, unable to access your profile.')
-											  .addClass('alert-error')
-											  .show();
-							  $('#wp-spinner').spin(false);
-						  }
-					  });
-				  } else if (userType === wp.constants.VENDORUSER){
-					  $.ajax({
-						  url: 'template/vendoruserprofile.handlebars',
+						  url: 'template/vendorprofile.handlebars',
 						  dataType: 'html',
 						  cache: false,
 						  beforeSend: function (){
 							  $('#wp-spinner').spin('custom');
 						  },
 						  success: function(resp) {
+							  var urlTypes, urlObj, descTypes, descObj;
+
 							  $('#profileForm').prop('method', 'GET').html(resp)
-							  	.prop('action', wp.cfg['REST_HOST']+'/resources/user/upsertVendorUser')
+							  	.prop('action', wp.cfg['REST_HOST']+'/resources/user/insert')
 							  	.show();
+
+							  $('#profileForm input[name="name"]').val(response.name || '');
 							  $('#profileForm input[name="email"]').val(response.email || '');
 							  $('#profileForm input[name="mobilePhone"]').val(response.mobilePhone || '');
+
+							  if ($.isArray(response.imageIds)) {
+								$.each(response.imageIds, function (ind, v){
+									var picpane = Mustache.to_html(pictempl, { src : wp.cfg['REST_HOST']+'/resources/images/'+v, imageId: v });
+									$('#profileForm .sr-photo-row').append(picpane);
+								});
+							  }
+							  if ($.isArray(response.urls)) {
+								  urlTypes = {
+										  'WEB': 'userUrlWeb',
+										  'FACEBOOK': 'userUrlFacebook',
+										  'LINKEDIN': 'userUrlLinkedIn'
+								  }
+								  for (var i=0; i<response.urls.length; i++) {
+									  urlObj = response.urls[i];
+									  $('#profileForm input[name=' +urlTypes[urlObj.urlType]+ ']').val(urlObj.urlLocation || '');
+								  }
+							  }
+
+							  if ($.isArray(response.descriptions)) {
+								  descTypes = {
+										  'SHORT_DESCRIPTION': 'userDescription1',
+										  'SPECIALIZATION': 'userDescription2',
+										  'EDUCATION': 'userDescription3',
+										  'PROFESSIONAL_EXPERIENCE': 'userDescription4',
+										  'LANGUAGES': 'userDescription5',
+										  'REGISTRATION': 'userDescription6',
+										  'AWARDS_AND_RECOGNITIONS': 'userDescription7',
+										  'MEMBERSHIPS': 'userDescription8'
+								  }
+								  for (var j=0; j<response.descriptions.length; j++) {
+									  descObj = response.descriptions[j];
+									  $('#profileForm textarea[name=' +descTypes[descObj.vendorDescriptionType]+ ']').val(descObj.description || '');
+								  }
+							  }
 
 							  $('#wp-spinner').spin(false);
 						  }
@@ -147,7 +95,7 @@ $(function (){
 				  wp.mynav.load({
 					'targetSelector': '#top-nav',
 					'userType': userType
-				  }, 'settings');
+				  }, 'profile');
 
 			  } else {
 				  wp.util.redirectToSigin();

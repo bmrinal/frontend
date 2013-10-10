@@ -1381,7 +1381,7 @@ li.sfHover > a > .sf-sub-indicator {
     border-bottom:1px solid #cdcdcd;
     padding:10px;
     border-top:none !important;
-    background: #fdfdfd url(../img/3.png) repeat;
+    /* background: #fdfdfd url(../img/3.png) repeat; */
     /* font-size:11px; */
     -webkit-transition:all 0.5s ease;
     -moz-transition:all 0.5s ease;
