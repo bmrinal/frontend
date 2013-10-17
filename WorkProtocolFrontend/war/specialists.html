@@ -156,8 +156,10 @@
 				<div class="spcl-details">
 					{{#if name}}<h6 class="spcl-name">{{name}}</h6>{{/if}}
 					<ul class="spcl-info">
-						{{#if userDescription3}}<li><div>{{userDescription3}}</div></li>{{/if}}
-						{{#if userDescription2}}<li><div>Cost per hour : {{userDescription2}}</div></li>{{/if}}
+						{{#each descriptions}}
+							{{#if_eq vendorDescriptionType compare='EDUCATION'}}<li><div>{{description}}</div></li>{{/if_eq}}
+							{{#if_eq vendorDescriptionType compare='SPECIALIZATION'}}<li><div>{{description}}</div></li>{{/if_eq}}
+						{{/each}}
 					</ul>
 				</div>
 			</div>
@@ -174,7 +176,9 @@
 			{{#with specialist}}
 				<div class="spcl-d-top">
 					{{#if name}}<h4 class="spcl-d-name">{{name}}</h4>{{/if}}
-					{{#if userDescription3}}userDescription3{{/if}}
+					{{#each descriptions}}
+						{{#if_eq vendorDescriptionType compare='EDUCATION'}}<div>{{description}}</div>{{/if_eq}}
+					{{/each}}
 					{{#each locations}}
 						{{#if streetAddress1}}
 							<div class="spcl-addr">
@@ -182,13 +186,13 @@
 							</div>
 						{{/if}}
 					{{/each}}
-					{{#each contacts}}
 						<ul class="spcl-contact">
-							{{#if userUrlLinkedIn}}<li class="first">{{userUrlLinkedIn}}</li>{{/if}}
-							{{#if userUrlFacebook}}<li {{#unless userUrlLinkedIn}} class="first" {{/unless}}>{{userUrlFacebook}}</li>{{/if}}
-							{{#if userUrlWeb}}<li>{{userUrlWeb}}</li>{{/if}}
+							{{#each urls}}
+								{{#if_eq urlType compare='FACEBOOK'}}<li class="first">{{urlLocation}}</li>{{/if_eq}}
+								{{#if_eq urlType compare='LINKEDIN'}}<li>{{urlLocation}}</li>{{/if_eq}}
+								{{#if_eq urlType compare='WEB'}}<li>{{urlLocation}}</li>{{/if_eq}}
+							{{/each}}
 						</ul>
-					{{/each}}
 				</div>
 			{{/with}}
 		</div>
@@ -220,21 +224,18 @@
 			<div class="span6">
 				<div class="box shadow_effect spcl-d-info">
 					<ul>
-						{{#if userDescription1}}
-							<li>
-								<div>
-									<i class="icon-ok" /> {{userDescription1}}
-								</div>
-							</li>
-						{{/if}}
-
-						{{#if userDescription2}}
-							<li>
-								<div>
-									<i class="icon-ok" /> {{userDescription2}}
-								</div>
-							</li>
-						{{/if}}
+						{{#each descriptions}}
+							{{#if_eq vendorDescriptionType compare='SHORT_DESCRIPTION'}}
+								<li>
+									<div><i class="icon-ok" /> {{description}}</div>
+								</li>
+							{{/if_eq}}
+							{{#if_eq vendorDescriptionType compare='SPECIALIZATION'}}
+								<li>
+									<div><i class="icon-ok" /> {{description}}</div>
+								</li>
+							{{/if_eq}}
+						{{/each}}
 					</ul>
 				</div>
 				<h5>Services offered</h5>
@@ -244,6 +245,46 @@
 			</div>
 			{{/with}}
 		</div>
+		{{#with specialist}}
+		<div class="row-fluid">
+			<div class="span12">
+				<ul>
+						{{#each descriptions}}
+							{{#if_eq vendorDescriptionType compare='EDUCATION'}}
+								<li>
+									<div><i class="icon-ok" /> {{description}}</div>
+								</li>
+							{{/if_eq}}
+							{{#if_eq vendorDescriptionType compare='PROFESSIONAL_EXPERIENCE'}}
+								<li>
+									<div><i class="icon-ok" /> {{description}}</div>
+								</li>
+							{{/if_eq}}
+							{{#if_eq vendorDescriptionType compare='REGISTRATION'}}
+								<li>
+									<div><i class="icon-ok" /> {{description}}</div>
+								</li>
+							{{/if_eq}}
+							{{#if_eq vendorDescriptionType compare='LANGUAGES'}}
+								<li>
+									<div><i class="icon-ok" /> {{description}}</div>
+								</li>
+							{{/if_eq}}
+							{{#if_eq vendorDescriptionType compare='AWARDS_AND_RECOGNITIONS'}}
+								<li>
+									<div><i class="icon-ok" /> {{description}}</div>
+								</li>
+							{{/if_eq}}
+							{{#if_eq vendorDescriptionType compare='MEMBERSHIPS'}}
+								<li>
+									<div><i class="icon-ok" /> {{description}}</div>
+								</li>
+							{{/if_eq}}
+						{{/each}}
+				</ul>
+			</div>
+		</div>
+		{{/with}}
 	 </div>
 	</script>
 

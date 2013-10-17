@@ -216,3 +216,6 @@
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
+.spcl-det-body li{
+	list-style-type: none;
+}
