@@ -28,9 +28,17 @@ $(function (){
 				data = {};
 				specialists = [];
 
-				$.each(response, function (ind, val){
-					if (val.isVendor || val.isVendorAdmin){
-						specialists.push(val);
+				$.each(response, function (ind, admin){
+					if (admin.isVendorAdmin){
+						admin.vendorAdminName = admin.nickname;
+						specialists.push(admin);
+
+						if (admin.vendorUsers) {
+							$.each(admin.vendorUsers, function (vuInd, vuVal){
+								vuVal.vendorAdminName = admin.nickname;
+								specialists.push(vuVal);
+							});
+						}
 					}
 				});
 
