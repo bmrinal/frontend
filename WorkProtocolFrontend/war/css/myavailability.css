@@ -1,0 +1,19 @@
+#availability {
+	margin-left: 10px;
+}
+
+#availability .services-box {
+	display: none;
+}
+
+.services-box .loading{
+	margin: auto 50%;
+}
+
+.time{
+	width: auto;
+}
+
+#view{
+	display: none;
+}
