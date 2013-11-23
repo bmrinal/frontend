@@ -1,5 +1,5 @@
 $(function (){
-	var profileId, userType, calendar;
+	var profileId, userType, calendar, date, firstDayOfWeek, convertToCalEvnt, eventsArr;
 
 	$.ajax({
 		  url: wp.cfg['REST_HOST']+'/resources/user',
@@ -39,34 +39,19 @@ $(function (){
 					  cache: false,
 					  dataType: "jsonp",
 					  success: function (response){
-						  var date, firstDayOfWeek, d, m, y, evntStartDate, evntEndDate, eventsArr, evts;
+						  var d, m, y, evntStartDate, evntEndDate, evts;
 
-						  date = new Date();
-						  firstDayOfWeek = new Date(date.setDate(date.getDate() - date.getDay())); //first day of the week
 						  eventsArr = [];
-
 						  for (var i=0; i<response.length; i++){
 							  evts = response[i].startTimesEndTimes;
 							  
 							  for (var j=0; j<evts.length; j++){
-								  evntStartDate = new Date(firstDayOfWeek);
-								  evntStartDate.setDate(firstDayOfWeek.getDate() + evts[j].daysOfWeek);
-								  evntStartDate.setHours(evts[j].startTime / 60);
-								  evntStartDate.setMinutes(0);
-								  evntStartDate.setSeconds(0);
-								  
-								  evntEndDate = new Date(firstDayOfWeek);
-								  evntEndDate.setDate(firstDayOfWeek.getDate() + evts[j].daysOfWeek);
-								  evntEndDate.setHours(evts[j].endTime / 60);
-								  evntEndDate.setMinutes(0);
-								  evntEndDate.setSeconds(0);
-								  
 								  eventsArr.push({
 									  id: eventsArr.length,
 									  title: 'Service Id : '+response[i].serviceId,
 									  allDay: false,
-									  start: evntStartDate,
-									  end: evntEndDate
+									  start: convertToCalEvnt(evts[j].daysOfWeek, evts[j].startTime),
+									  end: convertToCalEvnt(evts[j].daysOfWeek, evts[j].endTime)
 								  });
 							  }
 						  }
@@ -77,6 +62,7 @@ $(function (){
 								  center: '', 
 								  right: ''
 							  },
+							  columnFormat: 'ddd',
 							  allDaySlot: false,
 							  year: date.getFullYear(),
 							  month: date.getMonth(),
@@ -130,6 +116,19 @@ $(function (){
 		  }
 	});
 
+	date = new Date();
+	firstDayOfWeek = new Date(date.setDate(date.getDate() - date.getDay())); //first day of the week
+
+	convertToCalEvnt = function (daysOfWeek, time){
+		  var newDate = new Date(firstDayOfWeek);
+		  newDate.setDate(firstDayOfWeek.getDate() + daysOfWeek);
+		  newDate.setHours(time/ 60);
+		  newDate.setMinutes(0);
+		  newDate.setSeconds(0);
+		  
+		  return newDate;
+	};
+	
 	$('#availability input[name="srvc"]').change(function (e){
 		$('#availability .services-box').toggle($(this).val() === '0');
 		$('#availability .services-box select').prop('disabled', $(this).val() === '-1');
@@ -146,7 +145,29 @@ $(function (){
 	
 	$('#availability').submit(function (e){
 		e.preventDefault();
-		$.ajax({
+		var serviceId;
+		 
+		 if ($('#availability input[name="srvc"]').val() === "-1") {
+			 serviceId = 0; 
+		 } else {
+			 serviceId = $('#availability select[name="serviceId"]').val();
+		 }
+		 $('#availability input[name="daysOfWeek"]:checked').each(function (){
+			var tr, daysOfWeek;
+
+			tr = $(this).closest('tr');
+			daysOfWeek = parseInt($(this).val(), 10);
+			eventsArr.push({
+				  id: eventsArr.length,
+				  title: 'Service Id : '+serviceId,
+				  allDay: false,
+				  start: convertToCalEvnt(daysOfWeek, $('select[name="startTime"]', tr).val()),
+				  end: convertToCalEvnt(daysOfWeek, $('select[name="endTime"]', tr).val())
+			});
+			calendar.fullCalendar('renderEvent', eventsArr[eventsArr.length - 1]);
+		 });
+
+		 $.ajax({
 			  url: $(this).prop('action'),
 			  cache: false,
 			  type: $(this).prop('method'),
@@ -165,20 +186,35 @@ $(function (){
 				  $('#addspecialist .btn-success').removeAttr('disabled');
 			  },
 			  success: function (response){
-				 var statusMsg;
+				 var serviceId;
+				 
+				 if ($('#availability .services-box').val() === -1) {
+					 serviceId = 0; 
+				 } else {
+					 serviceId = $('#availability .services-box select').val();
+				 }
+				 $('#availability input[name="daysOfWeek"]:checked').each(function (){
+					var tr = $(this).closest('tr') ;
+
+					calendar.fullCalendar('renderEvent', {
+						  title: 'Service Id : '+serviceId,
+						  allDay: false,
+						  start: convertToCalEvnt($(this).val(), $('select[name="startTime"]', tr).val()),
+						  end: convertToCalEvnt($(this).val(), $('select[name="endTime"]', tr).val())
+					});
+				 });
 
 				 $('html').scrollTop(0);
 				 $('#page-status').html('Successfully added')
 					 .addClass('alert-success')
 					 .show();
-				 
-				 //calendar.fullCalendar('renderEvent', );
 			  },
 			  error: function (){
 				 $('#page-status').html('Sorry, unable to process your request at this time')
 	 							.addClass('alert-error')
 	 							.show();
 			  }
-		});		
+		});
+
 	});
 });

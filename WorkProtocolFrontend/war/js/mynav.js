@@ -11,13 +11,21 @@ $(function (){
 			'text': 'My Business',
 			'href': '/mysetting.html'				
 		},
-		{'id' : 'specialists',
-			'text': 'Specialists',
-			'href': '/myspecialists.html'				
-		},
 		{'id' : 'services',
 			'text': 'Services',
 			'href': '/myservices.html'
+		},
+		{'id' : 'availability',
+			'text': 'Availability',
+			'href': '/myavailability.html'
+		},
+		{'id' : 'schedule',
+			'text': 'Calendar',
+			'href': '/myschedule.html'
+		},
+		{'id' : 'specialists',
+			'text': 'Specialists',
+			'href': '/myspecialists.html'				
 		},
 		{'id' : 'clients',
 			'text': 'Appointments',
@@ -26,10 +34,6 @@ $(function (){
 		{'id' : 'business',
 			'text': 'Requests',
 			'href': '/mybusiness.html'
-		},
-		{'id' : 'schedule',
-			'text': 'Calendar',
-			'href': '/myschedule.html'
 		}
 	];
 
@@ -40,6 +44,14 @@ $(function (){
 			'text': 'Services',
 			'href': '/myservices.html'
 		},
+		{'id' : 'availability',
+			'text': 'Availability',
+			'href': '/myavailability.html'
+		},
+		{'id' : 'schedule',
+			'text': 'Calendar',
+			'href': '/myschedule.html'
+		},
 		{'id' : 'clients',
 			'text': 'Appointments',
 			'href': '/myclients.html'
@@ -47,10 +59,6 @@ $(function (){
 		{'id' : 'business',
 			'text': 'Requests',
 			'href': '/mybusiness.html'
-		},
-		{'id' : 'schedule',
-			'text': 'Calendar',
-			'href': '/myschedule.html'
 		}
 	];
 	
