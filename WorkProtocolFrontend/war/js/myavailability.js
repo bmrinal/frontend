@@ -45,14 +45,16 @@ $(function (){
 						  for (var i=0; i<response.length; i++){
 							  evts = response[i].startTimesEndTimes;
 							  
-							  for (var j=0; j<evts.length; j++){
-								  eventsArr.push({
-									  id: eventsArr.length,
-									  title: 'Service Id : '+response[i].serviceId,
-									  allDay: false,
-									  start: convertToCalEvnt(evts[j].daysOfWeek, evts[j].startTime),
-									  end: convertToCalEvnt(evts[j].daysOfWeek, evts[j].endTime)
-								  });
+							  if (evts) {
+								  for (var j=0; j<evts.length; j++){
+									  eventsArr.push({
+										  id: 'id=' + response[i].id + '&startTime=' + evts[j].startTime + '&endTime=' + evts[j].endTime + '&daysOfWeek=' + evts[j].daysOfWeek,
+										  title: 'Service Id : '+response[i].serviceId,
+										  allDay: false,
+										  start: convertToCalEvnt(evts[j].daysOfWeek, evts[j].startTime),
+										  end: convertToCalEvnt(evts[j].daysOfWeek, evts[j].endTime)
+									  });
+								  }
 							  }
 						  }
 
@@ -70,7 +72,19 @@ $(function (){
 							  minTime: '12:00am',
 							  defaultView: 'agendaWeek',
 							  slotMinutes:  60,
-							  events: eventsArr
+							  events: eventsArr,
+							  eventClick: function(calEvent, jsEvent, view) {
+								  if (confirm('Do you want to delete this schedule - "' + calEvent.title +'"')){
+									  $.ajax({
+										  url: wp.cfg['REST_HOST'] + '/resources/availability/delete?'+calEvent.id,
+										  cache: false,
+										  dataType: 'jsonp',
+										  success: function (){
+											  $('#calendar').fullCalendar('removeEvents', calEvent.id);
+										  }
+									  });
+								  }
+							  }
 						  });
 					  },
 					  error: function (){
@@ -145,7 +159,7 @@ $(function (){
 	
 	$('#availability').submit(function (e){
 		e.preventDefault();
-		var serviceId;
+		var serviceId, daysSelected;
 		 
 		 if ($('#availability input[name="srvc"]').val() === "-1") {
 			 serviceId = 0; 
@@ -155,6 +169,7 @@ $(function (){
 		 $('#availability input[name="daysOfWeek"]:checked').each(function (){
 			var tr, daysOfWeek;
 
+			daysSelected = true;
 			tr = $(this).closest('tr');
 			daysOfWeek = parseInt($(this).val(), 10);
 			eventsArr.push({
@@ -167,54 +182,58 @@ $(function (){
 			calendar.fullCalendar('renderEvent', eventsArr[eventsArr.length - 1]);
 		 });
 
-		 $.ajax({
-			  url: $(this).prop('action'),
-			  cache: false,
-			  type: $(this).prop('method'),
-			  data: $(this).serialize(),
-			  dataType: 'json',
-			  xhrFields: {
-				  withCredentials: true
-			  },
-			  beforeSend: function (){
-				  $('#availability .btn-success').attr('disabled', true);
-				  $('#page-status').removeClass('alert-success')
-	 							.removeClass('alert-error')
-	 							.hide();
-			  },
-			  complete: function (){
-				  $('#addspecialist .btn-success').removeAttr('disabled');
-			  },
-			  success: function (response){
-				 var serviceId;
-				 
-				 if ($('#availability .services-box').val() === -1) {
-					 serviceId = 0; 
-				 } else {
-					 serviceId = $('#availability .services-box select').val();
-				 }
-				 $('#availability input[name="daysOfWeek"]:checked').each(function (){
-					var tr = $(this).closest('tr') ;
-
-					calendar.fullCalendar('renderEvent', {
-						  title: 'Service Id : '+serviceId,
-						  allDay: false,
-						  start: convertToCalEvnt($(this).val(), $('select[name="startTime"]', tr).val()),
-						  end: convertToCalEvnt($(this).val(), $('select[name="endTime"]', tr).val())
-					});
-				 });
-
-				 $('html').scrollTop(0);
-				 $('#page-status').html('Successfully added')
+		 if (daysSelected === true){
+			 $.ajax({
+				 url: $(this).prop('action'),
+				 cache: false,
+				 type: $(this).prop('method'),
+				 data: $(this).serialize(),
+				 dataType: 'json',
+				 xhrFields: {
+					 withCredentials: true
+				 },
+				 beforeSend: function (){
+					 $('#availability .btn-success').attr('disabled', true);
+					 $('#page-status').removeClass('alert-success')
+					 .removeClass('alert-error')
+					 .hide();
+				 },
+				 complete: function (){
+					 $('#availability .btn-success').attr('disabled', false);
+				 },
+				 success: function (response){
+					 var serviceId;
+					 
+					 if ($('#availability .services-box').val() === -1) {
+						 serviceId = 0; 
+					 } else {
+						 serviceId = $('#availability .services-box select').val();
+					 }
+					 $('#availability input[name="daysOfWeek"]:checked').each(function (){
+						 var tr = $(this).closest('tr') ;
+						 
+						 calendar.fullCalendar('renderEvent', {
+							 id: response.id,
+							 title: 'Service Id : '+serviceId,
+							 allDay: false,
+							 start: convertToCalEvnt($(this).val(), $('select[name="startTime"]', tr).val()),
+							 end: convertToCalEvnt($(this).val(), $('select[name="endTime"]', tr).val())
+						 });
+					 });
+					 
+					 $('html').scrollTop(0);
+					 $('#page-status').html('Successfully added')
 					 .addClass('alert-success')
 					 .show();
-			  },
-			  error: function (){
-				 $('#page-status').html('Sorry, unable to process your request at this time')
-	 							.addClass('alert-error')
-	 							.show();
-			  }
-		});
+				 },
+				 error: function (){
+					 $('#page-status').html('Sorry, unable to process your request at this time')
+					 .addClass('alert-error')
+					 .show();
+				 }
+			 });
+		 }
+
 
 	});
 });

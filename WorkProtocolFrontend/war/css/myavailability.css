@@ -17,3 +17,7 @@
 #view{
 	display: none;
 }
+
+.fc-event{
+	cursor: pointer;	
+}

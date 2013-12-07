@@ -93,7 +93,7 @@ $(function (){
 						  minTime: '9:00am',
 						  maxTime: '6:00pm',
 						  defaultView: 'agendaWeek',
-						  slotMinutes:  parseInt(params.duration, 10),
+						  //slotMinutes:  parseInt(params.duration, 10),
 						  eventClick: function(event, jsEvent, view){
 							  if (event.id.match(OPENEVENT_ID)) {
 								  bookEvntStartStr = $.fullCalendar.formatDate(event.start, 'MM-dd-yyyy HH:mm:ss');
