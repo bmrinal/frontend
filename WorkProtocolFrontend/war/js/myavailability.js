@@ -1,5 +1,5 @@
 $(function (){
-	var profileId, userType, calendar, date, firstDayOfWeek, convertToCalEvnt, eventsArr;
+	var profileId, userType, calendar, date, firstDayOfWeek, convertToCalEvnt, eventsArr, addEvents;
 
 	$.ajax({
 		  url: wp.cfg['REST_HOST']+'/resources/user',
@@ -39,23 +39,11 @@ $(function (){
 					  cache: false,
 					  dataType: "jsonp",
 					  success: function (response){
-						  var d, m, y, evntStartDate, evntEndDate, evts;
+						  var d, m, y, evntStartDate, evntEndDate;
 
 						  eventsArr = [];
 						  for (var i=0; i<response.length; i++){
-							  evts = response[i].startTimesEndTimes;
-							  
-							  if (evts) {
-								  for (var j=0; j<evts.length; j++){
-									  eventsArr.push({
-										  id: 'id=' + response[i].id + '&startTime=' + evts[j].startTime + '&endTime=' + evts[j].endTime + '&daysOfWeek=' + evts[j].daysOfWeek,
-										  title: 'Service Id : '+response[i].serviceId,
-										  allDay: false,
-										  start: convertToCalEvnt(evts[j].daysOfWeek, evts[j].startTime),
-										  end: convertToCalEvnt(evts[j].daysOfWeek, evts[j].endTime)
-									  });
-								  }
-							  }
+							  eventsArr = eventsArr.concat(addEvents(response[i]));
 						  }
 
 						  calendar = $('#calendar').fullCalendar({
@@ -142,7 +130,27 @@ $(function (){
 		  
 		  return newDate;
 	};
-	
+
+	addEvents = function (response){
+		var daysOfWeek, evts, retArr;
+		retArr = [];
+		evts = response.startTimesEndTimes;
+		  
+		if (evts) {
+		  for (var j=0; j<evts.length; j++){
+			  daysOfWeek = evts[j].daysOfWeek -1; //javascript week 1(Sun) - 7(Sat) but java 0(Sun) - 6(Sat)
+			  retArr.push({
+				  id: 'id=' + response.id + '&startTime=' + evts[j].startTime + '&endTime=' + evts[j].endTime + '&daysOfWeek=' + evts[j].daysOfWeek,
+				  title: 'Service Id : '+response.serviceId,
+				  allDay: false,
+				  start: convertToCalEvnt(daysOfWeek, evts[j].startTime),
+				  end: convertToCalEvnt(daysOfWeek, evts[j].endTime)
+			  });
+		  }
+		}
+		return retArr;
+	}
+
 	$('#availability input[name="srvc"]').change(function (e){
 		$('#availability .services-box').toggle($(this).val() === '0');
 		$('#availability .services-box select').prop('disabled', $(this).val() === '-1');
@@ -156,33 +164,11 @@ $(function (){
 
 		$('select', tr).prop('disabled', !isChecked);
 	});
-	
+
 	$('#availability').submit(function (e){
-		e.preventDefault();
-		var serviceId, daysSelected;
-		 
-		 if ($('#availability input[name="srvc"]').val() === "-1") {
-			 serviceId = 0; 
-		 } else {
-			 serviceId = $('#availability select[name="serviceId"]').val();
-		 }
-		 $('#availability input[name="daysOfWeek"]:checked').each(function (){
-			var tr, daysOfWeek;
+		 e.preventDefault();
 
-			daysSelected = true;
-			tr = $(this).closest('tr');
-			daysOfWeek = parseInt($(this).val(), 10);
-			eventsArr.push({
-				  id: eventsArr.length,
-				  title: 'Service Id : '+serviceId,
-				  allDay: false,
-				  start: convertToCalEvnt(daysOfWeek, $('select[name="startTime"]', tr).val()),
-				  end: convertToCalEvnt(daysOfWeek, $('select[name="endTime"]', tr).val())
-			});
-			calendar.fullCalendar('renderEvent', eventsArr[eventsArr.length - 1]);
-		 });
-
-		 if (daysSelected === true){
+		 if ($('#availability input[name="daysOfWeek"]:checked').length > 0){
 			 $.ajax({
 				 url: $(this).prop('action'),
 				 cache: false,
@@ -202,38 +188,23 @@ $(function (){
 					 $('#availability .btn-success').attr('disabled', false);
 				 },
 				 success: function (response){
-					 var serviceId;
-					 
-					 if ($('#availability .services-box').val() === -1) {
-						 serviceId = 0; 
-					 } else {
-						 serviceId = $('#availability .services-box select').val();
-					 }
-					 $('#availability input[name="daysOfWeek"]:checked').each(function (){
-						 var tr = $(this).closest('tr') ;
-						 
-						 calendar.fullCalendar('renderEvent', {
-							 id: response.id,
-							 title: 'Service Id : '+serviceId,
-							 allDay: false,
-							 start: convertToCalEvnt($(this).val(), $('select[name="startTime"]', tr).val()),
-							 end: convertToCalEvnt($(this).val(), $('select[name="endTime"]', tr).val())
-						 });
+					 var arr = addEvents(response);
+					 $.each(arr, function (i, v){
+						 calendar.fullCalendar('renderEvent', v);
 					 });
-					 
+					 arr
 					 $('html').scrollTop(0);
 					 $('#page-status').html('Successfully added')
-					 .addClass('alert-success')
-					 .show();
+					 	.addClass('alert-success')
+					 	.show();
 				 },
 				 error: function (){
+					 eventsArr.pop();
 					 $('#page-status').html('Sorry, unable to process your request at this time')
 					 .addClass('alert-error')
 					 .show();
 				 }
 			 });
 		 }
-
-
 	});
 });
