@@ -198,10 +198,16 @@
 	color: #555555;
 }
 
+.srvc-gen-info,
 .srvc-d-info{
 	margin: 0 0 0 5px;
 }
 
+.srvc-d-info{
+	padding-top: 10px;	
+}
+
+.srvc-gen-info li,
 .srvc-d-info li{
 	list-style-type: none;
 }

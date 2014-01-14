@@ -16,6 +16,7 @@
 	height: 72px;
 }
 
+.srvc-gen-info li,
 .srvc-d-info li{
 	list-style-type: none;
 }
@@ -26,8 +27,13 @@
 	line-height: 18px;
 }
 
-.srvc-d-info{
+.srvc-d-info,
+.srvc-gen-info{
 	margin: 0 0 0 5px;
+}
+
+.srvc-d-info{
+	padding-top: 10px;
 }
 
 .srvc-d-info li i{

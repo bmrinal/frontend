@@ -318,11 +318,13 @@
 				<a class="wp-video btn btn-mini btn-less" href="https://plus.google.com/hangouts/_?gid=509343837677" target="_blank">Video</a>
 
 				<div class="box shadow_effect">
+					<ul class="srvc-gen-info">
+						{{#if wpProjectName}}<li>{{wpProjectName}}</li>{{/if}}
+						{{#if wpCostPerHour}}<li>Cost per hour : {{wpCostPerHour}}</li>{{/if}}
+						{{#if wpFixedCost}}<li>Fixed cost : {{wpFixedCost}}</li>{{/if}}
+						{{#if wpDuration}}<li>Duration : {{wpDuration}} mins</li>{{/if}}
+					</ul>
 					<ul class="srvc-d-info">
-						{{#if wpProjectName}}<li><div><i class="icon-ok"></i>{{wpProjectName}}</div></li>{{/if}}
-						{{#if wpCostPerHour}}<li><div><i class="icon-ok"></i>Cost per hour : {{wpCostPerHour}}</div></li>{{/if}}
-						{{#if wpFixedCost}}<li><div><i class="icon-ok"></i>Fixed cost : {{wpFixedCost}}</div></li>{{/if}}
-						{{#if wpDuration}}<li><div><i class="icon-ok"></i>Duration : {{wpDuration}} mins</div></li>{{/if}}
 						{{#each columns}}
 							{{#each values}}
 								{{#if .}}
