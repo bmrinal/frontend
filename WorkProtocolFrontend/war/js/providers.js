@@ -236,8 +236,8 @@ $(function (){
 		e.stopPropagation();
 
 		window.location.href = '/bookappointment.html?serviceId='
-				+ $(this).data('srvcid') + '&vendorId='
-				+ $(this).data('vendorid') + '&duration='
+				+ $(this).data('srvcid') + '&vendorUserId='
+				+ $(this).data('vendoruserid') + '&duration='
 				+ $(this).data('duration');
 	});
 

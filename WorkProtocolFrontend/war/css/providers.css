@@ -198,6 +198,10 @@
 	color: #555555;
 }
 
+.srvc-gen-info{
+	font-weight: bold;
+}
+
 .srvc-gen-info,
 .srvc-d-info{
 	margin: 0 0 0 5px;

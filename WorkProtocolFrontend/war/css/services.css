@@ -16,6 +16,10 @@
 	height: 72px;
 }
 
+.srvc-gen-info{
+	font-weight: bold;
+}
+
 .srvc-gen-info li,
 .srvc-d-info li{
 	list-style-type: none;

@@ -202,6 +202,10 @@
 	margin: 0 0 0 5px;
 }
 
+.srvc-gen-info{
+	font-weight: bold;
+}
+
 .srvc-d-info{
 	padding-top: 10px;	
 }

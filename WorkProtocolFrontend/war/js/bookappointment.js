@@ -20,14 +20,14 @@ $(function (){
 			  var data, template;
 			  data = {};
 
-			  data['isProxyBooking'] = (response.vendorId === parseInt(params.vendorId, 10));
+			  data['isProxyBooking'] = (response.vendorId === parseInt(params.vendorUserId, 10));
 			  data['phone'] = response.mobilePhone;
 			  template = Handlebars.compile($("#TL_addEvent").html());
 
 			  wp.overlay.setContent(template(data));
 
 			  $.ajax({
-				  url: wp.cfg['REST_HOST']+'/resources/calendar/freebusy?serviceId='+ params.serviceId +'&vendorId=' + params.vendorId,
+				  url: wp.cfg['REST_HOST']+'/resources/calendar/freebusy?serviceId='+ params.serviceId +'&vendorUserId=' + params.vendorUserId,
 				  cache: false,
 				  dataType: "json",
 				  complete: function (){
@@ -118,7 +118,7 @@ $(function (){
 						  var qsParams, formParams;
 
 						  qsParams = {
-								  vendorId: params.vendorId,
+								  vendorUserId: params.vendorUserId,
 								  serviceId: params.serviceId,
 								  eventStartTime: bookEvntStartStr,
 								  eventEndTime: bookEvntEndStr

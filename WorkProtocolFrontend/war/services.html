@@ -166,7 +166,7 @@
 						{{#if wpFixedCost}}<li><div>Fixed cost : {{wpFixedCost}}</div></li>{{/if}}
 						{{#if wpDuration}}<li><div>Duration : {{wpDuration}} mins</div></li>{{/if}}
 					</ul>
-					<button class="wp-appoint btn btn-mini btn-less" type="button" data-vendorId="{{wpVendorId}}" data-duration="{{wpDuration}}" data-srvcid="{{id}}">Book appointment</button>
+					<button class="wp-appoint btn btn-mini btn-less" type="button" data-vendoruserid="{{wpVendorUserId}}" data-duration="{{wpDuration}}" data-srvcid="{{id}}">Book appointment</button>
 					{{#if wpOpenToQuote}}
 						<button class="wp-quote btn btn-mini btn-less" type="button" data-srvcid="{{id}}" data-srvcdefid="{{wpServiceDefinitionId}}">Service request</button>
 					{{/if}}
@@ -210,7 +210,7 @@
 			</div>
 
 			<div class="span6">
-				<button class="wp-appoint btn btn-mini btn-less" type="button" data-vendorId="{{wpVendorId}}" data-duration="{{wpDuration}}" data-srvcid="{{id}}">Book appointment</button>
+				<button class="wp-appoint btn btn-mini btn-less" type="button" data-vendoruserid="{{wpVendorUserId}}" data-duration="{{wpDuration}}" data-srvcid="{{id}}">Book appointment</button>
 				{{#if wpOpenToQuote}}
 					<button class="wp-quote btn btn-mini btn-less" type="button" data-srvcid="{{id}}" data-srvcdefid="{{wpServiceDefinitionId}}">Service request</button>
 				{{/if}}
