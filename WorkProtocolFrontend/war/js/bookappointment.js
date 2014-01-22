@@ -114,9 +114,10 @@ $(function (){
 					  });
 
 					  //book new appointment
-					  $('#addEvent').on('submit', '.wp-addEvent', function (){
+					  $('#addEvent').on('submit', '.wp-addEvent', function (e){
 						  var qsParams, formParams;
 
+						  e.preventDefault();
 						  qsParams = {
 								  vendorUserId: params.vendorUserId,
 								  serviceId: params.serviceId,
@@ -130,16 +131,18 @@ $(function (){
 							  qsParams[obj.name] = obj.value;
 						  });
 
+						  wp.overlay.close();
+
 						  $.ajax({
 							  url: wp.cfg['REST_HOST']+'/resources/calendar/event',
 							  cache: false,
 							  data: qsParams,
 							  dataType: "jsonp",
 							  beforeSend: function (){
-								  $('#view .loading').html('Booking appointment...').show();
+								  $('#page-status').html('Booking appointment...').show();
 							  },
 							  complete: function (){
-								  $('#view .loading').hide();
+								  //$('#view .loading').hide();
 							  },
 							  success: function (response){
 								  var title;
