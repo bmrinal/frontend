@@ -29,7 +29,7 @@ $(function (){
 				specialists = [];
 
 				$.each(response, function (ind, admin){
-					if (admin.isVendorAdmin){
+					if (admin.isVendor){
 						admin.vendorAdminName = admin.nickname;
 						specialists.push(admin);
 
@@ -248,12 +248,18 @@ $(function (){
 
 	//appointment
 	$('body').on('click', '.wp-appoint', function(e){
+		var redirectUrl, duration;
 		e.stopPropagation();
 
-		window.location.href = '/bookappointment.html?serviceId='
-				+ $(this).data('srvcid') + '&vendorUserId='
-				+ $(this).data('vendoruserid') + '&duration='
-				+ $(this).data('duration');
+		redirectUrl = '/bookappointment.html?serviceId='
+			+ $(this).data('srvcid') + '&vendorUserId='
+			+ $(this).data('vendoruserid');
+
+		duration = $(this).data('duration');
+		if (duration) {
+			redirectUrl += '&duration=' + duration;
+		}
+		window.location.href = redirectUrl;
 	});
 
 	//service request

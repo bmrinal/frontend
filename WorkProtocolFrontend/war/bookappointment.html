@@ -93,12 +93,19 @@
 					    </div>
 						<div class="wp-srvc-info-b hide"></div>
 					</div>
-	
+
 			       	<div id="wp-spinner"></div>
-					<div id='calendar'></div>
-					<div class="wp-legend">
-						<i class="wp-open"></i> <span>Open</span>
-						<i class="wp-busy"></i> <span>Busy</span>
+			       	<div class="row">
+				       	<div class="span3">
+				       		<div id="calendarFor"></div>
+				       	</div>
+				       	<div class="span9">
+							<div id='calendar'></div>
+							<div class="wp-legend">
+								<i class="wp-open"></i> <span>Open</span>
+								<i class="wp-busy"></i> <span>Busy</span>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -128,10 +135,26 @@
 	<script src="/assets/js/jquery.spin.js"></script>
 	
 	<!-- 2. Application javascripts - Order is importatnt! -->
+	<script src="js/util/handlebarHelpers.js"></script>
 	<script src="js/app.js"></script>
 	<script src="js/overlay.js"></script>
 	<script src='js/bookappointment.js'></script>
 	
+	<script id="TL_calendarFor" type="text/x-handlebars-template">
+		<ul>
+			{{#each vendorUsers}}
+				<li {{#if_eq ../selectedVendorUserId compare=userId}} class="active" {{/if_eq}}>
+					<input type="radio" name="calendarfor" value="{{userId}}" {{#if_eq ../selectedVendorUserId compare=userId}} checked {{/if_eq}}/>
+					{{#one imageIds}}
+						<img src="{{../../REST_HOST}}/resources/images/{{.}}"/>
+					{{/one}}
+					<div class="info">
+						{{name}}
+					</div>
+				</li>
+			{{/each}}
+		</ul>
+	</script>
 	<script id="TL_addEvent" type="text/x-handlebars-template">
 		<h4 class="wp-reviewTitle">Review and book</h4>
 	  	<form class="wp-addEvent form-horizontal">

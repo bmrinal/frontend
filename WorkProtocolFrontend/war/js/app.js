@@ -38,7 +38,7 @@ $(function (){
 				  /* $('#user-info span').html(user.userName);
 				  $('#user-info a').prop('href', user.signOutUrl + '?ru=' + window.location.protocol + '//' + window.location.host); */
 				  $('#user-info .wp-signOut').prop('href', wp.cfg['REST_HOST'] +'/SignOut?ru=' + window.location.protocol + '//' + window.location.host); 
-				  $('#user-info .wp-signedIn').show();
+				  $('#user-info .wp-signedIn').show().prepend('<span>('+user.email+') </span>');
 				  $('#user-info .wp-signedOut').hide();
 			  } else {
 				  $('#user-info .wp-signIn').prop('href', wp.cfg['REST_HOST'] +'/SignIn?ru=' + encodeURIComponent(window.location.href)); 
@@ -100,9 +100,9 @@ $(function (){
 	};
 	
 	wp.util.getUserType = function (userObj){
-		if (userObj.isVendorAdmin){
+		if (userObj.isVendor){
 			return 'vendorAdmin';
-		} else if (userObj.isVendor){
+		} else if (userObj.isVendorUser){
 			return 'vendorUser';
 		} else {
 			return 'user';

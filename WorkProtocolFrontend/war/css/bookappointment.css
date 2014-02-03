@@ -80,3 +80,40 @@ div.wp-event-open{
 	font-size: 16px;
 	color: #CD853F
 }
+
+#calendarFor{
+	background: #fff;
+	padding: 10px;
+	border: 1px solid #ddd;
+	box-shadow: 2px 2px 2px #ddd;
+}
+
+#calendarFor ul{
+	margin: 0;
+}
+
+#calendarFor li{
+	list-style: none;
+	padding: 5px;
+	margin: 5px;
+	cursor: pointer;
+	border: 1px solid transparent;
+}
+
+#calendarFor li:hover{
+	border: 1px solid #f3f3f3;
+}
+
+#calendarFor li.active{
+	background-color: #f3f3f3;
+}
+
+#calendarFor img{
+	max-width: 50px;
+	max-height: 50px;
+	margin: 0 10px;
+}
+
+#calendarFor div.info{
+	display: inline-block;
+}
