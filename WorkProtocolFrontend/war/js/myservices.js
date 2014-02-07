@@ -1,5 +1,5 @@
 $(function (){
-	var servicesArr, userType;
+	var servicesArr, userType, locationsArr, pictempl;
 
 	$.ajax({
 	  url: wp.cfg['REST_HOST']+'/resources/user',
@@ -20,6 +20,9 @@ $(function (){
 				  return;
 			  }
 
+			  if (userType === wp.constants.VENDORADMIN){
+				  $('.srvc-add').show();
+			  }
 			  wp.mynav.load({
 				'targetSelector': '#top-nav',
 				'userType': userType 
@@ -129,9 +132,131 @@ $(function (){
 		e.stopPropagation();
 
 		window.location.href = '/bookappointment.html?serviceId='
-				+ $(this).data('srvcid') + '&vendorId='
-				+ $(this).data('vendorid') + '&duration='
+				+ $(this).data('srvcid') + '&vendorUserId='
+				+ $(this).data('vendoruserid') + '&duration='
 				+ $(this).data('duration');
 	});
 	
+	//edit service
+	$('body').on('click', '.wp-edit', function(e){
+		var template, data, ind, htmlTmpl, htmlMetaData, locationId, editLocationArr, locationTmpl;
+
+		e.stopPropagation();
+		wp.overlay.open();
+		ind = parseInt($(this).data('ind'), 10);
+		template = Handlebars.compile($('#TL_requestSrvc').html());
+		data = {};
+		data.service = servicesArr[ind];
+
+		data['REST_HOST'] = wp.cfg['REST_HOST'];
+		wp.overlay.setContent(template(data));
+
+		$('#sr-form-fields').prop('action', wp.cfg['REST_HOST']+'/resources/services');
+		//$("#sr-form-fields input[name='serviceDefinitionId']").val(data.service.id);
+
+		htmlTmpl = data.service.htmlTemplate;
+		htmlMetaData = $.parseJSON(data.service.metaDataInstance);
+
+		if (htmlTmpl && htmlMetaData) {
+			$('#srTemplate').html(Mustache.to_html(htmlTmpl, htmlMetaData));
+
+			//show selected photos
+			$.each(data.service.wpImageIds, function (ind, v){
+				var picpane = Mustache.to_html(pictempl, { src : wp.cfg['REST_HOST']+'/resources/images/'+v, imageId: v });
+				$('#sr-form-fields .sr-photo-row').append(picpane);
+			});
+
+			//show selected location
+			locationId = data.service.wpLocationId || '';
+			if (locationId){
+				editLocationArr = [];
+				$.each(locationsArr, function (i, v){
+					var val;
+					val = locationsArr[i];
+					if (locationId === val.id){
+						val.selected = true;
+					}
+					editLocationArr.push(locationsArr[i]);
+				});
+
+				locationTmpl = Handlebars.compile($('#TL_location').html());
+				$('#srvc-location').html(locationTmpl({location: editLocationArr}));
+			}
+		} else {
+			$('#srTemplate').html('<div class="alert  alert-error">'
+			  + 'Sorry, service instance details form unavailable'
+			  + '</div>'
+			);
+		}
+	});
+	
+	//fetch location data
+	$.ajax({
+		url: wp.cfg['REST_HOST']+'/resources/vendors/myvendor',
+		dataType: 'json',
+		cache: false,
+		xhrFields: {
+			withCredentials: true
+		},
+		success: function (response){
+			locationsArr = response.locations || [];
+		}
+	});
+	
+	//cost fields
+	$('body').on('change', 'input[name="wpServicePaymentType"]', function (){
+		var val, checked, fc, cph;
+	
+		val = $(this).val();
+		checked = this.checked;
+	
+		fc = $('#wpFixedCost');
+		cph = $('#wpCostPerHour');
+	
+		if (val === 'fixedcost'){
+			$('#wpFixedCost').toggle(checked).prop('disabled', !checked).focus();
+		} else if (val === 'timeandmaterials'){
+			$('#wpCostPerHour').toggle(checked).prop('disabled', !checked).focus();
+		}
+	});
+
+	//photos - set up
+	$('#wp-main').append('<iframe id="picframe" name="picframe"></iframe>');
+	$('#picupload').prop('action', wp.cfg['REST_HOST']+'/ImageUpload');
+	$('#picupload input[name="ru"]').val('http://'+window.location.host+'/jsproxy.html');
+
+	//trigger file browse
+	$('body').on('click', '#sr-photo-trigger', function (){
+		$('#file-inp').click();
+	});
+
+	//do upload
+	$('#file-inp').on('change', function (e){
+		$('#sr-photo-trigger').hide();
+		$('#sr-photo-loading').show();
+		$('#picupload').submit();
+	});
+
+	//after upload
+	pictempl = $('#TL_pic').html();
+	wp.jsproxy = {};
+	wp.jsproxy.callback = function (data){
+		var imageIds;
+
+		$('#sr-photo-trigger').show();
+		$('#sr-photo-loading').hide();
+
+		if (data){
+			imageIds = data['imageId'].split(",");
+
+			$.each(imageIds, function (ind, v){
+				var picpane = Mustache.to_html(pictempl, { src : wp.cfg['REST_HOST']+'/resources/images/'+v, imageId: v });
+				$('#sr-form-fields .sr-photo-row').append(picpane);
+			});
+		}
+	};
+	
+	$('body').on('click', '#sr-form-close', function (){
+		wp.overlay.close();
+	});
 });

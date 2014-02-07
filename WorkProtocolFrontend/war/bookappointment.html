@@ -95,6 +95,7 @@
 					</div>
 
 			       	<div id="wp-spinner"></div>
+			       	<div id="services"></div>
 			       	<div class="row">
 				       	<div class="span3">
 				       		<div id="calendarFor"></div>
@@ -150,6 +151,22 @@
 					{{/one}}
 					<div class="info">
 						{{name}}
+					</div>
+				</li>
+			{{/each}}
+		</ul>
+	</script>
+	
+	<script id="TL_services" type="text/x-handlebars-template">
+		<ul>
+			{{#each services}}
+				<li>
+					<input type="radio" name="serviceId" value="{{id}}" />
+					{{#one wpImageIds}}
+						<img src="{{../../REST_HOST}}/resources/images/{{.}}"/>
+					{{/one}}
+					<div class="info">
+						{{wpName}}
 					</div>
 				</li>
 			{{/each}}

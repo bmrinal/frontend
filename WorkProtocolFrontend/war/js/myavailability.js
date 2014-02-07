@@ -100,7 +100,7 @@ $(function (){
 							
 							data.service = res.services;
 							data['REST_HOST'] = wp.cfg['REST_HOST'];
-							$(container).append($(template(data).trim()));
+							$(container).append($(template(data).trim())).show();
 						}
 				  });
 
@@ -150,11 +150,6 @@ $(function (){
 		}
 		return retArr;
 	}
-
-	$('#availability input[name="srvc"]').change(function (e){
-		$('#availability .services-box').toggle($(this).val() === '0');
-		$('#availability .services-box select').prop('disabled', $(this).val() === '-1');
-	});
 
 	$('#availability input[name="daysOfWeek"]').change(function (e){
 		var isChecked, tr;

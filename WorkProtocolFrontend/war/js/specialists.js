@@ -253,7 +253,8 @@ $(function (){
 
 		redirectUrl = '/bookappointment.html?serviceId='
 			+ $(this).data('srvcid') + '&vendorUserId='
-			+ $(this).data('vendoruserid');
+			+ $(this).data('vendoruserid') + '&vendorId='
+			+ $(this).data('vendorid');
 
 		duration = $(this).data('duration');
 		if (duration) {

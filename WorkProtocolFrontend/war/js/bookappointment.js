@@ -1,10 +1,12 @@
 $(function (){
-	var params, OPENEVENT_ID, BUSYEVENT_ID, bookEvntStartStr, bookEvntEndStr, loadCalendar, freebusyXHR;
+	var params, OPENEVENT_ID, BUSYEVENT_ID, bookEvntStartStr, bookEvntEndStr, loadCalendar, freebusyXHR, selectedSrvcId, selectedVendoruserId;
 
 	params = wp.util.qsToJSON();
 	OPENEVENT_ID = 'open';
 	BUSYEVENT_ID = 'busy';
 
+	selectedSrvcId = params.serviceId;
+	selectedVendoruserId = params.vendorUserId;
 	loadCalendar = function (serviceId, vendorUserId){
 
 	if (freebusyXHR) {
@@ -122,14 +124,14 @@ $(function (){
 			  var data, template;
 			  data = {};
 
-			  data['isProxyBooking'] = (response.vendorId === parseInt(params.vendorUserId, 10));
+			  data['isProxyBooking'] = (response.vendorId === parseInt(selectedVendoruserId, 10));
 			  data['phone'] = response.mobilePhone;
 			  template = Handlebars.compile($("#TL_addEvent").html());
 
 			  wp.overlay.setContent(template(data));
 			  
 			  //loading calendar
-			  loadCalendar(params.serviceId, params.vendorUserId);
+			  loadCalendar(selectedSrvcId, selectedVendoruserId);
 			  
 			  $('#addEvent form').on('submit', function (e){
 				  e.preventDefault();
@@ -142,8 +144,8 @@ $(function (){
 
 				  e.preventDefault();
 				  qsParams = {
-						  vendorUserId: params.vendorUserId,
-						  serviceId: params.serviceId,
+						  vendorUserId: selectedVendoruserId,
+						  serviceId: selectedSrvcId,
 						  eventStartTime: bookEvntStartStr,
 						  eventEndTime: bookEvntEndStr
 				  };
@@ -200,12 +202,59 @@ $(function (){
 				  wp.overlay.close();
 			  });
 
-			  if (params.serviceId === '-1'){
+			  if (selectedSrvcId === '-1'){
 				  $('#servicename').html('General');
 				  $('#providername').html('--');
+
+				  $.ajax({
+					  url: wp.cfg['REST_HOST']+'/resources/vendors/' + params.vendorId,
+					  cache: false,
+					  dataType: "jsonp",
+					  success: function (response){
+						  var template, data;
+
+						  //load services
+						  template = Handlebars.compile($('#TL_services').html());
+						  data = response;
+						  data['REST_HOST'] = wp.cfg['REST_HOST'];
+						  $('#services').html(template(data)).show();
+						  
+						  $(document).on('click', '#services li', function (){
+							  var radio = $(this).find('input[name="serviceId"]');
+
+							  selectedSrvcId = radio.val();
+							  radio.prop('checked', true);
+							  $('#services li.active').removeClass('active');
+							  $(this).addClass('active');
+							  loadCalendar(selectedSrvcId, selectedVendoruserId);
+						  });
+						  
+						  //load vendor users
+						  template = Handlebars.compile($('#TL_calendarFor').html());
+						  data = response;
+						  data['REST_HOST'] = wp.cfg['REST_HOST'];
+						  data['selectedVendorUserId'] = selectedVendoruserId;
+						  $('#calendarFor').html(template(data)).show();
+						  
+						  $(document).on('click', '#calendarFor li', function (){
+							  var radio = $(this).find('input[name="calendarfor"]');
+
+							  selectedVendoruserId = radio.val();
+							  radio.prop('checked', true);
+							  $('#calendarFor li.active').removeClass('active');
+							  $(this).addClass('active');
+							  loadCalendar(selectedSrvcId, selectedVendoruserId);
+						  });
+
+					  },
+					  error: function (){}
+				  });
+
+				  // $('#calendarFor').parent().remove();
+				  // $('#calendar').parent().prop('class', 'span12');
 			  } else {
 				  $.ajax({
-					  url: wp.cfg['REST_HOST']+'/resources/services/' + params.serviceId,
+					  url: wp.cfg['REST_HOST']+'/resources/services/' + selectedSrvcId,
 					  cache: false,
 					  dataType: "jsonp",
 					  success: function (response){
@@ -229,18 +278,18 @@ $(function (){
 						  template = Handlebars.compile($('#TL_calendarFor').html());
 						  data = response;
 						  data['REST_HOST'] = wp.cfg['REST_HOST'];
-						  data['selectedVendorUserId'] = params.vendorUserId;
-						  $('#calendarFor').html(template(data));
+						  data['selectedVendorUserId'] = selectedVendoruserId;
+						  $('#calendarFor').html(template(data)).show();
 						  
 						  $(document).on('click', '#calendarFor li', function (){
 							  var radio = $(this).find('input[name="calendarfor"]');
 
+							  selectedVendoruserId = radio.val();
 							  radio.prop('checked', true);
 							  $('#calendarFor li.active').removeClass('active');
 							  $(this).addClass('active');
-							  loadCalendar(params.serviceId, radio.val());
+							  loadCalendar(selectedSrvcId, selectedVendoruserId);
 						  });
-						  
 					  },
 					  error: function (){}
 				  });

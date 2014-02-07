@@ -16,8 +16,9 @@ $(function (){
 		  if(response && response.userId){
 			userType = wp.util.getUserType(response);
 
-			if (userType === wp.constants.USER){
+			if (userType === wp.constants.USER || userType === wp.constants.VENDORUSER){
 				$('#page-status').html('Sorry, please register as a vendor to view this page.').addClass('alert-error').show();
+				$('#wp-spinner').spin(false);
 				return;
 			}
 
@@ -228,6 +229,8 @@ $(function (){
 			$('#wp-main').append('<iframe id="picframe" name="picframe"></iframe>');
 			$('#picupload').prop('action', wp.cfg['REST_HOST']+'/ImageUpload');
 			$('#picupload input[name="ru"]').val('http://'+window.location.host+'/jsproxy.html');
+			
+			//trigger file browse
 			$('body').on('click', '#sr-photo-trigger', function (){
 				$('#file-inp').click();
 			});

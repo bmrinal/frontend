@@ -88,6 +88,10 @@
 					<div id="srvc-details" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="Service request form" aria-hidden="true"></div>
 	        	</div>
         	</div><!--/span-->
+        	<form enctype="multipart/form-data" method="post" name="picupload" id="picupload" target="picframe">
+				<input id="file-inp" type="file" name="images" multiple />
+				<input type="hidden" name="ru" />
+			</form>
       </div><!--/row-->
 	</div><!--/.main-->
 	<div id="wp-oly">
@@ -142,7 +146,8 @@
 						{{#if wpFixedCost}}<li><div>Fixed cost : {{wpFixedCost}}</div></li>{{/if}}
 						{{#if wpDuration}}<li><div>Duration : {{wpDuration}} mins</div></li>{{/if}}
 					</ul>
-					<button class="wp-appoint btn btn-mini btn-less" type="button" data-vendorId="{{wpVendorId}}" data-duration="{{wpDuration}}" data-srvcid="{{id}}">Book appointment</button>
+					<button class="wp-appoint btn btn-mini btn-less" type="button" data-vendoruserid="{{wpVendorUserId}}" data-duration="{{wpDuration}}" data-srvcid="{{id}}">Book appointment</button>
+					{{!-- <button class="wp-edit btn btn-mini btn-less" type="button" data-ind="{{@index}}" data-srvcid="{{id}}">Edit</button> --}}
 				</div>
 			</div>
 		{{/each}}
@@ -176,7 +181,7 @@
 			</div>
 
 			<div class="span6">
-				<button class="wp-appoint btn btn-mini btn-less" type="button" data-vendorId="{{wpVendorId}}" data-duration="{{wpDuration}}" data-srvcid="{{id}}">Book appointment</button>
+				<button class="wp-appoint btn btn-mini btn-less" type="button" data-vendoruserid="{{wpVendorUserId}}" data-duration="{{wpDuration}}" data-srvcid="{{id}}">Book appointment</button>
 				<div class="box shadow_effect">
 					<ul class="srvc-d-info">
 						{{#if wpProjectName}}<li><div><i class="icon-ok"></i>{{wpProjectName}}</div></li>{{/if}}
@@ -195,6 +200,111 @@
 			</div>
 			{{/with}}
 		</div>
+	</script>
+	
+	<script id="TL_requestSrvc" type="text/x-handlebars-template">
+			<h3 id="myModalLabel">Tell us about your service</h3>
+			<form id="sr-form-fields" class="form-horizontal">
+				<input type="hidden" name="wpServiceDefinitionId" value="{{service.wpServiceDefinitionId}}" />
+				<div id="srMetaFields">
+					<div class="control-group">
+						<label class="control-label" for="wpName">Name</label>
+    					<div class="controls">
+							<input type="text" id="wpName" name="wpName" value="{{service.wpName}}">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="wpProjectName">Project name</label>
+    					<div class="controls">
+							<input type="text" id="wpProjectName" name="wpProjectName" value="{{service.wpProjectName}}">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="wpLocationId">Location</label>
+    					<div id="srvc-location" class="controls"></div>
+					</div>
+					<div class="control-group">
+						<label class="control-label">Photos</label>
+    					<div class="controls">
+							<button id="sr-photo-trigger" class="btn btn-mini btn btn-info" type="button"><i class="icon-white icon-plus-sign"></i> Add photo</button>
+							<div class="row-fluid sr-photo-row"></div>
+							<span id="sr-photo-loading" class="hide">uploading...</span>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label">Status</label>
+						<div class="controls">
+							<label class="radio">
+								<input type="radio" name="wpStatus" value="active" {{#if_eq service.wpStatus compare='active'}}checked{{/if_eq}}>Active
+							</label>
+							<label class="radio">
+								<input type="radio" name="wpStatus" value="inactive" {{#if_eq service.wpStatus compare='inactive'}}checked{{/if_eq}}>Inactive
+							</label>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label"></label>
+						<div class="controls">
+							<label class="checkbox">
+								<input type="checkbox" name="wpOpenToQuote" value="opentoquote" {{#if service.wpOpenToQuote}}checked{{/if}}>Open to quote
+							</label>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label">Payment type</label>
+						<div class="controls">
+							<label class="checkbox">
+								<input type="checkbox" name="wpServicePaymentType" value="fixedcost" {{#if_gt service.wpFixedCost compare=0}}checked{{/if_gt}}>Fixed Cost
+							</label>
+							<label>
+								<input {{#unless_gt service.wpFixedCost compare=0}}class="hide" disabled="true"{{/unless_gt}} type="text" id="wpFixedCost" name="wpFixedCost" placeholder="Enter fixed cost" value="{{service.wpFixedCost}}">
+							</label>
+							<label class="checkbox">
+								<input type="checkbox" name="wpServicePaymentType" value="timeandmaterials" {{#if_gt service.wpCostPerHour compare=0}}checked{{/if_gt}}>Time and Materials
+							</label>
+							<label>
+								<input {{#unless_gt service.wpCostPerHour compare=0}}class="hide" disabled="true"{{/unless_gt}} type="text" id="wpCostPerHour" name="wpCostPerHour" placeholder="Enter cost per hour" value="{{service.wpCostPerHour}}">
+							</label>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="wpDuration">Duration</label>
+    					<div class="controls">
+							<select id="wpDuration" name="wpDuration">
+								<option {{#if_eq service.wpDuration compare='15'}}selected{{/if_eq}} value="15">15 mins</option>
+								<option {{#if_eq service.wpDuration compare='30'}}selected{{/if_eq}} value="30">30 mins</option>
+								<option {{#if_eq service.wpDuration compare='45'}}selected{{/if_eq}} value="45">45 mins</option>
+								<option {{#if_eq service.wpDuration compare='60'}}selected{{/if_eq}} value="60">1 hour</option>
+								<option {{#if_eq service.wpDuration compare='75'}}selected{{/if_eq}} value="75">1 hour and 15 mins</option>
+								<option {{#if_eq service.wpDuration compare='90'}}selected{{/if_eq}} value="90">1 hour and 30 mins</option>
+								<option {{#if_eq service.wpDuration compare='105'}}selected{{/if_eq}} value="105">1 hour and 45 mins</option>
+								<option {{#if_eq service.wpDuration compare='120'}}selected{{/if_eq}} value="120">2 hours</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div id="srTemplate"></div>
+			    <div class="form-actions">
+			    	<button type="button" id="sr-form-close" class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+		    		<button type="submit" class="btn btn-success" data-action="submit">Submit</button>
+		  		</div>
+				<input type="hidden" name="id" value="{{service.id}}" />
+			</form>
+	</script>
+
+	<script id="TL_pic" type="text/x-handlebars-template">
+		<div class="sr-photo-col">
+			<img src="{{src}}" class="sr-photo"/>
+			<input type="hidden" name="wpImageIds" value="{{imageId}}"/>
+		</div>
+	</script>
+
+	<script id="TL_location" type="text/x-handlebars-template">
+		<select name="wpLocationId">
+			{{#each location}}
+				<option value="{{id}}" {{#if selected}}selected{{/if}}>{{streetAddress1}} {{streetAddress2}} {{city}} {{stateOrProvince}} {{zipCode}}</option>
+			{{/each}}
+		</select>
 	</script>
   </body>
 </html>

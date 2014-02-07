@@ -82,6 +82,7 @@ div.wp-event-open{
 }
 
 #calendarFor{
+	display: none;
 	background: #fff;
 	padding: 10px;
 	border: 1px solid #ddd;
@@ -116,4 +117,39 @@ div.wp-event-open{
 
 #calendarFor div.info{
 	display: inline-block;
+}
+
+#services ul{
+	width: 100%;
+	overflow-x: auto;
+	white-space: nowrap;
+	border: 1px solid #ccc;
+	margin: 0 0 10px;
+}
+
+#services li{
+	display: inline-block;
+	list-style: none;
+	padding: 5px;
+	margin: 5px;
+	cursor: pointer;
+	border: 1px solid transparent;
+}
+
+#services li.active{
+	background-color: #f3f3f3;
+}
+
+#services li:hover{
+	border: 1px solid #f3f3f3;
+}
+
+#services .info{
+	display: inline-block;	
+}
+
+#services img{
+	max-width: 50px;
+	max-height: 50px;
+	margin: 0 10px;
 }
