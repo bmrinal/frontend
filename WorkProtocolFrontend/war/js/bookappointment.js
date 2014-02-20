@@ -222,6 +222,7 @@ $(function (){
 						  $(document).on('click', '#services li', function (){
 							  var radio = $(this).find('input[name="serviceId"]');
 
+							  $('#servicename').html($(this).find('.info').text());
 							  selectedSrvcId = radio.val();
 							  radio.prop('checked', true);
 							  $('#services li.active').removeClass('active');
@@ -239,6 +240,7 @@ $(function (){
 						  $(document).on('click', '#calendarFor li', function (){
 							  var radio = $(this).find('input[name="calendarfor"]');
 
+							  $('#providername').html($(this).find('.info').text());
 							  selectedVendoruserId = radio.val();
 							  radio.prop('checked', true);
 							  $('#calendarFor li.active').removeClass('active');
@@ -266,7 +268,7 @@ $(function (){
 								  'data': response,
 								  'targetSelector': '#view .wp-srvc-info .wp-srvc-info-b'
 						  });
-						  $('#servicename').html(response.wpProjectName || '--');
+						  $('#servicename').html(response.wpName || '--');
 						  $.each(response.vendors, function (i, v){
 							  if (v.id === response.wpVendorId){
 								  $('#providername').html(v.name);
@@ -284,6 +286,7 @@ $(function (){
 						  $(document).on('click', '#calendarFor li', function (){
 							  var radio = $(this).find('input[name="calendarfor"]');
 
+							  $('#providername').html($(this).find('.info').text());
 							  selectedVendoruserId = radio.val();
 							  radio.prop('checked', true);
 							  $('#calendarFor li.active').removeClass('active');

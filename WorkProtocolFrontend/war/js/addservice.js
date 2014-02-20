@@ -288,7 +288,8 @@ $(function (){
 					  }
 
 					  wp.overlay.close();
-					  $('#page-status').html('Service ('+ response.wpName +') created successfully').removeClass('hide');
+					  // $('#page-status').html('Service ('+ response.wpName +') created successfully').removeClass('hide');
+					  window.location.href = '/myservices.html';
 				  },
 				  error: function (){
 					  form.prepend('<div class="alert alert-error">'

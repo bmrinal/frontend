@@ -141,7 +141,7 @@ $(function (){
 			  daysOfWeek = evts[j].daysOfWeek -1; //javascript week 1(Sun) - 7(Sat) but java 0(Sun) - 6(Sat)
 			  retArr.push({
 				  id: 'id=' + response.id + '&startTime=' + evts[j].startTime + '&endTime=' + evts[j].endTime + '&daysOfWeek=' + evts[j].daysOfWeek,
-				  title: 'Service Id : '+response.serviceId,
+				  title: response.serviceName,
 				  allDay: false,
 				  start: convertToCalEvnt(daysOfWeek, evts[j].startTime),
 				  end: convertToCalEvnt(daysOfWeek, evts[j].endTime)
